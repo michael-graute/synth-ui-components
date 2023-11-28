@@ -1,0 +1,6 @@
+<div class="ins-slider-container" [ngStyle]="{'width.px': width + 10}">
+  <canvas #slider [width]="width" [height]="height"></canvas>
+  <label class="ins-slider-label">{{label}}</label>
+  <div class="ins-slider-value">{{value | number: '1.0-0'}}</div>
+  <input #sliderEditorInput class="ins-slider-value-editor" type="number" [hidden]="!editMode" [ngStyle]="{'width.px': width + 10}" (keydown)="handleEditorKeyDown($event)">
+</div>

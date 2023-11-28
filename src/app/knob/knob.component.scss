@@ -1,0 +1,39 @@
+.ins-knob {
+  position: relative;
+
+  .ins-knob-canvas {
+    transform: rotate(45deg);
+  }
+
+  .ins-knob-value {
+    user-select: none;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ins-knob-label {
+    user-select: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .ins-knob-value-editor {
+    z-index: 100;
+    background: #31383e;
+    border: 0;
+    border-radius: 50%;
+    color: gray;
+    font-size: small;
+    font-weight: 300;
+    text-align: center;
+
+     &:focus, &:active, &focus-visible {
+      outline: none;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+label {
+  display: block;
+  font-weight: 300;
+  font-size: x-small;
+  color: gray;
+  text-transform: uppercase;
+  text-align: center;
+  user-select: none;
+}
+
+.ins-slider-value {
+  font-weight: 300;
+  font-size: small;
+  color: gray;
+  user-select: none;
+}
+
+.ins-slider-container {
+  position: relative;
+ display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ins-slider-value-editor {
+  z-index: 100;
+  background: #31383e;
+  border: 0;
+  color: gray;
+  font-size: small;
+  font-weight: 300;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+
+  &:focus, &:active, &focus-visible {
+    outline: none;
+  }
+}

@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/scss/bootstrap";
+
+.jqx-slider-track{
+  &.jqx-slider-track-vertical{
+    background-color: gray !important;
+  }
+}
+
+.jqx-slider-slider {
+  &.jqx-slider-slider-vertical {
+    background-color: #00a4e1 !important;
+    border-radius: 0;
+    height: 15px;
+  }
+}
+
+
+  .jqx-fill-state-pressed.jqx-primary, .jqx-primary:active, .jqx-primary.active {
+    background-color: #00a4e1 !important;
+  }
+
