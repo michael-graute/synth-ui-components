@@ -1,11 +1,19 @@
 import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
   selector: 'ins-knob',
   templateUrl: './knob.component.html',
-  styleUrls: ['./knob.component.scss']
+  styleUrls: ['./knob.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi:true,
+      useExisting: KnobComponent
+    }
+  ]
 })
-export class KnobComponent implements AfterViewInit{
+export class KnobComponent implements AfterViewInit, ControlValueAccessor{
 
   @Input() label: string = '';
   @Input() baseColor: string = 'grey';
@@ -28,52 +36,67 @@ export class KnobComponent implements AfterViewInit{
   private mouseDownStartY: number = 0;
   public editMode: boolean = false;
   private tmpValue: number = 0;
-  private _value: number = 6;
+  private internalValue: number = 0;
 
   get value(): number {
-    return this._value;
+    return this.internalValue;
   }
 
   @Input() set value(value: number) {
-    this._value = value;
+    this.internalValue = value;
+    this.onChange(this.value);
+    this.draw();
   }
 
+  public writeValue(obj: any): void {
+    if(obj === null || obj === undefined) return;
+    this.value = obj;
+    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, 71 ] );
+  }
+
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  public registerOnTouched(fn: any): void {
+    console.log(fn)
+  }
+
+  public setDisabledState?(isDisabled: boolean): void {
+    console.log(isDisabled);
+  }
+
+  public onChange = (value: number): void => {};
+
   ngAfterViewInit(): void {
-    this.drawKnob(this.convertRange( this.value, [ this.min, this.max ], [ 0.5, 2 ] ));
+    this.draw();
     this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, 71 ] );
   }
 
   @HostListener('mousedown', ['$event'])
-  handleMouseDown(event: MouseEvent) {
+  handleMouseDown(event: MouseEvent): void {
     this.mouseDown = true;
     this.mouseDownStartY = event.clientY;
   }
 
-  @HostListener('mouseup', ['$event'])
-  handleMouseUp(event: MouseEvent) {
-    this.mouseDown = false;
-  }
-
-  @HostListener('mouseout', ['$event'])
-  handleMouseOut(event: MouseEvent) {
+  @HostListener('mouseup')
+  handleMouseUp(): void {
     this.mouseDown = false;
   }
 
   @HostListener('mousemove', ['$event'])
   handleMouseMove(event: MouseEvent) {
     if(this.mouseDown) {
-      const difference = Math.round((this.mouseDownStartY-event.clientY)/3);
+      const difference = Math.round((this.mouseDownStartY-event.clientY));
       this.tmpValue += difference
-      if(this.tmpValue >= 71) this.tmpValue = 71;
-      if(this.tmpValue <= 0) this.tmpValue = 0;
-      const endAngle = this.convertRange( this.tmpValue, [ 0, 71 ], [ 0.5, 2 ] );
-      this._value = Math.round(this.convertRange( this.tmpValue, [ 0, 71 ], [ this.min, this.max ] ));
-      this.drawKnob(endAngle);
+      if(this.tmpValue >= 71) this.tmpValue = 71; this.mouseDownStartY = event.clientY;
+      if(this.tmpValue <= 0) this.tmpValue = 0; this.mouseDownStartY = event.clientY;
+      this.value = Math.round(this.convertRange( this.tmpValue, [ 0, 71 ], [ this.min, this.max ] ));
     }
   }
 
-  @HostListener('dblclick', ['$event'])
-  handleDoubleClick(event: MouseEvent) {
+  @HostListener('dblclick')
+  handleDoubleClick(): void {
     this.editMode = true;
     setTimeout(() => {
       if(!this.knobEditorInput) return;
@@ -83,34 +106,39 @@ export class KnobComponent implements AfterViewInit{
   }
 
   @HostListener('document:click', ['$event'])
-  handleDocumentClick(event: MouseEvent) {
+  handleDocumentClick(event: MouseEvent): void {
     if(!this.knobEditorInput) return;
     if(event.target !== this.knobEditorInput.nativeElement) {
       this.editMode = false;
     }
   }
 
-  handleEditorKeyDown(event: KeyboardEvent) {
+  @HostListener('document:mouseup')
+  handleDocumentMouseUp(): void {
+    if(this.mouseDown) {
+      this.mouseDown = false;
+    }
+  }
+
+  handleEditorKeyDown(event: KeyboardEvent): void {
+    const target: HTMLInputElement = event.currentTarget as HTMLInputElement;
     if(event.key === 'Enter') {
       this.editMode = false;
-      // @ts-ignore
-      this.value = event.currentTarget.value === '' ? this.min : event.currentTarget.value;
+      this.value = target.value === '' || target.value === null ? this.min : target.valueAsNumber;
       if(this.value > this.max) this.value = this.max;
       if(this.value < this.min) this.value = this.min;
-      // @ts-ignore
-      event.currentTarget.value = this.value;
-      const endAngle = this.convertRange( this.value, [ this.min, this.max ], [ 0.5, 2 ] );
-      this.drawKnob(endAngle);
+      target.value = this.value + '';
     } else if(event.key === 'Escape') {
       this.editMode = false;
     }
   }
 
-  drawKnob(value: number) {
+  draw() {
+    const value: number = this.convertRange( this.internalValue, [ this.min, this.max ], [ 0.5, 2 ] )
     if(this.knobCanvas) {
-      const elm = this.knobCanvas.nativeElement;
-      const context = elm.getContext('2d');
-      context.clearRect(0, 0, elm.width, elm.height);
+      const element = this.knobCanvas.nativeElement;
+      const context = element.getContext('2d');
+      context.clearRect(0, 0, element.width, element.height);
       context.lineWidth = this.baseLineWidth;
       context.beginPath();
       context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, Math.PI/2, 2 * Math.PI);

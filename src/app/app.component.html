@@ -1,18 +1,30 @@
-<div class="container">
-  <div class="d-flex mb-3">
-    <ins-slider label="Vol" [max]="20" [min]="0" [height]="250"></ins-slider>
-    <ins-slider label="Mid" [max]="20" [min]="0" [height]="250" [value]="15"></ins-slider>
-    <ins-slider label="Hi" [max]="20" [min]="0" [height]="250" [value]="8"></ins-slider>
-    <ins-slider label="Lo" [max]="20" [min]="0" [height]="250" [value]="3"></ins-slider>
-  </div>
-  <div class="d-flex">
-    <ins-knob [value]="25" label="one" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="10" [max]="100"></ins-knob>
-    <ins-knob [value]="2" label="freq" [size]="70"></ins-knob>
-    <ins-knob [value]="9" [size]="60"></ins-knob>
-    <ins-knob [value]="3"></ins-knob>
-    <ins-knob [value]="6"></ins-knob>
-    <ins-knob [value]="1"></ins-knob>
-  </div>
+<div class="container" data-bs-theme="dark">
+
+  <fieldset>
+    <div class="d-flex justify-content-center">
+      <legend>Oscillator One</legend>
+    </div>
+
+    <div class="d-flex mb-3">
+      <ins-slider label="Vol" [max]="20" [min]="0" [height]="250" [value]="12"></ins-slider>
+      <ins-slider label="Mid" [max]="100" [min]="0" [height]="250" [(ngModel)]="foo"></ins-slider>
+      <ins-slider label="Hi" [max]="20" [min]="0" [height]="250" [value]="8"></ins-slider>
+      <ins-slider label="Lo" [max]="20" [min]="0" [height]="250" [value]="3"></ins-slider>
+    </div>
+    <p>{{foo}}</p>
+    <div class="d-flex mb-3">
+      <ins-knob [(ngModel)]="foo" label="one" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="10" [max]="100"></ins-knob>
+      <ins-knob [value]="2" label="freq" [size]="70"></ins-knob>
+      <ins-knob [value]="9" [size]="60"></ins-knob>
+      <ins-knob [value]="3"></ins-knob>
+      <ins-knob [value]="6"></ins-knob>
+      <ins-knob [value]="1"></ins-knob>
+    </div>
+    <p>{{bar}}</p>
+    <div class="d-flex mb-3">
+      <ins-switch label="active"></ins-switch>
+    </div>
+  </fieldset>
   <canvas #myCanvas width="850" height="300"></canvas>
   <div class="row">
     <div class="col">

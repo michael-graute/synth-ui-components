@@ -1,12 +1,29 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
   selector: 'ins-slider',
   templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.scss']
+  styleUrls: ['./slider.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi:true,
+      useExisting: SliderComponent
+    }
+  ]
 })
-export class SliderComponent implements AfterViewInit {
-  @Input() value: number = 5;
+export class SliderComponent implements AfterViewInit, ControlValueAccessor {
+  private mouseDown: boolean = false;
+  private mouseDownStartY: number = 0;
+  public editMode: boolean = false;
+  private internalValue: number = 0;
+
+  @Input() set value(value: number) {
+    this.internalValue = value;
+    this.onChange(this.value)
+    this.draw();
+  }
   @Input() name: string = '';
   @Input() id: string = '';
   @Input() min: number = 0;
@@ -20,63 +37,74 @@ export class SliderComponent implements AfterViewInit {
   @ViewChild('slider') slider: ElementRef | undefined;
   @ViewChild('sliderEditorInput') sliderEditorInput: ElementRef | undefined;
 
-  private mouseDown: boolean = false;
-  private mouseDownStartY: number = 0;
-  public editMode: boolean = false;
-  private tmpValue: number = 0;
+  get value(): number {
+    return Math.round(this.internalValue);
+  }
 
+  public writeValue(obj: any): void {
+    if(obj === null || obj === undefined) return;
+    this.value = obj;
+  }
 
-  public draw() {
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  public registerOnTouched(fn: any): void {
+    console.log(fn)
+  }
+  public setDisabledState?(isDisabled: boolean): void {
+    console.log(isDisabled);
+  }
+
+  public onChange = (value: number): void => {};
+
+  public draw(): void {
+    if(!this.slider) return;
     const canvas = this.slider?.nativeElement;
     const ctx = canvas.getContext('2d');
-
     if (ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = this.baseColor;
       ctx.fillRect(0, 0, this.width, this.height);
-
       ctx.fillStyle = this.valueColor;
-      ctx.fillRect(0, this.height - (this.value - this.min) / (this.max - this.min) * this.height, this.width, (this.value - this.min) / (this.max - this.min) * this.height);
+      ctx.fillRect(0, this.height - (this.internalValue - this.min) / (this.max - this.min) * this.height, this.width, (this.internalValue - this.min) / (this.max - this.min) * this.height);
     }
   }
 
+
   @HostListener('mousedown', ['$event'])
-  handleMouseDown(event: MouseEvent) {
+  handleMouseDown(event: MouseEvent): void {
     this.mouseDown = true;
     this.mouseDownStartY = event.clientY;
-    const delta = event.clientY - this.mouseDownStartY;
-    const deltaValue = delta / this.height * (this.max - this.min);
-    this.value = Math.min(Math.max(this.value - deltaValue, this.min), this.max);
-    this.draw();
+    this.value = Math.min(Math.max(this.internalValue - this.calculateDelta(event), this.min), this.max);
   }
 
-  @HostListener('mouseup', ['$event'])
-  handleMouseUp(event: MouseEvent) {
+  @HostListener('mouseup')
+  handleMouseUp(): void {
     this.mouseDown = false;
   }
 
-  @HostListener('mouseout', ['$event'])
-  handleMouseOut(event: MouseEvent) {
+  @HostListener('mouseout')
+  handleMouseOut(): void {
     this.mouseDown = false;
   }
 
   @HostListener('mousemove', ['$event'])
-  handleMouseMove(event: MouseEvent) {
-    if (!this.mouseDown) {
-      return;
-    }
-
-    const delta = event.clientY - this.mouseDownStartY;
-    const deltaValue = delta / this.height * (this.max - this.min);
-    this.value = Math.min(Math.max(this.value - deltaValue, this.min), this.max);
+  handleMouseMove(event: MouseEvent): void {
+    if (!this.mouseDown) return;
+    this.value = Math.min(Math.max(this.internalValue - this.calculateDelta(event), this.min), this.max);
     this.mouseDownStartY = event.clientY;
-    this.draw();
   }
 
-  @HostListener('dblclick', ['$event'])
-  handleDoubleClick(event: MouseEvent) {
+  calculateDelta(event: MouseEvent): number {
+    const delta: number = event.clientY - this.mouseDownStartY;
+    return delta / this.height * (this.max - this.min);
+  }
+
+  @HostListener('dblclick')
+  handleDoubleClick(): void {
     this.editMode = true;
-    setTimeout(() => {
+    setTimeout((): void => {
       if(!this.sliderEditorInput) return;
       this.sliderEditorInput.nativeElement.value = this.value;
       this.sliderEditorInput.nativeElement.focus();
@@ -84,16 +112,20 @@ export class SliderComponent implements AfterViewInit {
   }
 
   @HostListener('document:click', ['$event'])
-  handleDocumentClick(event: MouseEvent) {
+  handleDocumentClick(event: MouseEvent): void {
     if(!this.sliderEditorInput) return;
     if(event.target !== this.sliderEditorInput.nativeElement) {
       this.editMode = false;
     }
   }
 
-  handleEditorKeyDown(event: KeyboardEvent) {
+  handleEditorKeyDown(event: KeyboardEvent): void {
     if(event.key === 'Enter') {
       this.editMode = false;
+      if(event.currentTarget) {
+        const target: HTMLInputElement = event.currentTarget as HTMLInputElement;
+        this.value = target.value === '' || target.value === null ? this.min : target.valueAsNumber;
+      }
     } else if(event.key === 'Escape') {
       this.editMode = false;
     }

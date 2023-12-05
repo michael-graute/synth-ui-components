@@ -9,12 +9,14 @@ import {jqxNumberInputModule} from "jqwidgets-ng/jqxnumberinput";
 import {jqxDrawModule} from "jqwidgets-ng/jqxdraw";
 import { KnobComponent } from './knob/knob.component';
 import { SliderComponent } from './slider/slider.component';
+import { SwitchComponent } from './switch/switch.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     KnobComponent,
-    SliderComponent
+    SliderComponent,
+    SwitchComponent
   ],
   imports: [
     BrowserModule,

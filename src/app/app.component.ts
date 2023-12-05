@@ -16,6 +16,10 @@ export class AppComponent implements AfterViewInit {
   sustainValue: number = 5;
   releaseValue: number = 3;
 
+
+  foo: number = 48;
+  bar: number = 67;
+
   @ViewChild('myCanvas') myCanvas: ElementRef | undefined;
 
   style: any =
