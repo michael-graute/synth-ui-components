@@ -13,7 +13,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     }
   ]
 })
-export class KnobComponent implements AfterViewInit, ControlValueAccessor{
+export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
   @Input() label: string = '';
   @Input() baseColor: string = 'grey';
@@ -133,7 +133,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor{
     }
   }
 
-  draw() {
+  draw(): void {
     const value: number = this.convertRange( this.internalValue, [ this.min, this.max ], [ 0.5, 2 ] )
     if(this.knobCanvas) {
       const element = this.knobCanvas.nativeElement;
