@@ -1,26 +1,26 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {jqxKnobComponent} from "jqwidgets-ng/jqxknob";
+import {Component} from '@angular/core';
+/*import {jqxKnobComponent} from "jqwidgets-ng/jqxknob";
 import {jqxNumberInputComponent} from "jqwidgets-ng/jqxnumberinput";
-import {jqxDrawComponent} from "jqwidgets-ng/jqxdraw";
+import {jqxDrawComponent} from "jqwidgets-ng/jqxdraw";*/
 
 @Component({
   selector: 'ins-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
-  sliderValue: number = 7;
+export class AppComponent {
+  /*sliderValue: number = 7;
 
   attackValue: number = 8;
   decayValue: number = 3;
   sustainValue: number = 5;
   releaseValue: number = 3;
-
+  */
 
   foo: number = 48;
   bar: number = 67;
 
-  @ViewChild('myCanvas') myCanvas: ElementRef | undefined;
+  /*@ViewChild('myCanvas') myCanvas: ElementRef | undefined;
 
   style: any =
     {
@@ -130,6 +130,6 @@ export class AppComponent implements AfterViewInit {
 
   convertRange( value: number, r1: any, r2: any ) {
     return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
-  }
+  }*/
 
 }

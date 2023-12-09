@@ -10,13 +10,17 @@ import {jqxDrawModule} from "jqwidgets-ng/jqxdraw";
 import { KnobComponent } from './knob/knob.component';
 import { SliderComponent } from './slider/slider.component';
 import { SwitchComponent } from './switch/switch.component';
+import { AdsrEnvelopeComponent } from './adsr-envelope/adsr-envelope.component';
+import { PanningKnobComponent } from './panning-knob/panning-knob.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     KnobComponent,
     SliderComponent,
-    SwitchComponent
+    SwitchComponent,
+    AdsrEnvelopeComponent,
+    PanningKnobComponent
   ],
   imports: [
     BrowserModule,

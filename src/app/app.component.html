@@ -13,8 +13,8 @@
     </div>
     <p>{{foo}}</p>
     <div class="d-flex mb-3">
-      <ins-knob [(ngModel)]="foo" label="one" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="10" [max]="100"></ins-knob>
-      <ins-knob [value]="2" label="freq" [size]="70"></ins-knob>
+      <ins-knob [(ngModel)]="foo" label="one" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
+      <ins-knob [(ngModel)]="bar" label="freq" [size]="70" [min]="0" [max]="100"></ins-knob>
       <ins-knob [value]="9" [size]="60"></ins-knob>
       <ins-knob [value]="3"></ins-knob>
       <ins-knob [value]="6"></ins-knob>
@@ -25,39 +25,6 @@
       <ins-switch label="active"></ins-switch>
     </div>
   </fieldset>
-  <canvas #myCanvas width="850" height="300"></canvas>
-  <div class="row">
-    <div class="col">
-      <jqxKnob #attack (onChange)="onAttackChange($event)"
-               [width]="80" [height]="80"
-               [value]="attackValue" [min]="0" [max]="20" [startAngle]="120"
-               [endAngle]="420" [snapToStep]="true" [rotation]="'clockwise'" [style]="style"
-               [progressBar]="progressBar">
-      </jqxKnob>
-    </div>
-    <div class="col">
-      <jqxKnob #decay (onChange)="onDecayChange($event)"
-               [width]="80" [height]="80"
-               [value]="decayValue" [min]="0" [max]="20" [startAngle]="120"
-               [endAngle]="420" [snapToStep]="true" [rotation]="'clockwise'" [style]="style"
-               [progressBar]="progressBar">
-      </jqxKnob>
-    </div>
-    <div class="col">
-      <jqxKnob #sustain (onChange)="onSustainChange($event)"
-               [width]="80" [height]="80"
-               [value]="sustainValue" [min]="0" [max]="20" [startAngle]="120"
-               [endAngle]="420" [snapToStep]="true" [rotation]="'clockwise'" [style]="style"
-               [progressBar]="progressBar">
-      </jqxKnob>
-    </div>
-    <div class="col">
-      <jqxKnob #release (onChange)="onReleaseChange($event)"
-               [width]="80" [height]="80"
-               [value]="releaseValue" [min]="0" [max]="20" [startAngle]="120"
-               [endAngle]="420" [snapToStep]="true" [rotation]="'clockwise'" [style]="style"
-               [progressBar]="progressBar">
-      </jqxKnob>
-    </div>
-  </div>
+  <ins-adsr-envelope [value]="{attack: 1, decay: 1, sustain: 1, release: 1}"></ins-adsr-envelope>
+  <ins-panning-knob></ins-panning-knob>
 </div>

@@ -84,7 +84,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor{
     this.mouseDown = false;
   }
 
-  @HostListener('mousemove', ['$event'])
+  @HostListener('document:mousemove', ['$event'])
   handleMouseMove(event: MouseEvent) {
     if(this.mouseDown) {
       const difference = Math.round((this.mouseDownStartY-event.clientY));
