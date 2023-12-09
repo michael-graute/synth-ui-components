@@ -98,7 +98,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor{
   @HostListener('dblclick')
   handleDoubleClick(): void {
     this.editMode = true;
-    setTimeout(() => {
+    setTimeout(() => { //@TODO DIRTY!!! Check why timeout is needed here and fix!
       if(!this.knobEditorInput) return;
       this.knobEditorInput.nativeElement.value = this.value;
       this.knobEditorInput.nativeElement.focus();
