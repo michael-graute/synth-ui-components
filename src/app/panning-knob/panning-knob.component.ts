@@ -1,14 +1,32 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
   selector: 'ins-panning-knob',
   templateUrl: './panning-knob.component.html',
-  styleUrls: ['./panning-knob.component.scss']
+  styleUrls: ['./panning-knob.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi:true,
+      useExisting: PanningKnobComponent
+    }
+  ]
 })
-export class PanningKnobComponent implements AfterViewInit {
+export class PanningKnobComponent implements AfterViewInit, ControlValueAccessor {
 
   @ViewChild('knobCanvas') knobCanvas: ElementRef | undefined;
 
+  @Input() value: number = 0;
   @Input() label: string = '';
   @Input() baseColor: string = 'grey';
   @Input() valueColor: string = '#00a4e1';
@@ -23,19 +41,48 @@ export class PanningKnobComponent implements AfterViewInit {
   @Input() valueTextSize: string = 'small';
   @Input() valueTextWeight: number = 300;
 
+  @Output() change: EventEmitter<number> = new EventEmitter<number>();
+
   private mouseDown: boolean = false;
   private mouseDownStartY: number = 0;
   private tmpValue: number = 0;
 
-  value: number = 75;
   private valueToAngle(value: number): number {
     const twelveOClock: number= -Math.PI/2;
     const fullCircle: number= Math.PI*2;
     return(twelveOClock+fullCircle*(value/275));
   }
 
+  get displayValue(): string {
+    if(this.value === 0) return 'C';
+    return this.value > 0 ? 'R' + this.value : 'L' + this.value * -1;
+  }
+
+  public writeValue(obj: any): void {
+    if(obj === null || obj === undefined) return;
+    this.value = obj;
+    this.draw();
+  }
+
+  public registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  public registerOnTouched(fn: any): void {
+    ///console.log(fn)
+  }
+
+  public setDisabledState?(isDisabled: boolean): void {
+    //console.log(isDisabled);
+  }
+
+  public onChange = (value: number): void => {
+    this.change.emit(value);
+  };
+
   @HostListener('mousedown', ['$event'])
   handleMouseDown(event: MouseEvent): void {
+    this.tmpValue = this.value;
     this.mouseDown = true;
     this.mouseDownStartY = event.clientY;
   }
@@ -52,11 +99,9 @@ export class PanningKnobComponent implements AfterViewInit {
       this.tmpValue += difference
       if(this.tmpValue >= 100) this.tmpValue = 100; this.mouseDownStartY = event.clientY;
       if(this.tmpValue <= -100) this.tmpValue = -100; this.mouseDownStartY = event.clientY;
-      console.log(difference);
-      console.log(this.tmpValue);
       this.value = this.tmpValue;
+      this.onChange(this.value);
       this.draw();
-      //this.value = Math.round(this.convertRange( this.tmpValue, [ 0, 71 ], [ this.min, this.max ] ));
     }
   }
 

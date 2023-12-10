@@ -8,10 +8,15 @@ import {Component} from '@angular/core';
 export class AppComponent {
   foo: number = 48;
   bar: number = 67;
+  pan: number = -34;
   adsr: any = {
     attack: 5,
     decay: 1,
     sustain: 5,
     release: 2
+  }
+
+  onKnobChange(event: number) {
+    console.log('knobChange', event);
   }
 }

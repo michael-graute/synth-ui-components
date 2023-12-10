@@ -15,11 +15,13 @@
     <div class="d-flex mb-3">
       <ins-knob [(ngModel)]="foo" label="one" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
       <ins-knob [(ngModel)]="bar" label="freq" [size]="70" [min]="0" [max]="100"></ins-knob>
-      <ins-knob [value]="9" [size]="60"></ins-knob>
+      <ins-knob [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
       <ins-knob [value]="3"></ins-knob>
       <ins-knob [value]="6"></ins-knob>
       <ins-knob [value]="1"></ins-knob>
+      <ins-panning-knob [size]="70" label="pan" [value]="pan" [(ngModel)]="pan"></ins-panning-knob>
     </div>
+    <p>{{pan}}</p>
     <p>{{bar}}</p>
     <div class="d-flex mb-3">
       <ins-switch label="active"></ins-switch>
@@ -27,5 +29,4 @@
   </fieldset>
   <ins-adsr-envelope [(ngModel)]="adsr"></ins-adsr-envelope>
   <pre>{{adsr | json}}</pre>
-  <ins-panning-knob [size]="70" label="pan"></ins-panning-knob>
 </div>

@@ -66,6 +66,7 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
 
   set attackValue(value: number) {
     this.internalAttackValue = value;
+    this.value.attack = value;
     this.draw();
   }
 

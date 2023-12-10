@@ -1,2 +1,5 @@
-<canvas #knobCanvas width="300" height="150"></canvas>
-<label class="ins-knob-label" [ngStyle]="{'width.px': size, 'font-size': labelTextSize, 'font-weight': labelTextWeight, 'color': baseColor}">{{label}}</label>
+<div class="ins-knob">
+  <span class="ins-knob-value" [ngStyle]="{'width.px': size, 'height.px': size, 'font-size': valueTextSize, 'font-weight': valueTextWeight, 'color': baseColor}">{{displayValue}}</span>
+  <canvas #knobCanvas [width]="size" [height]="size"></canvas>
+  <label class="ins-knob-label" [ngStyle]="{'width.px': size, 'font-size': labelTextSize, 'font-weight': labelTextWeight, 'color': baseColor}">{{label}}</label>
+</div>

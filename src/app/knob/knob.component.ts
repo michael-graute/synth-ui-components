@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
@@ -28,6 +37,8 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   @Input() labelTextWeight: number = 300;
   @Input() valueTextSize: string = 'small';
   @Input() valueTextWeight: number = 300;
+
+  @Output() change: EventEmitter<number> = new EventEmitter<number>();
 
   @ViewChild('knobCanvas') knobCanvas: ElementRef | undefined;
   @ViewChild('knobEditorInput') knobEditorInput: ElementRef | undefined;
@@ -67,7 +78,9 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
     //console.log(isDisabled);
   }
 
-  public onChange = (value: number): void => {};
+  public onChange = (value: number): void => {
+    this.change.emit(value);
+  };
 
   ngAfterViewInit(): void {
     this.draw();
