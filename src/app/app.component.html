@@ -25,6 +25,7 @@
       <ins-switch label="active"></ins-switch>
     </div>
   </fieldset>
-  <ins-adsr-envelope [value]="{attack: 1, decay: 1, sustain: 1, release: 1}"></ins-adsr-envelope>
-  <ins-panning-knob></ins-panning-knob>
+  <ins-adsr-envelope [(ngModel)]="adsr"></ins-adsr-envelope>
+  <pre>{{adsr | json}}</pre>
+  <ins-panning-knob [size]="70" label="pan"></ins-panning-knob>
 </div>

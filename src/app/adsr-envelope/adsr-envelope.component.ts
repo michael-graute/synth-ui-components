@@ -1,4 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 export interface AdsrEnvelopeValue {
   attack: number;
@@ -10,9 +11,32 @@ export interface AdsrEnvelopeValue {
 @Component({
   selector: 'ins-adsr-envelope',
   templateUrl: './adsr-envelope.component.html',
-  styleUrls: ['./adsr-envelope.component.scss']
+  styleUrls: ['./adsr-envelope.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi:true,
+      useExisting: AdsrEnvelopeComponent
+    }
+  ]
 })
-export class AdsrEnvelopeComponent implements AfterViewInit {
+export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccessor {
+  writeValue(obj: any): void {
+      if (obj === null || obj === undefined) return;
+      this.value = obj;
+      console.log('writeValue', this.value)
+  }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+      //throw new Error('Method not implemented.');
+  }
+  setDisabledState?(isDisabled: boolean): void {
+      //throw new Error('Method not implemented.');
+  }
+
+  public onChange = (value: AdsrEnvelopeValue): void => {};
 
   @ViewChild('myCanvas') myCanvas: ElementRef | undefined;
   @Input() set value(value: AdsrEnvelopeValue) {
@@ -20,13 +44,16 @@ export class AdsrEnvelopeComponent implements AfterViewInit {
     this.internalDecayValue = value.decay;
     this.internalSustainValue = value.sustain;
     this.internalReleaseValue = value.release;
+    this.onChange(this.value);
+    console.log(this.value);
+    console.log(value);
     this.draw();
   }
 
-  private internalAttackValue: number = 0;
-  private internalDecayValue: number = 0;
-  private internalSustainValue: number = 0;
-  private internalReleaseValue: number = 0;
+  public internalAttackValue: number = 0;
+  public internalDecayValue: number = 0;
+  public internalSustainValue: number = 0;
+  public internalReleaseValue: number = 0;
 
   get value(): AdsrEnvelopeValue {
     return {
@@ -47,12 +74,12 @@ export class AdsrEnvelopeComponent implements AfterViewInit {
   }
 
   set decayValue(value: number) {
-    this.internalDecayValue = value;
+    this.internalDecayValue = this.internalAttackValue < value ? this.internalAttackValue : value;
     this.draw();
   }
 
   get decayValue(): number {
-    return this.internalDecayValue;
+    return this.internalAttackValue < this.internalDecayValue ? this.internalAttackValue : this.internalDecayValue;
   }
 
   set sustainValue(value: number) {
@@ -66,6 +93,7 @@ export class AdsrEnvelopeComponent implements AfterViewInit {
 
   set releaseValue(value: number) {
     this.internalReleaseValue = value;
+    console.log(value);
     this.draw();
   }
 
@@ -77,6 +105,7 @@ export class AdsrEnvelopeComponent implements AfterViewInit {
     if (!this.myCanvas) {
       return;
     }
+    console.log(this.releaseValue);
     const attackStart = this.myCanvas.nativeElement.height - 5;
     const attackEnd = attackStart - this.attackValue * 10;
     const decayEnd = attackEnd + this.decayValue * 10;
@@ -120,8 +149,8 @@ export class AdsrEnvelopeComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log('afterViewInit', this.value);
     this.draw();
-    console.log(this.value);
   }
 
 }

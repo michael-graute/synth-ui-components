@@ -52,6 +52,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
     if(obj === null || obj === undefined) return;
     this.value = obj;
     this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, 71 ] );
+    console.log('knob writeValue', this.value);
   }
 
   public registerOnChange(fn: any): void {
@@ -59,11 +60,11 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   }
 
   public registerOnTouched(fn: any): void {
-    console.log(fn)
+    ///console.log(fn)
   }
 
   public setDisabledState?(isDisabled: boolean): void {
-    console.log(isDisabled);
+    //console.log(isDisabled);
   }
 
   public onChange = (value: number): void => {};

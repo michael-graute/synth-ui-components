@@ -1,29 +1,14 @@
 @import "bootstrap/scss/bootstrap";
 
-.jqx-slider-track{
-  &.jqx-slider-track-vertical{
-    background-color: gray !important;
-  }
-}
-
-.jqx-slider-slider {
-  &.jqx-slider-slider-vertical {
-    background-color: #00a4e1 !important;
-    border-radius: 0;
-    height: 15px;
-  }
-}
-
-
-.jqx-fill-state-pressed.jqx-primary, .jqx-primary:active, .jqx-primary.active {
-  background-color: #00a4e1 !important;
+:root {
+  --value-editor-bg-color: #31383e;
+  --value-editor-text-color: gray;
 }
 
 fieldset {
   border: 1px solid #8e9aa0;
   border-radius: 5px;
-  padding: 15px;
-  padding-top: 0;
+  padding: 0 15px 15px 15px;
   background: #252627;
   width: max-content;
   legend {
@@ -33,7 +18,6 @@ fieldset {
     color: #212529;
     border: 1px solid gray;
     padding: 2px 15px;
-    /* display: inline-block; */
     width: auto;
     border-top: 0;
     border-bottom-left-radius: 5px;

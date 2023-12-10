@@ -50,10 +50,10 @@ export class SliderComponent implements AfterViewInit, ControlValueAccessor {
     this.onChange = fn;
   }
   public registerOnTouched(fn: any): void {
-    console.log(fn)
+    //console.log(fn)
   }
   public setDisabledState?(isDisabled: boolean): void {
-    console.log(isDisabled);
+    //console.log(isDisabled);
   }
 
   public onChange = (value: number): void => {};
