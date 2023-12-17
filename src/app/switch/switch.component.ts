@@ -8,6 +8,7 @@ import {Component, Input} from '@angular/core';
 export class SwitchComponent {
   @Input() onLabel: string = 'on';
   @Input() offLabel: string = 'off';
+  @Input() labelPosition: 'left' | 'right' | 'top' | 'bottom' = 'bottom';
 
   @Input() value: boolean = false;
 }

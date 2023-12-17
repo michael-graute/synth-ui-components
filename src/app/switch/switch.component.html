@@ -1,4 +1,4 @@
-<div class="form-check form-switch" data-bs-theme="dark">
+<div class="form-check form-switch" [ngClass]="{'form-check-reverse' : labelPosition === 'left'}" data-bs-theme="dark">
   <input class="form-check-input" [(ngModel)]="value" type="checkbox" role="switch" id="flexSwitchCheckDefault">
   <label class="form-check-label" for="flexSwitchCheckDefault">{{value ? onLabel : offLabel}}</label>
 </div>
