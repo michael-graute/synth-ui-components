@@ -15,12 +15,12 @@
     </div>
     <p>{{foo}}</p>
     <div class="d-flex mb-3">
-      <ins-knob [(ngModel)]="foo" label="one" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
-      <ins-knob [(ngModel)]="bar" label="freq" [size]="70" [min]="0" [max]="100"></ins-knob>
-      <ins-knob [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
-      <ins-knob [value]="3"></ins-knob>
-      <ins-knob [value]="6"></ins-knob>
-      <ins-knob [value]="1"></ins-knob>
+      <ins-knob [midiLearn]="midiLearn" [(ngModel)]="foo" label="one" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
+      <ins-knob [midiLearn]="midiLearn" [(ngModel)]="bar" label="freq" [size]="70" [min]="0" [max]="100"></ins-knob>
+      <ins-knob [midiLearn]="midiLearn" [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
+      <ins-knob [midiLearn]="midiLearn" [value]="3"></ins-knob>
+      <ins-knob [midiLearn]="midiLearn" [value]="6"></ins-knob>
+      <ins-knob [midiLearn]="midiLearn" [value]="1"></ins-knob>
       <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan"></ins-panning-knob>
     </div>
     <p>{{pan}}</p>

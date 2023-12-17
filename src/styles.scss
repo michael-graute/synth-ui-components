@@ -29,11 +29,12 @@ fieldset {
 .ins-midi-learn {
   background: rgba(79, 128, 81, 0.42);
   position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  top: 1px;
+  right: 1px;
+  left: 1px;
+  bottom: 1px;
   cursor: pointer;
+  border-radius: 3px;
 
   .ins-midi-learn-editor {
     position: absolute;
