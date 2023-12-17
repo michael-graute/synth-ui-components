@@ -1,9 +1,11 @@
-<div class="container" data-bs-theme="dark">
-
-  <fieldset>
-    <div class="d-flex justify-content-center">
+<div class="container">
+  <button class="btn btn-primary" (click)="toggleMidiLearn()">Midi Learn</button>
+  <fieldset class="ins-container">
+    <div class="ins-container-header d-flex justify-content-center">
       <legend>Oscillator One</legend>
     </div>
+    <div class="ins-container-body"></div>
+    <div class="ins-container-footer"></div>
 
     <div class="d-flex mb-3">
       <ins-slider label="Vol" [max]="20" [min]="0" [height]="250" [value]="12"></ins-slider>
@@ -19,7 +21,7 @@
       <ins-knob [value]="3"></ins-knob>
       <ins-knob [value]="6"></ins-knob>
       <ins-knob [value]="1"></ins-knob>
-      <ins-panning-knob [size]="70" label="pan" [value]="pan" [(ngModel)]="pan"></ins-panning-knob>
+      <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan"></ins-panning-knob>
     </div>
     <p>{{pan}}</p>
     <p>{{bar}}</p>
@@ -29,4 +31,40 @@
   </fieldset>
   <ins-adsr-envelope [(ngModel)]="adsr"></ins-adsr-envelope>
   <pre>{{adsr | json}}</pre>
+  <ins-oscilloscope></ins-oscilloscope>
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          <nav class="navbar">
+            <div class="container-fluid">
+              <a class="navbar-brand">Oscillator A</a>
+              <form class="d-flex">
+                <ins-switch [value]="true"></ins-switch>
+              </form>
+            </div>
+          </nav>
+        </div>
+        <div class="card-body">
+          <div class="d-flex">
+            <ins-knob [value]="3" [midiLearn]="midiLearn" label="octave" [min]="0" [max]="12"></ins-knob>
+            <ins-panning-knob  label="steps"></ins-panning-knob>
+          </div>
+          <hr>
+          <ins-waveform-select waveform="triangle"></ins-waveform-select>
+          <hr>
+          <div class="d-flex">
+            <ins-knob [midiLearn]="midiLearn" [value]="3" label="phase" [min]="0" [max]="12"></ins-knob>
+            <ins-panning-knob label="pan"></ins-panning-knob>
+            <ins-knob [midiLearn]="midiLearn" [value]="50" label="level" [min]="0" [max]="100"></ins-knob>
+          </div>
+          <hr>
+          <ins-adsr-envelope></ins-adsr-envelope>
+        </div>
+        <div class="card-footer">
+          <p>Card footer</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

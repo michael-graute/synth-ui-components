@@ -10,6 +10,12 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
+export interface KnobMidiEvent {
+  controller: number;
+  value: number;
+  channel: number;
+}
+
 @Component({
   selector: 'ins-knob',
   templateUrl: './knob.component.html',
@@ -37,6 +43,9 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   @Input() labelTextWeight: number = 300;
   @Input() valueTextSize: string = 'small';
   @Input() valueTextWeight: number = 300;
+  @Input() midiLearn: boolean = false;
+  @Input() midiLearnEditMode: boolean = false;
+  @Input() midiEventListener: KnobMidiEvent = { controller: 123, value: 0, channel: 1 };
 
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
 
@@ -57,6 +66,10 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
     this.internalValue = value;
     this.onChange(this.value);
     this.draw();
+  }
+
+  toggleMidiLearnEditMode(): void {
+    this.midiLearnEditMode = !this.midiLearnEditMode;
   }
 
   public writeValue(obj: any): void {
@@ -100,7 +113,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
   @HostListener('document:mousemove', ['$event'])
   handleMouseMove(event: MouseEvent) {
-    if(this.mouseDown) {
+    if(this.mouseDown && !this.editMode && !this.midiLearn) {
       const difference = Math.round((this.mouseDownStartY-event.clientY));
       this.tmpValue += difference
       if(this.tmpValue >= 71) this.tmpValue = 71; this.mouseDownStartY = event.clientY;

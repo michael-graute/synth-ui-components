@@ -6,5 +6,8 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./switch.component.scss']
 })
 export class SwitchComponent {
-  @Input() label: string = '';
+  @Input() onLabel: string = 'on';
+  @Input() offLabel: string = 'off';
+
+  @Input() value: boolean = false;
 }

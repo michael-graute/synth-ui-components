@@ -23,17 +23,27 @@
   }
 
   .ins-knob-value-editor {
-    z-index: 100;
-    background: var(--value-editor-bg-color);
-    border: 0;
-    border-radius: 50%;
-    color: var(--value-editor-text-color);
-    font-size: small;
-    font-weight: 300;
-    text-align: center;
 
-     &:focus, &:active, &focus-visible {
-      outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+
+    .ins-knob-value-editor-input {
+      z-index: 100;
+      background: var(--value-editor-bg-color);
+      border: 0;
+      border-radius: 50%;
+      color: var(--value-editor-text-color);
+      font-size: small;
+      font-weight: 300;
+      text-align: center;
+
+      &:focus, &:active, &focus-visible {
+        outline: none;
+      }
     }
   }
+
+
 }

@@ -52,8 +52,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/jqwidgets-ng/jqwidgets/styles/jqx.base.css"
+              "src/styles.scss"
             ],
             "scripts": []
           },

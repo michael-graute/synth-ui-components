@@ -7,6 +7,8 @@ import { SliderComponent } from './slider/slider.component';
 import { SwitchComponent } from './switch/switch.component';
 import { AdsrEnvelopeComponent } from './adsr-envelope/adsr-envelope.component';
 import { PanningKnobComponent } from './panning-knob/panning-knob.component';
+import { OscilloscopeComponent } from './oscilloscope/oscilloscope.component';
+import { WaveformSelectComponent } from './waveform-select/waveform-select.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { PanningKnobComponent } from './panning-knob/panning-knob.component';
     SliderComponent,
     SwitchComponent,
     AdsrEnvelopeComponent,
-    PanningKnobComponent
+    PanningKnobComponent,
+    OscilloscopeComponent,
+    WaveformSelectComponent
   ],
   imports: [
     BrowserModule,

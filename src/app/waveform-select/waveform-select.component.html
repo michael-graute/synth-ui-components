@@ -1,0 +1,17 @@
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+  <input type="radio" class="btn-check" value="sine" [(ngModel)]="waveform" name="btnradio" id="btnradio1" autocomplete="off" checked>
+  <label class="btn btn-secondary" for="btnradio1"><img src="../../assets/img/sine32x32.png" height="16"
+                                                        width="16"/></label>
+
+  <input type="radio" class="btn-check" value="triangle" [(ngModel)]="waveform" name="btnradio" id="btnradio2" autocomplete="off">
+  <label class="btn btn-secondary" for="btnradio2"><img src="../../assets/img/triangle32x32.png" height="16"
+                                                        width="16"/></label>
+
+  <input type="radio" class="btn-check" value="square" [(ngModel)]="waveform" name="btnradio" id="btnradio3" autocomplete="off">
+  <label class="btn btn-secondary" for="btnradio3"><img src="../../assets/img/square32x32.png" height="16"
+                                                        width="16"/></label>
+  <input type="radio" class="btn-check" value="sawtooth" [(ngModel)]="waveform" name="btnradio" id="btnradio4" autocomplete="off">
+  <label class="btn btn-secondary" for="btnradio4"><img src="../../assets/img/sawtooth32x32.png" height="16"
+                                                        width="16"/></label>
+</div>
+<p>Waveform: {{waveform}}</p>

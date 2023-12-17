@@ -25,3 +25,33 @@ fieldset {
     background: #8e9aa0;
   }
 }
+
+.ins-midi-learn {
+  background: rgba(79, 128, 81, 0.42);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  cursor: pointer;
+
+  .ins-midi-learn-editor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(79, 128, 81, 1);
+    border: 0;
+    color: gray;
+    font-size: small;
+    font-weight: 300;
+    text-align: center;
+
+    p {
+      font-size: x-small;
+      font-weight: 300;
+      color: rgb(255, 255, 255);
+      margin: 0;
+    }
+  }
+}

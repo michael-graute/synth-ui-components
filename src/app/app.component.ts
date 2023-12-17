@@ -16,7 +16,13 @@ export class AppComponent {
     release: 2
   }
 
+  public midiLearn: boolean = false;
+
   onKnobChange(event: number) {
     console.log('knobChange', event);
+  }
+
+  toggleMidiLearn() {
+    this.midiLearn = !this.midiLearn;
   }
 }
