@@ -1,6 +1,41 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown link
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <form class="d-flex">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success me-2" type="submit">Search</button>
+      <button class="btn btn-primary" type="button" (click)="toggleMidiLearn()">Midi Learn</button>
+    </form>
+  </div>
+</nav>
 <div class="container">
-  <button class="btn btn-primary" (click)="toggleMidiLearn()">Midi Learn</button>
-  <fieldset class="ins-container">
+  <!--<fieldset class="ins-container">
     <div class="ins-container-header d-flex justify-content-center">
       <legend>Oscillator One</legend>
     </div>
@@ -28,13 +63,14 @@
     <div class="d-flex mb-3">
       <ins-switch label="active"></ins-switch>
     </div>
-  </fieldset>
-  <ins-adsr-envelope [(ngModel)]="adsr"></ins-adsr-envelope>
-  <pre>{{adsr | json}}</pre>
+  </fieldset>-->
+  <!--<ins-adsr-envelope [(ngModel)]="adsr" [width]="400" [height]="200" knobColor="red" lineColor="green"></ins-adsr-envelope>
+  <pre>{{adsr | json}}</pre>-->
   <ins-oscilloscope></ins-oscilloscope>
   <div class="row">
     <div class="col-4">
-      <div class="card">
+      <ins-oscillator></ins-oscillator>
+      <!--<div class="card">
         <div class="card-header">
           <nav class="navbar">
             <div class="container-fluid">
@@ -64,7 +100,7 @@
         <div class="card-footer">
           <p>Card footer</p>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>

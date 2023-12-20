@@ -32,8 +32,8 @@
     .ins-knob-value-editor-input {
       z-index: 100;
       background: var(--value-editor-bg-color);
-      border: 0;
-      border-radius: 50%;
+      border: 1px solid var(--value-editor-text-color);
+      //border-radius: 50%;
       color: var(--value-editor-text-color);
       font-size: small;
       font-weight: 300;

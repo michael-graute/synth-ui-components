@@ -30,6 +30,7 @@ export interface KnobMidiEvent {
 })
 export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
+  @Input() type: 'dot' | 'line' = 'line';
   @Input() label: string = '';
   @Input() baseColor: string = 'grey';
   @Input() valueColor: string = '#00a4e1';
@@ -57,14 +58,15 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   public editMode: boolean = false;
   private tmpValue: number = 0;
   private internalValue: number = 0;
+  private rangeIndicator: number = 71;
 
   get value(): number {
     return this.internalValue;
   }
 
   @Input() set value(value: number) {
-    this.internalValue = value;
-    this.onChange(this.value);
+    this.internalValue = Math.round(value* (100/this.step)) / (100/this.step);
+    this.onChange(this.internalValue);
     this.draw();
   }
 
@@ -74,9 +76,9 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
   public writeValue(obj: any): void {
     if(obj === null || obj === undefined) return;
-    this.value = obj;
+    this.internalValue = obj;
+    this.draw();
     this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, 71 ] );
-    console.log('knob writeValue', this.value);
   }
 
   public registerOnChange(fn: any): void {
@@ -96,14 +98,15 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   };
 
   ngAfterViewInit(): void {
+    this.rangeIndicator = this.size + this.size / 2;
     this.draw();
-    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, 71 ] );
   }
 
   @HostListener('mousedown', ['$event'])
   handleMouseDown(event: MouseEvent): void {
     this.mouseDown = true;
     this.mouseDownStartY = event.clientY;
+    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
   }
 
   @HostListener('mouseup')
@@ -114,11 +117,11 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   @HostListener('document:mousemove', ['$event'])
   handleMouseMove(event: MouseEvent) {
     if(this.mouseDown && !this.editMode && !this.midiLearn) {
-      const difference = Math.round((this.mouseDownStartY-event.clientY));
-      this.tmpValue += difference
-      if(this.tmpValue >= 71) this.tmpValue = 71; this.mouseDownStartY = event.clientY;
+      const difference: number = Math.round((this.mouseDownStartY-event.clientY)/this.step) * this.step;
+      this.tmpValue += difference;
+      if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator; this.mouseDownStartY = event.clientY;
       if(this.tmpValue <= 0) this.tmpValue = 0; this.mouseDownStartY = event.clientY;
-      this.value = Math.round(this.convertRange( this.tmpValue, [ 0, 71 ], [ this.min, this.max ] ));
+      this.value = Math.round(this.convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
     }
   }
 
@@ -161,21 +164,24 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   }
 
   draw(): void {
-    const value: number = this.convertRange( this.internalValue, [ this.min, this.max ], [ 0.5, 2 ] )
+    const convertedValue: number = this.convertRange( this.value, [ this.min, this.max ], [ 0.5, 2 ] )
     if(this.knobCanvas) {
       const element = this.knobCanvas.nativeElement;
       const context = element.getContext('2d');
       context.clearRect(0, 0, element.width, element.height);
+      //Outer ring
       context.lineWidth = this.baseLineWidth;
-      context.beginPath();
-      context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, Math.PI/2, 2 * Math.PI);
       context.strokeStyle = this.baseColor;
+      context.beginPath();
+      context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, Math.PI/2 -.2, 2 * Math.PI +.2);
       context.stroke();
       context.closePath();
+      //Inner value indicator ring / dot
       context.lineWidth = this.valueLineWidth;
       context.strokeStyle = this.valueColor;
       context.beginPath();
-      context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), Math.PI/2, value * Math.PI);
+      if(this.type === 'line') context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), Math.PI/2 -.2, convertedValue * Math.PI + .2);
+      if(this.type === 'dot') context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), convertedValue * Math.PI - .2, convertedValue * Math.PI + .2);
       context.stroke();
       context.closePath();
     }

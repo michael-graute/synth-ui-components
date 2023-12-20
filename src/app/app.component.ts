@@ -12,7 +12,7 @@ export class AppComponent {
   adsr: any = {
     attack: 5,
     decay: 1,
-    sustain: 5,
+    sustain: 10,
     release: 2
   }
 

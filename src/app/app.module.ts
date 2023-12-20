@@ -9,6 +9,8 @@ import { AdsrEnvelopeComponent } from './adsr-envelope/adsr-envelope.component';
 import { PanningKnobComponent } from './panning-knob/panning-knob.component';
 import { OscilloscopeComponent } from './oscilloscope/oscilloscope.component';
 import { WaveformSelectComponent } from './waveform-select/waveform-select.component';
+import { OscillatorComponent } from './oscillator/oscillator.component';
+//import { KnobRefactoredComponent } from './knob-refactored/knob-refactored.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { WaveformSelectComponent } from './waveform-select/waveform-select.compo
     AdsrEnvelopeComponent,
     PanningKnobComponent,
     OscilloscopeComponent,
-    WaveformSelectComponent
+    WaveformSelectComponent,
+    OscillatorComponent,
+    //KnobRefactoredComponent
   ],
   imports: [
     BrowserModule,

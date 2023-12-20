@@ -1,9 +1,59 @@
 @import "bootstrap/scss/bootstrap";
 
+//@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
 :root {
+  --body-bg-color: #323232;
   --value-editor-bg-color: #31383e;
-  --value-editor-text-color: gray;
+  --value-editor-text-color: #808080;
+  --text-color: #808080;
 }
+
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-color);
+  background-color: var(--body-bg-color);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--body-bg-color);
+  color: var(--text-color);
+}
+
+pre {
+  font-weight: 300;
+  font-size: small;
+}
+
+/*.btn {
+  font-weight: 100;
+  font-size: small;
+  padding: .5rem 1rem;
+  border: 1px solid var(--text-color);
+  border-radius: 5px;
+  background: #31383e;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.btn-group {
+  .btn {
+    &:first-child {
+      margin-right: 5px;
+    }
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}*/
 
 fieldset {
   border: 1px solid #8e9aa0;

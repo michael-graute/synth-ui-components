@@ -8,6 +8,8 @@ export interface AdsrEnvelopeValue {
   release: number;
 }
 
+export type canvasPoint = {x: number, y: number};
+
 @Component({
   selector: 'ins-adsr-envelope',
   templateUrl: './adsr-envelope.component.html',
@@ -21,9 +23,21 @@ export interface AdsrEnvelopeValue {
   ]
 })
 export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccessor {
+
+  @Input() width: number = 200;
+  @Input() height: number = 100;
+  @Input() knobColor: string = '#00a4e1';
+  @Input() lineColor: string = '#00a4e1';
+  @Input() lineWidth: number = 2;
+  @Input() dotSize: number = 3;
+
+
   writeValue(obj: any): void {
       if (obj === null || obj === undefined) return;
-      this.value = obj;
+      this.attackValue = obj.attack;
+      this.decayValue = obj.decay;
+      this.sustainValue = obj.sustain;
+      this.releaseValue = obj.release;
       console.log('writeValue', this.value)
   }
   registerOnChange(fn: any): void {
@@ -57,16 +71,17 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
 
   get value(): AdsrEnvelopeValue {
     return {
-      attack: this.internalAttackValue,
-      decay: this.internalDecayValue,
-      sustain: this.internalSustainValue,
-      release: this.internalReleaseValue
+      attack: this.attackValue,
+      decay: this.decayValue,
+      sustain: this.sustainValue,
+      release: this.releaseValue
     };
   }
 
   set attackValue(value: number) {
     this.internalAttackValue = value;
-    this.value.attack = value;
+    this.value.attack = this.internalAttackValue;
+    this.onChange(this.value);
     this.draw();
   }
 
@@ -74,17 +89,26 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
     return this.internalAttackValue;
   }
 
+  attackValueChanged(event: number) {
+    console.log(event);
+    this.attackValue = event;
+  }
+
   set decayValue(value: number) {
-    this.internalDecayValue = this.internalAttackValue < value ? this.internalAttackValue : value;
+    this.internalDecayValue = value;
+    this.value.decay = this.internalDecayValue;
+    this.onChange(this.value);
     this.draw();
   }
 
   get decayValue(): number {
-    return this.internalAttackValue < this.internalDecayValue ? this.internalAttackValue : this.internalDecayValue;
+    return this.internalDecayValue;
   }
 
   set sustainValue(value: number) {
     this.internalSustainValue = value;
+    this.value.sustain = this.internalSustainValue;
+    this.onChange(this.value);
     this.draw();
   }
 
@@ -94,7 +118,8 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
 
   set releaseValue(value: number) {
     this.internalReleaseValue = value;
-    console.log(value);
+    this.value.release = this.internalReleaseValue;
+    this.onChange(this.value);
     this.draw();
   }
 
@@ -106,47 +131,52 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
     if (!this.myCanvas) {
       return;
     }
-    console.log(this.releaseValue);
-    const attackStart = this.myCanvas.nativeElement.height - 5;
-    const attackEnd = attackStart - this.attackValue * 10;
-    const decayEnd = attackEnd + this.decayValue * 10;
-    const line = this.myCanvas.nativeElement.getContext('2d');
-    line.clearRect(0, 0, this.myCanvas.nativeElement.width, this.myCanvas.nativeElement.height);
-    line.beginPath();
-    line.moveTo(5, attackStart);
-    line.lineTo(55, attackEnd);
-    line.lineWidth = 3;
-    line.strokeStyle = '#00a4e1';
-    line.fillStyle = '#00a4e1';
-    line.stroke();
-    line.closePath();
-    line.beginPath();
-    line.arc(55, attackEnd, 4, 0, 2 * Math.PI, false);
-    line.fill();
-    line.closePath();
-    line.beginPath();
-    line.moveTo(55, attackEnd);
-    line.lineTo(100, decayEnd);
-    line.stroke();
-    line.closePath();
-    line.beginPath();
-    line.arc(100, decayEnd, 4, 0, 2 * Math.PI, false);
-    line.fill();
-    line.closePath();
-    line.beginPath();
-    line.moveTo(100, decayEnd);
-    line.lineTo(100 + this.sustainValue * 10, decayEnd);
-    line.stroke();
-    line.closePath();
-    line.beginPath();
-    line.arc(100 + this.sustainValue * 10, decayEnd, 4, 0, 2 * Math.PI, false);
-    line.fill();
-    line.closePath();
-    line.beginPath();
-    line.moveTo(100 + this.sustainValue * 10, decayEnd);
-    line.lineTo(100 + (this.sustainValue * 10) + (this.releaseValue * 10) , attackStart);
-    line.stroke();
-    line.fill();
+    const canvas = this.myCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+    const attackStart: canvasPoint = {y : canvas.height - (this.dotSize), x: this.dotSize};
+    const attackEnd: canvasPoint = {y : this.dotSize, x: this.dotSize + ((this.attackValue * 10) * ((canvas.width/4)/100))};
+    const sustainStart: canvasPoint = {y : canvas.height - this.dotSize - ((this.sustainValue * 100) * ((canvas.height-this.dotSize*2)/100)), x: attackEnd.x};
+    const decayStart: canvasPoint = attackEnd;
+    const decayEnd: canvasPoint = {y : sustainStart.y, x: attackEnd.x + (this.decayValue * ((canvas.width/4)/100))};
+    const sustainEnd: canvasPoint = {y : sustainStart.y, x: canvas.width - this.dotSize - (this.releaseValue * ((canvas.width/4)/100))};
+    const releaseStart: canvasPoint = sustainEnd;
+    const releaseEnd: canvasPoint = {y : canvas.height - this.dotSize, x: canvas.width - this.dotSize};
+    ctx.strokeStyle = this.lineColor;
+    ctx.lineWidth = this.lineWidth;
+    ctx.fillStyle = this.lineColor;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.moveTo(attackStart.x,  attackStart.y);
+    ctx.lineTo(attackEnd.x, attackEnd.y);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.arc(attackEnd.x, attackEnd.y, this.dotSize, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.moveTo(decayStart.x, decayStart.y);
+    ctx.lineTo(decayEnd.x, decayEnd.y);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.arc(decayEnd.x, decayEnd.y, this.dotSize, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.moveTo(decayEnd.x, sustainStart.y);
+    ctx.lineTo(sustainEnd.x, sustainEnd.y);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.arc(sustainEnd.x, sustainEnd.y, this.dotSize, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.moveTo(releaseStart.x, releaseStart.y);
+    ctx.lineTo(releaseEnd.x, releaseEnd.y);
+    ctx.stroke();
+    ctx.closePath();
   }
 
   ngAfterViewInit() {

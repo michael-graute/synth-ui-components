@@ -1,7 +1,7 @@
 <div class="ins-knob">
   <span class="ins-knob-value" [ngStyle]="{'width.px': size, 'height.px': size, 'font-size': valueTextSize, 'font-weight': valueTextWeight, 'color': baseColor}">{{value}}</span>
   <div class="ins-knob-value-editor" [ngStyle]="{'height.px': size, 'width.px': size}">
-    <input #knobEditorInput class="ins-knob-value-editor-input" type="number" [hidden]="!editMode" [ngStyle]="{'width.px': size/2, 'height.px': size/2}" (keydown)="handleEditorKeyDown($event)">
+    <input #knobEditorInput class="ins-knob-value-editor-input" type="number" [step]="step" [hidden]="!editMode" [ngStyle]="{'width.px': size, 'height.px': size/2}" (keydown)="handleEditorKeyDown($event)">
   </div>
   <canvas class="ins-knob-canvas" #knobCanvas [width]="size" [height]="size"></canvas>
   <label class="ins-knob-label" [ngStyle]="{'width.px': size, 'font-size': labelTextSize, 'font-weight': labelTextWeight, 'color': baseColor}">{{label}}</label>
