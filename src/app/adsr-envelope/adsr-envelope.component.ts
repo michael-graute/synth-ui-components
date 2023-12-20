@@ -38,7 +38,6 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
       this.decayValue = obj.decay;
       this.sustainValue = obj.sustain;
       this.releaseValue = obj.release;
-      console.log('writeValue', this.value)
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -59,8 +58,6 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
     this.internalSustainValue = value.sustain;
     this.internalReleaseValue = value.release;
     this.onChange(this.value);
-    console.log(this.value);
-    console.log(value);
     this.draw();
   }
 
@@ -180,7 +177,6 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
   }
 
   ngAfterViewInit() {
-    console.log('afterViewInit', this.value);
     this.draw();
   }
 

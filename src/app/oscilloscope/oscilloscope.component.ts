@@ -45,7 +45,6 @@ export class OscilloscopeComponent implements AfterViewInit {
       this.draw();
     }, this.analyser.blockTime);
     this.transport?.start();
-    console.log(this.analyser.blockTime);
   }
 
   stop() {

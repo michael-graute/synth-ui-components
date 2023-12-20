@@ -87,10 +87,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "tonjs-modular-synth:build:production"
+              "buildTarget": "tonjs-modular-synth:build:production"
             },
             "development": {
-              "browserTarget": "tonjs-modular-synth:build:development"
+              "buildTarget": "tonjs-modular-synth:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -98,7 +98,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "tonjs-modular-synth:build"
+            "buildTarget": "tonjs-modular-synth:build"
           }
         },
         "test": {
