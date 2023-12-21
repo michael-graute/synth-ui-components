@@ -35,7 +35,7 @@
   </div>
 </nav>
 <div class="container">
-  <!--<fieldset class="ins-container">
+  <fieldset class="ins-container">
     <div class="ins-container-header d-flex justify-content-center">
       <legend>Oscillator One</legend>
     </div>
@@ -56,20 +56,20 @@
       <ins-knob [midiLearn]="midiLearn" [value]="3"></ins-knob>
       <ins-knob [midiLearn]="midiLearn" [value]="6"></ins-knob>
       <ins-knob [midiLearn]="midiLearn" [value]="1"></ins-knob>
-      <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan"></ins-panning-knob>
+      <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-panning-knob>
     </div>
     <p>{{pan}}</p>
     <p>{{bar}}</p>
     <div class="d-flex mb-3">
       <ins-switch label="active"></ins-switch>
     </div>
-  </fieldset>-->
+  </fieldset>
   <!--<ins-adsr-envelope [(ngModel)]="adsr" [width]="400" [height]="200" knobColor="red" lineColor="green"></ins-adsr-envelope>
   <pre>{{adsr | json}}</pre>-->
   <ins-oscilloscope></ins-oscilloscope>
   <div class="row">
     <div class="col-4">
-      <ins-oscillator></ins-oscillator>
+      <ins-oscillator [midiLearn]="midiLearn"></ins-oscillator>
       <!--<div class="card">
         <div class="card-header">
           <nav class="navbar">

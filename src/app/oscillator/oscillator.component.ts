@@ -9,13 +9,14 @@ import {RecursivePartial} from "tone/build/esm/core/util/Interface";
 })
 export class OscillatorComponent {
   public envelopeOptions: RecursivePartial<Omit<Tone.EnvelopeOptions, "context">> = {
-    attack: 3,
+    attack: 0,
     decay: 10,
     sustain: .5,
     release: 10
   };
   @Input() synth: Tone.Synth = new Tone.Synth({oscillator: {type: 'sawtooth'}, envelope: this.envelopeOptions});
   @Input() name: string = 'Oscillator'
+  @Input() midiLearn: boolean = false;
 
   connectTo(destination: any): void {
     this.synth.connect(destination);

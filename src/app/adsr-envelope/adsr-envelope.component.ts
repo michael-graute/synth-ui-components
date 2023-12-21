@@ -30,6 +30,7 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
   @Input() lineColor: string = '#00a4e1';
   @Input() lineWidth: number = 2;
   @Input() dotSize: number = 3;
+  @Input() midiLearn: boolean = false;
 
 
   writeValue(obj: any): void {

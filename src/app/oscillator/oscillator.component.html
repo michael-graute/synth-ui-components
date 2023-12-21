@@ -3,41 +3,23 @@
     <div class="ins-oscillator__body card-body">
       <div class="ins-oscillator__waveform">
           <ins-waveform-select [(ngModel)]="synth.oscillator.type"></ins-waveform-select>
-        <pre>{{synth.oscillator.type}}</pre>
       </div>
-      <!--<ins-knob-refactored></ins-knob-refactored>-->
-      <div class="ins-oscillator__detune">
-          <div class="ins-oscillator__detune__title">Detune</div>
-          <div class="ins-oscillator__detune__range">
-              <input type="range" name="oscillator_detune" id="oscillator_detune" min="-100" max="100" value="0" step="1">
-          </div>
-      </div>
-      <div class="ins-oscillator__octave">
-        <ins-panning-knob label="octave" [min]="-2" [max]="2"></ins-panning-knob>
-          <div class="ins-oscillator__octave__title">Octave</div>
-          <div class="ins-oscillator__octave__select">
-              <select name="oscillator_octave" id="oscillator_octave">
-                  <option value="-2">-2</option>
-                  <option value="-1">-1</option>
-                  <option value="0" selected>0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-              </select>
-          </div>
-      </div>
-      <div class="ins-oscillator__volume">
-          <div class="ins-oscillator__volume__title">Volume</div>
-          <div class="ins-oscillator__volume__range">
-              <input type="range" name="oscillator_volume" id="oscillator_volume" min="0" max="1" value="0.5" step="0.01">
-          </div>
-      </div>
-      <div class="ins-oscillator__pan">
-        <div class="ins-oscillator__pan__title">Pan</div>
+      <div class="d-flex">
+        <div class="ins-oscillator__detune">
+          <ins-panning-knob label="detune" [min]="-100" [max]="100" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
+        </div>
+        <div class="ins-oscillator__octave">
+          <ins-panning-knob label="octave" [min]="-3" [max]="3" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
+        </div>
+        <div class="ins-oscillator__volume">
+          <ins-knob label="Volume" [min]="0" [max]="100"></ins-knob>
+        </div>
+        <div class="ins-oscillator__pan">
+          <ins-panning-knob label="pan" [min]="-10" [max]="10" [step]="1"></ins-panning-knob>
+        </div>
       </div>
       <div class="ins-oscillator__envelope">
-        <ins-adsr-envelope [(ngModel)]="envelopeOptions"></ins-adsr-envelope>
-        <pre>{{envelopeOptions | json}}</pre>
-        <pre>{{synth.envelope.attack}}</pre>
+        <ins-adsr-envelope [(ngModel)]="envelopeOptions" [midiLearn]="midiLearn"></ins-adsr-envelope>
       </div>
     </div>
 </div>
