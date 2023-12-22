@@ -4,7 +4,7 @@
       <div class="ins-oscillator__waveform">
           <ins-waveform-select [(ngModel)]="synth.oscillator.type"></ins-waveform-select>
       </div>
-      <div class="d-flex">
+      <div class="d-flex mb-3 mt-3">
         <div class="ins-oscillator__detune">
           <ins-panning-knob label="detune" [min]="-100" [max]="100" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
         </div>
