@@ -16,6 +16,8 @@ export class AppComponent {
     release: 2
   }
 
+  public page: string = 'main';
+
   public midiLearn: boolean = false;
 
   onKnobChange(event: number) {

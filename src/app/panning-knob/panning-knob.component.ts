@@ -121,14 +121,22 @@ export class PanningKnobComponent implements AfterViewInit, ControlValueAccessor
 
   draw() {
     const counterClockwise: boolean = this.value < 0;
-    const value: number = this.convertRange(this.value, [this.min, this.max], [-100, 100])
+    let value: number = this.convertRange(this.value, [this.min, this.max], [-100, 100]);
+    if(counterClockwise) {
+      value = value -10;
+    } else if (value === 0) {
+      value = 0;
+    } else {
+      value = value + 10;
+    }
+
     if(!this.knobCanvas) return;
     const context = this.knobCanvas.nativeElement.getContext("2d");
     context.clearRect(0, 0, this.knobCanvas.nativeElement.width, this.knobCanvas.nativeElement.height);
     context.lineWidth = this.baseLineWidth;
     context.strokeStyle = this.baseColor;
     context.beginPath();
-    context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, this.valueToAngle(-100), this.valueToAngle(100));
+    context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, this.valueToAngle(-110), this.valueToAngle(110));
     context.stroke();
     context.closePath();
     context.lineWidth = this.valueLineWidth;

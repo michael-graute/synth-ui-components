@@ -4,7 +4,7 @@
 //@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 :root {
-  --body-bg-color: #323232;
+  --body-bg-color: #2b3035;
   --value-editor-bg-color: #31383e;
   --value-editor-text-color: #808080;
   --text-color: #808080;
@@ -16,6 +16,7 @@ html {
   font-weight: 300;
   color: var(--text-color);
   background-color: var(--body-bg-color);
+  height: 100%;
 }
 
 body {
@@ -23,6 +24,7 @@ body {
   padding: 0;
   background-color: var(--body-bg-color);
   color: var(--text-color);
+  hight: 100%;
 }
 
 pre {
@@ -30,31 +32,51 @@ pre {
   font-size: small;
 }
 
-/*.btn {
-  font-weight: 100;
-  font-size: small;
-  padding: .5rem 1rem;
-  border: 1px solid var(--text-color);
-  border-radius: 5px;
-  background: #31383e;
-  color: var(--text-color);
-  cursor: pointer;
-}
-
-.btn-group {
-  .btn {
-    &:first-child {
-      margin-right: 5px;
-    }
-    &:last-child {
-      margin-left: 5px;
+.navbar {
+  .nav-link {
+    color: var(--text-color);
+    font-weight: 300;
+    text-transform: uppercase;
+    &:hover, &.active {
+      color: #00a4e1;
     }
   }
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}*/
+   .btn {
+     &.active {
+       color: #2b3035;
+       background-color: #00a4e1;
+       border-color: #00a4e1;
+       font-weight: 500;
+     }
+   }
+
+}
+
+  /*.btn {
+    font-weight: 100;
+    font-size: small;
+    padding: .5rem 1rem;
+    border: 1px solid var(--text-color);
+    border-radius: 5px;
+    background: #31383e;
+    color: var(--text-color);
+    cursor: pointer;
+  }
+
+  .btn-group {
+    .btn {
+      &:first-child {
+        margin-right: 5px;
+      }
+      &:last-child {
+        margin-left: 5px;
+      }
+    }
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }*/
 
 .card-header {
   font-size: small;
@@ -107,12 +129,12 @@ fieldset {
 }
 
 .ins-midi-learn {
-  background: rgba(79, 128, 81, 0.42);
+  background: rgb(0 164 225 / 25%);
   position: absolute;
   top: 1px;
   right: 1px;
   left: 1px;
-  bottom: 1px;
+  bottom: -5px;
   cursor: pointer;
   border-radius: 3px;
 
@@ -121,7 +143,7 @@ fieldset {
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(79, 128, 81, 1);
+    background: rgb(0 164 225);
     border: 0;
     color: gray;
     font-size: small;
@@ -131,7 +153,7 @@ fieldset {
     p {
       font-size: x-small;
       font-weight: 300;
-      color: rgb(255, 255, 255);
+      color: #212529;
       margin: 0;
     }
   }
