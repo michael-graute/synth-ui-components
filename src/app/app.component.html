@@ -35,39 +35,37 @@
   </div>
 </nav>
 <div class="container">
-  <fieldset class="ins-container">
-    <div class="ins-container-header d-flex justify-content-center">
-      <legend>Oscillator One</legend>
-    </div>
-    <div class="ins-container-body"></div>
-    <div class="ins-container-footer"></div>
-
-    <div class="d-flex mb-3">
-      <ins-slider label="Vol" [max]="20" [min]="0" [height]="250" [value]="12"></ins-slider>
-      <ins-slider label="Mid" [max]="100" [min]="0" [height]="250" [(ngModel)]="foo"></ins-slider>
-      <ins-slider label="Hi" [max]="20" [min]="0" [height]="250" [value]="8"></ins-slider>
-      <ins-slider label="Lo" [max]="20" [min]="0" [height]="250" [value]="3"></ins-slider>
-    </div>
-    <p>{{foo}}</p>
-    <div class="d-flex mb-3">
-      <ins-knob [midiLearn]="midiLearn" [(ngModel)]="foo" label="one" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
-      <ins-knob [midiLearn]="midiLearn" [(ngModel)]="bar" label="freq" [size]="70" [min]="0" [max]="100"></ins-knob>
-      <ins-knob [midiLearn]="midiLearn" [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
-      <ins-knob [midiLearn]="midiLearn" [value]="3"></ins-knob>
-      <ins-knob [midiLearn]="midiLearn" [value]="6"></ins-knob>
-      <ins-knob [midiLearn]="midiLearn" [value]="1"></ins-knob>
-      <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-panning-knob>
-    </div>
-    <p>{{pan}}</p>
-    <p>{{bar}}</p>
-    <div class="d-flex mb-3">
-      <ins-switch label="active"></ins-switch>
-    </div>
-  </fieldset>
   <!--<ins-adsr-envelope [(ngModel)]="adsr" [width]="400" [height]="200" knobColor="red" lineColor="green"></ins-adsr-envelope>
   <pre>{{adsr | json}}</pre>-->
-  <ins-oscilloscope></ins-oscilloscope>
   <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">
+          Elements
+        </div>
+        <div class="card-body">
+          <div class="d-flex mb-3">
+            <ins-slider label="Vol" [max]="20" [min]="0" [height]="250" [value]="12"></ins-slider>
+            <ins-slider label="Mid" [max]="100" [min]="0" [height]="250" [(ngModel)]="foo"></ins-slider>
+            <ins-slider label="Hi" [max]="20" [min]="0" [height]="250" [value]="8"></ins-slider>
+            <ins-slider label="Lo" [max]="20" [min]="0" [height]="250" [value]="3"></ins-slider>
+          </div>
+          <p>{{foo}}</p>
+          <div class="d-flex mb-3">
+            <ins-knob [midiLearn]="midiLearn" [(ngModel)]="foo" label="size 80" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
+            <ins-knob [midiLearn]="midiLearn" [(ngModel)]="bar" label="size 70" [size]="70" [min]="0" [max]="100"></ins-knob>
+            <ins-knob [midiLearn]="midiLearn" label="size 60" [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
+            <ins-knob [midiLearn]="midiLearn" label="default" [value]="9" (change)="onKnobChange($event)"></ins-knob>
+            <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-panning-knob>
+          </div>
+          <p>{{pan}}</p>
+          <p>{{bar}}</p>
+          <div class="d-flex mb-3">
+            <ins-switch label="active"></ins-switch>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-4">
       <ins-oscillator [midiLearn]="midiLearn"></ins-oscillator>
       <!--<div class="card">
@@ -101,6 +99,9 @@
           <p>Card footer</p>
         </div>
       </div>-->
+    </div>
+    <div class="col-4">
+      <ins-oscilloscope></ins-oscilloscope>
     </div>
   </div>
 </div>

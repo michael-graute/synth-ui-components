@@ -1,4 +1,5 @@
 @import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons";
 
 //@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
@@ -54,6 +55,35 @@ pre {
   justify-content: space-between;
   align-items: center;
 }*/
+
+.card-header {
+  font-size: small;
+  font-weight: 300;
+  color: gray;
+  text-transform: uppercase;
+}
+
+.btn {
+  color: var(--text-color);
+  background-color: #282c30;
+  font-size: small;
+  font-weight: 300;
+  text-transform: uppercase;
+  border-color: var(--text-color);
+  border-radius: 3px;
+
+  &:hover {
+    color: #00a4e1;
+    background-color: #323232;
+    border-color: var(--text-color);
+  }
+
+  &:active {
+    color: var(--text-color) !important;
+    background-color: #252627 !important;
+    border-color: #31383e !important;
+  }
+}
 
 fieldset {
   border: 1px solid #8e9aa0;

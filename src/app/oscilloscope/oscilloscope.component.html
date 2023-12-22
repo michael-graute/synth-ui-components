@@ -1,4 +1,11 @@
-<canvas #canvasElement width="300" height="200"></canvas>
-<button type="button" (click)="toneStart()">Start AudioContext</button>
-<button type="button" (click)="play()">play</button>
-<button type="button" (click)="stop()">stop</button>
+<div class="ins-oscilloscope card">
+  <div class="ins-oscilloscope__header card-header">Oscilloscope</div>
+  <div class="ins-oscilloscope__body card-body">
+    <canvas #canvasElement width="300" height="200"></canvas>
+    <div class="d-flex">
+      <button type="button" class="btn btn-primary" (click)="toneStart()"><i class="bi-power"></i></button>
+      <button type="button" class="btn btn-primary" (click)="play()"><i class="bi-play-fill"></i></button>
+      <button type="button" class="btn btn-primary" (click)="stop()"><i class="bi-stop-fill"></i></button>
+    </div>
+  </div>
+</div>
