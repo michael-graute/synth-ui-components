@@ -1,0 +1,50 @@
+.keyboard {
+  justify-content: center;
+}
+
+.keyboard, .keys {
+  display: flex;
+  position: relative;
+}
+
+.octave-label {
+  position: absolute;
+  bottom: -25px;
+  z-index: 10;
+  margin: 0 0 10px 5px;
+  font-size: small;
+  color: #8b979d;
+}
+
+.note {
+  background-color: #282c30;
+  color: #8e9aa0;
+  border: 1px solid #8e9aa0;
+  border-right: 0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  height: 200px;
+  width: 50px;
+
+  &.playing {
+    background-color: #245066;
+  }
+
+  &.sharp {
+    border: 1px solid #8e9aa0;
+    background-color: #1a1a1a;
+    height: 120px;
+    margin: 0 -20px 0 -20px;
+    width: 40px;
+    z-index: 100;
+
+    &.playing {
+      background-color: #1a3a4a;
+    }
+  }
+
+  &.last {
+    border-right: 1px solid #8e9aa0;
+    margin-right: 4px;
+  }
+}
