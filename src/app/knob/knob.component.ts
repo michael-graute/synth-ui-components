@@ -55,10 +55,12 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
   private mouseDown: boolean = false;
   private mouseDownStartY: number = 0;
+  private mouseOver: boolean = false;
   public editMode: boolean = false;
   private tmpValue: number = 0;
   private internalValue: number = 0;
   private rangeIndicator: number = 71;
+  private mouseWheelEvent: WheelEvent | undefined = undefined
 
   get value(): number {
     return this.internalValue;
@@ -99,6 +101,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
   ngAfterViewInit(): void {
     this.rangeIndicator = this.size + this.size / 2;
+    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
     this.draw();
   }
 
@@ -106,7 +109,6 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   handleMouseDown(event: MouseEvent): void {
     this.mouseDown = true;
     this.mouseDownStartY = event.clientY;
-    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
   }
 
   @HostListener('mouseup')
@@ -119,8 +121,32 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
     if(this.mouseDown && !this.editMode && !this.midiLearn) {
       const difference: number = Math.round((this.mouseDownStartY-event.clientY));
       this.tmpValue += difference;
-      if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator; this.mouseDownStartY = event.clientY;
-      if(this.tmpValue <= 0) this.tmpValue = 0; this.mouseDownStartY = event.clientY;
+      this.mouseDownStartY = event.clientY;
+      if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator;
+      if(this.tmpValue <= 0) this.tmpValue = 0;
+      this.value = Math.round(this.convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
+    }
+  }
+
+  @HostListener('mouseover', ['$event'])
+  handleMouseOver(event: MouseEvent): void {
+    this.mouseOver = true;
+  }
+
+  @HostListener('mouseout', ['$event'])
+  handleMouseOut(event: MouseEvent): void {
+    this.mouseOver = false;
+    if(this.mouseWheelEvent) this.mouseWheelEvent.stopPropagation();
+  }
+
+  @HostListener('mousewheel', ['$event'])
+  handleMouseWheel(event: WheelEvent): void {
+    event.preventDefault();
+    this.mouseWheelEvent = event;
+    if(!this.midiLearn && !this.editMode && !this.mouseDown && this.mouseOver) {
+      this.tmpValue += event.deltaY/4;
+      if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator;
+      if(this.tmpValue <= 0) this.tmpValue = 0;
       this.value = Math.round(this.convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
     }
   }
