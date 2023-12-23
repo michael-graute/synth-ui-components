@@ -1,0 +1,6 @@
+<div class="btn-group">
+  <ng-container *ngFor="let option of options; let i = index">
+    <input type="radio" class="btn-check" value="{{option.value}}" [(ngModel)]="value" [name]="name" [id]="id + i" autocomplete="off">
+    <label class="btn btn-secondary" [for]="id + i">{{option.label}}</label>
+  </ng-container>
+</div>

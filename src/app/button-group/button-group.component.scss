@@ -1,0 +1,13 @@
+label {
+  &.btn {
+    font-size: x-small;
+    font-weight: 300;
+  }
+}
+
+.btn-check:checked + .btn {
+  color: #2b3035;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  font-weight: 500;
+}

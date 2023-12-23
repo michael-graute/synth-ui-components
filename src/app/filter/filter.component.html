@@ -1,0 +1,8 @@
+<div class="ins-filter card">
+  <div class="ins-filter__header card-header">Filter</div>
+  <div class="ins-filter__body card-body">
+    <div class="ins-filter__type-select">
+      <ins-button-group [(ngModel)]="type" name="filterType" id="filterType" [options]="[{value: 'lowpass', label: 'Low'},{value: 'highpass', label: 'High'},{value: 'bandpass', label: 'Band'}]"></ins-button-group>
+    </div>
+  </div>
+</div>
