@@ -132,7 +132,7 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
     const canvas = this.myCanvas.nativeElement;
     const ctx = canvas.getContext('2d');
     const attackStart: canvasPoint = {y : canvas.height - (this.dotSize), x: this.dotSize};
-    const attackEnd: canvasPoint = {y : this.dotSize, x: this.dotSize + ((this.attackValue * 10) * ((canvas.width/4)/100))};
+    const attackEnd: canvasPoint = {y : this.dotSize, x: this.dotSize + ((this.attackValue) * ((canvas.width/4)/100))};
     const sustainStart: canvasPoint = {y : canvas.height - this.dotSize - ((this.sustainValue * 100) * ((canvas.height-this.dotSize*2)/100)), x: attackEnd.x};
     const decayStart: canvasPoint = attackEnd;
     const decayEnd: canvasPoint = {y : sustainStart.y, x: attackEnd.x + (this.decayValue * ((canvas.width/4)/100))};

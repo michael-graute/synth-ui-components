@@ -5,8 +5,8 @@
   </div>
   <canvas class="ins-knob-canvas" #knobCanvas [width]="size" [height]="size"></canvas>
   <label class="ins-knob-label" [ngStyle]="{'width.px': size, 'font-size': labelTextSize, 'font-weight': labelTextWeight, 'color': baseColor}">{{label}}</label>
-  <div *ngIf="midiLearn" class="ins-midi-learn" (click)="toggleMidiLearnEditMode()">
-    <div *ngIf="midiLearnEditMode" class="ins-midi-learn-editor">
+  <div *ngIf="midiLearn" class="ins-midi-learn" [ngClass]="{'ins-midi-listen-active': midiListen}" (click)="toggleMidiLearnEditMode()">
+    <div *ngIf="midiLearnEditMode || midiListen" class="ins-midi-learn-editor" (click)="toggleMidiListen()">
       <p>CH: {{midiEventListener.channel}}</p>
       <p>CC: {{midiEventListener.controller}}</p>
     </div>

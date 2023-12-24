@@ -15,6 +15,7 @@ export class AppComponent {
     sustain: 10,
     release: 2
   }
+  test: string = 'test';
 
   public page: string = 'main';
 

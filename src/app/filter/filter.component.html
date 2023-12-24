@@ -1,5 +1,7 @@
-<div class="ins-filter card">
-  <div class="ins-filter__header card-header">Filter</div>
+<div class="ins-filter card" [class]="{'inactive': !active}">
+  <div class="ins-filter__header card-header">
+    <div class="d-flex justify-content-between align-items-center">Filter <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
   <div class="ins-filter__body card-body">
     <div class="ins-filter__type-select">
       <ins-button-group [(ngModel)]="type" name="filterType" id="filterType" [options]="[{value: 'lowpass', label: 'Low'},{value: 'highpass', label: 'High'},{value: 'bandpass', label: 'Band'}]"></ins-button-group>

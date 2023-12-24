@@ -38,7 +38,7 @@ export class OscilloscopeComponent implements AfterViewInit {
   }
 
   play() {
-    this.synth.oscillator.type = 'sine';
+    this.synth.oscillator.type = 'square';
     //this.synth.volume
     this.synth.triggerAttack("C4", "8n", 1);
     this.transportScheduledRepeatId = this.transport?.scheduleRepeat((time) => {
@@ -59,7 +59,7 @@ export class OscilloscopeComponent implements AfterViewInit {
 
 
   draw() {
-    const type: "scope" | "graph" = 'graph';
+    const type: "scope" | "graph" = 'scope';
     const canvas = this.canvasElement.nativeElement;
     const canvasContext = canvas.getContext('2d');
     // @ts-ignore

@@ -1,25 +1,27 @@
-<div class="ins-oscillator card">
-    <div class="ins-oscillator__header card-header">Oscillator</div>
+<div class="ins-oscillator card" [class]="{'inactive': !active}">
+    <div class="ins-oscillator__header card-header">
+      <div class="d-flex justify-content-between align-items-center">Oscillator <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+    </div>
     <div class="ins-oscillator__body card-body">
       <div class="ins-oscillator__waveform">
           <ins-waveform-select [(ngModel)]="synth.oscillator.type"></ins-waveform-select>
       </div>
       <div class="d-flex mb-3 mt-3">
         <div class="ins-oscillator__detune">
-          <ins-panning-knob label="detune" [min]="-100" [max]="100" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
+          <ins-panning-knob label="detune" [min]="-12" [max]="12" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
         </div>
         <div class="ins-oscillator__octave">
           <ins-panning-knob label="octave" [min]="-3" [max]="3" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
         </div>
         <div class="ins-oscillator__volume">
-          <ins-knob label="Volume" [min]="0" [max]="100"></ins-knob>
+          <ins-knob label="Volume" [min]="0" [max]="100" [value]="80"></ins-knob>
         </div>
         <div class="ins-oscillator__pan">
           <ins-panning-knob label="pan" [min]="-10" [max]="10" [step]="1"></ins-panning-knob>
         </div>
       </div>
       <div class="ins-oscillator__envelope">
-        <ins-adsr-envelope [(ngModel)]="envelopeOptions" [midiLearn]="midiLearn"></ins-adsr-envelope>
+        <ins-adsr-envelope [(ngModel)]="envelopeOptions" [midiLearn]="midiLearn" [height]="50"></ins-adsr-envelope>
       </div>
     </div>
 </div>

@@ -13,23 +13,27 @@ import { OscillatorComponent } from './oscillator/oscillator.component';
 import {KeyboardComponent} from "./keyboard/keyboard.component";
 import {FilterComponent} from "./filter/filter.component";
 import {ButtonGroupComponent} from "./button-group/button-group.component";
-//import { KnobRefactoredComponent } from './knob-refactored/knob-refactored.component';
+import { AbstractInputComponent } from "./abstracts/abstract-input.component";
+import { SequencerComponent} from "./sequencer/sequencer.component";
+import { SequencerStepComponent} from "./sequencer/sequencer-step/sequencer-step.component";
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        KnobComponent,
-        SliderComponent,
-        SwitchComponent,
-        AdsrEnvelopeComponent,
-        PanningKnobComponent,
-        OscilloscopeComponent,
-        WaveformSelectComponent,
-        OscillatorComponent,
-        KeyboardComponent,
-        FilterComponent,
-        //KnobRefactoredComponent
-    ],
+  declarations: [
+    AppComponent,
+    AbstractInputComponent,
+    KnobComponent,
+    SliderComponent,
+    SwitchComponent,
+    AdsrEnvelopeComponent,
+    PanningKnobComponent,
+    OscilloscopeComponent,
+    WaveformSelectComponent,
+    OscillatorComponent,
+    KeyboardComponent,
+    FilterComponent,
+    SequencerComponent,
+    SequencerStepComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,

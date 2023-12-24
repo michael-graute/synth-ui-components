@@ -79,11 +79,23 @@ pre {
     align-items: center;
   }*/
 
-.card-header {
-  font-size: small;
-  font-weight: 300;
-  color: gray;
-  text-transform: uppercase;
+.card {
+
+  &.inactive {
+    opacity: 0.5;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .card-header {
+    font-size: small;
+    font-weight: 300;
+    color: gray;
+    text-transform: uppercase;
+  }
 }
 
 .btn {
@@ -139,17 +151,29 @@ fieldset {
   cursor: pointer;
   border-radius: 3px;
 
+  &.ins-midi-listen-active {
+    background: rgba(109, 225, 0, 0.35);
+
+    .ins-midi-learn-editor {
+      background: rgba(85 143 31 / .8);
+      border-color: #3a620d;
+    }
+  }
+
   .ins-midi-learn-editor {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     background: rgb(0 164 225);
-    border: 0;
     color: gray;
     font-size: small;
     font-weight: 300;
     text-align: center;
+    border-radius: 3px;
+    border: 1px solid #212529;
+    margin: 2px;
+
 
     p {
       font-size: x-small;

@@ -7,4 +7,6 @@ import {Component, Input} from '@angular/core';
 })
 export class FilterComponent {
   @Input() type: string = 'highpass';
+
+  public active: boolean = false;
 }

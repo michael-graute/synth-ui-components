@@ -46,13 +46,14 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   @Input() valueTextWeight: number = 300;
   @Input() midiLearn: boolean = false;
   @Input() midiLearnEditMode: boolean = false;
-  @Input() midiEventListener: KnobMidiEvent = { controller: 123, value: 0, channel: 1 };
+  @Input() midiEventListener: KnobMidiEvent = { controller: 0, value: 0, channel: 0 };
 
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
 
   @ViewChild('knobCanvas') knobCanvas: ElementRef | undefined;
   @ViewChild('knobEditorInput') knobEditorInput: ElementRef | undefined;
 
+  public midiListen: boolean = false;
   private mouseDown: boolean = false;
   private mouseDownStartY: number = 0;
   private mouseOver: boolean = false;
@@ -74,6 +75,11 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
   toggleMidiLearnEditMode(): void {
     this.midiLearnEditMode = !this.midiLearnEditMode;
+  }
+
+  toggleMidiListen(): void {
+    this.midiListen = !this.midiListen;
+    this.midiEventListener = { controller: Math.floor(Math.random() * 100), value: 100, channel: 1 };
   }
 
   public writeValue(obj: any): void {
