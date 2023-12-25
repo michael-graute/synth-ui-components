@@ -16,6 +16,7 @@ import {ButtonGroupComponent} from "./button-group/button-group.component";
 import { AbstractInputComponent } from "./abstracts/abstract-input.component";
 import { SequencerComponent} from "./sequencer/sequencer.component";
 import { SequencerStepComponent} from "./sequencer/sequencer-step/sequencer-step.component";
+import { WaveformPlotterComponent} from "./waveform-plotter/waveform-plotter.component";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { SequencerStepComponent} from "./sequencer/sequencer-step/sequencer-step
     KeyboardComponent,
     FilterComponent,
     SequencerComponent,
-    SequencerStepComponent
+    SequencerStepComponent,
+    WaveformPlotterComponent
   ],
   imports: [
     BrowserModule,
