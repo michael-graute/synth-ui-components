@@ -3,10 +3,12 @@
       <div class="d-flex justify-content-between align-items-center">Oscillator <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
     </div>
     <div class="ins-oscillator__body card-body">
+      <ins-divider label="waveform" class="mt-0"></ins-divider>
       <div class="ins-oscillator__waveform">
           <ins-waveform-select [(ngModel)]="synth.oscillator.type"></ins-waveform-select>
       </div>
-      <div class="d-flex mb-3 mt-3">
+      <ins-divider label="Settings"></ins-divider>
+      <div class="d-flex">
         <div class="ins-oscillator__detune">
           <ins-panning-knob label="detune" [min]="-12" [max]="12" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
         </div>
@@ -20,6 +22,7 @@
           <ins-panning-knob label="pan" [min]="-10" [max]="10" [step]="1"></ins-panning-knob>
         </div>
       </div>
+      <ins-divider label="Amplitude Envelope"></ins-divider>
       <div class="ins-oscillator__envelope">
         <ins-adsr-envelope [(ngModel)]="envelopeOptions" [midiLearn]="midiLearn" [height]="50"></ins-adsr-envelope>
       </div>
