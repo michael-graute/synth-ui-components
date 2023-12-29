@@ -1,3 +1,13 @@
+span.badge {
+  position: absolute;
+  z-index: 1;
+  font-size: 8px;
+  font-weight: 300;
+  text-transform: uppercase;
+  border-radius: 2px;
+  color: #86d486;
+}
+
 .ins-knob {
   position: relative;
   cursor: pointer;

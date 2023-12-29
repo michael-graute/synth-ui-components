@@ -1,4 +1,5 @@
 <div class="ins-knob">
+  <span *ngIf="lfo" class="badge bg-success">lfo</span>
   <span class="ins-knob-value" [ngStyle]="{'width.px': size, 'height.px': size, 'font-size': valueTextSize, 'font-weight': valueTextWeight, 'color': baseColor}">{{value}}</span>
   <div class="ins-knob-value-editor" [ngStyle]="{'height.px': size, 'width.px': size}">
     <input #knobEditorInput class="ins-knob-value-editor-input" type="number" [step]="step" [max]="max" [min]="min" [hidden]="!editMode" [ngStyle]="{'width.px': size, 'height.px': size/2}" (keydown)="handleEditorKeyDown($event)">

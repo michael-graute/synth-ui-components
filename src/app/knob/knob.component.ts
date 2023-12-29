@@ -47,6 +47,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   @Input() midiLearn: boolean = false;
   @Input() midiLearnEditMode: boolean = false;
   @Input() midiEventListener: KnobMidiEvent = { controller: 0, value: 0, channel: 0 };
+  @Input() lfo: boolean = false;
 
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
 

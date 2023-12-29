@@ -18,6 +18,7 @@ import { SequencerComponent} from "./sequencer/sequencer.component";
 import { SequencerStepComponent} from "./sequencer/sequencer-step/sequencer-step.component";
 import { WaveformPlotterComponent} from "./waveform-plotter/waveform-plotter.component";
 import { DividerComponent } from "./divider/divider.component";
+import { LfoComponent } from "./lfo/lfo.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { DividerComponent } from "./divider/divider.component";
     SequencerComponent,
     SequencerStepComponent,
     WaveformPlotterComponent,
-    DividerComponent
+    DividerComponent,
+    LfoComponent
   ],
   imports: [
     BrowserModule,

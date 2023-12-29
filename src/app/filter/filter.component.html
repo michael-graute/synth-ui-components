@@ -3,8 +3,22 @@
     <div class="d-flex justify-content-between align-items-center">Filter <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
   </div>
   <div class="ins-filter__body card-body">
+    <ins-divider label="Type" class="mt-0"></ins-divider>
     <div class="ins-filter__type-select">
       <ins-button-group [(ngModel)]="type" name="filterType" id="filterType" [options]="[{value: 'lowpass', label: 'Low'},{value: 'highpass', label: 'High'},{value: 'bandpass', label: 'Band'}]"></ins-button-group>
+    </div>
+    <ins-divider label="Settings"></ins-divider>
+    <div class="d-flex">
+      <div class="ins-filter__resonance">
+        <ins-knob [(ngModel)]="resonance" name="resonance" id="resonance" [min]="0" [max]="1" [step]="0.01" label="res"></ins-knob>
+      </div>
+      <div class="ins-filter__cutoff">
+        <ins-knob [(ngModel)]="cutoff" name="cutoff" id="cutoff" [min]="0" [max]="1" [step]="0.01" label="cutoff"></ins-knob>
+      </div>
+    </div>
+    <ins-divider label="Envelope"></ins-divider>
+    <div class="ins-filter__envelope">
+      <ins-adsr-envelope [(ngModel)]="envelopeOptions" name="envelope" [height]="50" id="envelope"></ins-adsr-envelope>
     </div>
   </div>
 </div>
