@@ -62,7 +62,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   private tmpValue: number = 0;
   private internalValue: number = 0;
   private rangeIndicator: number = 71;
-  private mouseWheelEvent: WheelEvent | undefined = undefined
+  private mouseWheelEvent: WheelEvent | undefined = undefined;
 
   get value(): number {
     return this.internalValue;
