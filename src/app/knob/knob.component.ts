@@ -69,7 +69,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   }
 
   @Input() set value(value: number) {
-    this.internalValue = Math.round(value* (100/this.step)) / (100/this.step);
+    this.internalValue = Math.round(value * (100 / this.step)) / (100 / this.step);
     this.onChange(this.internalValue);
     this.draw();
   }
@@ -86,13 +86,17 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   public writeValue(obj: any): void {
     if(obj === null || obj === undefined) return;
     this.internalValue = obj;
+    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
     this.draw();
-    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, 71 ] );
   }
 
   public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
+
+  public onChange = (value: number): void => {
+    this.change.emit(value);
+  };
 
   public registerOnTouched(fn: any): void {
     ///console.log(fn)
@@ -101,10 +105,6 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   public setDisabledState?(isDisabled: boolean): void {
     //console.log(isDisabled);
   }
-
-  public onChange = (value: number): void => {
-    this.change.emit(value);
-  };
 
   ngAfterViewInit(): void {
     this.rangeIndicator = this.size + this.size / 2;

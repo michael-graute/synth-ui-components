@@ -96,6 +96,14 @@ export class SliderComponent implements AfterViewInit, ControlValueAccessor {
     this.mouseDownStartY = event.clientY;
   }
 
+  @HostListener('mousewheel', ['$event'])
+  handleMouseWheel(event: WheelEvent): void {
+    event.preventDefault();
+    if(!this.editMode && !this.mouseDown) {
+      this.value = Math.min(Math.max(this.internalValue - event.deltaY/5, this.min), this.max);
+    }
+  }
+
   calculateDelta(event: MouseEvent): number {
     const delta: number = event.clientY - this.mouseDownStartY;
     return delta / this.height * (this.max - this.min);

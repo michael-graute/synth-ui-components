@@ -15,7 +15,7 @@ export class WaveformPlotterComponent implements AfterViewInit {
 
   plotSine() {
     if (!this.waveformCanvas) {
-      console.log('foo');
+      //console.log('foo');
       return;
     }
     const ctx = this.waveformCanvas.nativeElement.getContext("2d");
@@ -46,9 +46,9 @@ export class WaveformPlotterComponent implements AfterViewInit {
         } else {
           amplitude = 30;
         }
-        console.log('if', width - attack);
+        /*console.log('if', width - attack);
         console.log('x', x);
-        console.log('amplitude', amplitude);
+        console.log('amplitude', amplitude);*/
         y = height / 2 + amplitude * Math.sin(x / frequency);
         ctx.lineTo(x, y);
         x = x + 1;

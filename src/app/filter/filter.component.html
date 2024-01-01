@@ -13,7 +13,7 @@
         <ins-knob [(ngModel)]="resonance" name="resonance" id="resonance" [min]="0" [max]="1" [step]="0.01" label="res"></ins-knob>
       </div>
       <div class="ins-filter__cutoff">
-        <ins-knob [(ngModel)]="cutoff" name="cutoff" id="cutoff" [min]="0" [max]="1" [step]="0.01" label="cutoff"></ins-knob>
+        <ins-knob [(ngModel)]="cutoff" name="cutoff" id="cutoff" [min]="0" [lfo]="true" [max]="1" [step]="0.01" label="cutoff"></ins-knob>
       </div>
     </div>
     <ins-divider label="Envelope"></ins-divider>
