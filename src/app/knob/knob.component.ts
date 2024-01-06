@@ -4,7 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
-  Input,
+  Input, OnInit,
   Output,
   ViewChild
 } from '@angular/core';
@@ -28,7 +28,7 @@ export interface KnobMidiEvent {
     }
   ]
 })
-export class KnobComponent implements AfterViewInit, ControlValueAccessor {
+export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
   @Input() type: 'dot' | 'line' = 'line';
   @Input() label: string = '';
@@ -48,6 +48,7 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
   @Input() midiLearnEditMode: boolean = false;
   @Input() midiEventListener: KnobMidiEvent = { controller: 0, value: 0, channel: 0 };
   @Input() lfo: boolean = false;
+  @Input() options: any[] | undefined = undefined;
 
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
 
@@ -66,6 +67,13 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
   get value(): number {
     return this.internalValue;
+  }
+
+  getDisplayValue(): string {
+    if(this.options) {
+      return this.options[this.value];
+    }
+    return this.value + '';
   }
 
   @Input() set value(value: number) {
@@ -104,6 +112,14 @@ export class KnobComponent implements AfterViewInit, ControlValueAccessor {
 
   public setDisabledState?(isDisabled: boolean): void {
     //console.log(isDisabled);
+  }
+
+  ngOnInit() {
+    if(this.options) {
+      this.min = 0;
+      this.max = this.options.length - 1;
+      this.step = 1;
+    }
   }
 
   ngAfterViewInit(): void {

@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './sequencer-step.component.scss'
 })
 export class SequencerStepComponent {
-
+  gateOptions: string[] = ['1n', '2n', '4n', '8n', '16n', '32n', '64n'];
 }
