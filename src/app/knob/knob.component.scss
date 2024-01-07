@@ -6,6 +6,16 @@ span.badge {
   text-transform: uppercase;
   border-radius: 2px;
   color: #86d486;
+  padding: 2px 3px;
+  user-select: none;
+
+  &.ins-badge-midi-listen {
+    background: #00a4e1;
+    right: 0;
+    bottom: 12px;
+    color: #7ddcff;;
+  }
+
 }
 
 .ins-knob {
@@ -40,7 +50,7 @@ span.badge {
     align-items: center;
     position: absolute;
 
-    .ins-knob-value-editor-input {
+    .ins-knob-value-editor-input, .ins-knob-value-editor-select {
       z-index: 100;
       background: var(--value-editor-bg-color);
       border: 1px solid var(--value-editor-text-color);

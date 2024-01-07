@@ -37,7 +37,7 @@
             <ins-knob [midiLearn]="midiLearn" [lfo]="true" [(ngModel)]="foo" label="size 80" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
             <ins-knob [midiLearn]="midiLearn" [(ngModel)]="bar" label="size 70" [size]="70" [min]="0" [max]="100"></ins-knob>
             <ins-knob [midiLearn]="midiLearn" label="size 60" [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
-            <ins-knob [midiLearn]="midiLearn" label="default" [value]="9" (change)="onKnobChange($event)"></ins-knob>
+            <ins-knob [midiLearn]="midiLearn" [lfo]="true" label="default" [value]="9" (change)="onKnobChange($event)"></ins-knob>
             <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-panning-knob>
           </div>
           <div class="d-flex mb-3">

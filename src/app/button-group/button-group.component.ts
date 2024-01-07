@@ -54,11 +54,9 @@ export class ButtonGroupComponent implements ControlValueAccessor {
   }
 
   writeValue(value: string): void {
-    console.log(value);
     this.value = value;
   }
 
   onChange(value: string) {
-    console.log(value)
   }
 }

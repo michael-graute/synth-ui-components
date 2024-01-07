@@ -16,3 +16,10 @@
   margin: 0;
   width: fit-content;
 }
+
+ .btn-check:checked + .btn {
+  color: #00a4e1;
+  background-color: #364551;
+  border-color: #808080;
+  font-weight: 400;
+}

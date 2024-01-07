@@ -54,6 +54,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @ViewChild('knobCanvas') knobCanvas: ElementRef | undefined;
   @ViewChild('knobEditorInput') knobEditorInput: ElementRef | undefined;
+  @ViewChild('knobEditorSelect') knobEditorSelect: ElementRef | undefined;
 
   public midiListen: boolean = false;
   private mouseDown: boolean = false;
@@ -176,19 +177,27 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @HostListener('dblclick')
   handleDoubleClick(): void {
-    this.editMode = true;
-    setTimeout(() => { //@TODO DIRTY!!! Check why timeout is needed here and fix!
-      if(!this.knobEditorInput) return;
-      this.knobEditorInput.nativeElement.value = this.value;
-      this.knobEditorInput.nativeElement.focus();
-    }, 100);
+    if(!this.editMode) {
+      this.editMode = true;
+      setTimeout(() => { //@TODO DIRTY!!! Check why timeout is needed here and fix!
+        if (!this.knobEditorInput) return;
+        this.knobEditorInput.nativeElement.value = this.value;
+        this.knobEditorInput.nativeElement.focus();
+      }, 100);
+    }
   }
 
   @HostListener('document:click', ['$event'])
   handleDocumentClick(event: MouseEvent): void {
-    if(!this.knobEditorInput) return;
-    if(event.target !== this.knobEditorInput.nativeElement) {
-      this.editMode = false;
+    if(this.knobEditorInput) {
+      if (event.target !== this.knobEditorInput.nativeElement) {
+        this.editMode = false;
+      }
+    }
+    if(this.knobEditorSelect) {
+      if (event.target !== this.knobEditorSelect.nativeElement) {
+        this.editMode = false;
+      }
     }
   }
 
@@ -210,6 +219,15 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     } else if(event.key === 'Escape') {
       this.editMode = false;
     }
+  }
+
+  handleEditorInputChange(event: any): void {
+    this.value = event.target.value;
+  }
+
+  handleEditorSelectChange(event: any): void {
+    this.value = event.target.value;
+    this.editMode = false;
   }
 
   draw(): void {

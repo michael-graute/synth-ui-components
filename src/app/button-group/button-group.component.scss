@@ -2,12 +2,14 @@ label {
   &.btn {
     font-size: x-small;
     font-weight: 300;
+    padding-top: 7px;
   }
 }
 
 .btn-check:checked + .btn {
-  color: #2b3035;
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  font-weight: 500;
+  color: #00a4e1;
+  background-color: #364551;
+  border-color: #808080;
+  font-weight: 400;
 }
+

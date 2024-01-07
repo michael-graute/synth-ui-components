@@ -106,6 +106,7 @@ pre {
   text-transform: uppercase;
   border-color: var(--text-color);
   border-radius: 3px;
+  height: 32px;
 
   &:hover {
     color: #00a4e1;
@@ -114,9 +115,9 @@ pre {
   }
 
   &:active {
-    color: var(--text-color) !important;
+    /*color: var(--text-color) !important;
     background-color: #252627 !important;
-    border-color: #31383e !important;
+    border-color: #31383e !important;*/
   }
 }
 
@@ -173,6 +174,7 @@ fieldset {
     border-radius: 3px;
     border: 1px solid #212529;
     margin: 2px;
+    z-index: 1;
 
 
     p {
