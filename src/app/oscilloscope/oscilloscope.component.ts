@@ -17,6 +17,7 @@ export class OscilloscopeComponent implements AfterViewInit {
   public isPlaying = false;
   private transport?: Transport;
   private transportScheduledRepeatId?: number;
+  public type: "scope" | "graph" = 'scope';
 
   public constructor() {
     this.synth.connect(this.fft);
@@ -59,11 +60,10 @@ export class OscilloscopeComponent implements AfterViewInit {
 
 
   draw() {
-    const type: "scope" | "graph" = 'scope';
     const canvas = this.canvasElement.nativeElement;
     const canvasContext = canvas.getContext('2d');
     // @ts-ignore
-    if(type === 'scope') {
+    if(this.type === 'scope') {
       const data: Float32Array = this.analyser.getValue() as Float32Array;
       //console.log(data[0]);
       canvasContext.clearRect(0, 0, canvas.width, canvas.height);

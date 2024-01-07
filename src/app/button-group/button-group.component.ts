@@ -31,8 +31,17 @@ export class ButtonGroupComponent implements ControlValueAccessor {
   @Input() public label: string = '';
   @Input() public name: string = '';
   @Input() public id: string = '';
-  @Input() public value: string = '';
+  @Input() public set value(value: string) {
+    this.internalValue = value;
+    this.onChange(this.value)
+  }
   @Input() public options: ButtonGroupOption[] = [];
+
+  private internalValue: string = '';
+
+  get value(): string {
+    return this.internalValue;
+  }
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
