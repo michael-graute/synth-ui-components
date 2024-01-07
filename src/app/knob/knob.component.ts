@@ -57,10 +57,11 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @ViewChild('knobEditorSelect') knobEditorSelect: ElementRef | undefined;
 
   public midiListen: boolean = false;
+  public editMode: boolean = false;
+
   private mouseDown: boolean = false;
   private mouseDownStartY: number = 0;
   private mouseOver: boolean = false;
-  public editMode: boolean = false;
   private tmpValue: number = 0;
   private internalValue: number = 0;
   private rangeIndicator: number = 71;
@@ -235,6 +236,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     if(this.knobCanvas) {
       const element = this.knobCanvas.nativeElement;
       const context = element.getContext('2d');
+      const valueStartAngle: number = this.type === 'line' ? Math.PI/2 -.2 : convertedValue * Math.PI - .2;
       context.clearRect(0, 0, element.width, element.height);
       //Outer ring
       context.lineWidth = this.baseLineWidth;
@@ -247,14 +249,13 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       context.lineWidth = this.valueLineWidth;
       context.strokeStyle = this.valueColor;
       context.beginPath();
-      if(this.type === 'line') context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), Math.PI/2 -.2, convertedValue * Math.PI + .2);
-      if(this.type === 'dot') context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), convertedValue * Math.PI - .2, convertedValue * Math.PI + .2);
+      context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), valueStartAngle ,convertedValue * Math.PI + .2);
       context.stroke();
       context.closePath();
     }
   }
 
-  convertRange( value: number, r1: any, r2: any ): number {
+  private convertRange( value: number, r1: any, r2: any ): number {
     return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
   }
 
