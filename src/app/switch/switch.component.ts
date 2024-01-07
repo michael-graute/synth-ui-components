@@ -14,6 +14,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
   ]
 })
 export class SwitchComponent implements ControlValueAccessor {
+  @Input() label: string | undefined;
   @Input() onLabel: string = 'on';
   @Input() offLabel: string = 'off';
   @Input() labelPosition: 'left' | 'right' | 'top' | 'bottom' = 'bottom';

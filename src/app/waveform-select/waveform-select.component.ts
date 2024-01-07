@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {v4 as uuidv4} from "uuid";
 
 @Component({
   selector: 'ins-waveform-select',
@@ -14,6 +15,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
   ]
 })
 export class WaveformSelectComponent implements ControlValueAccessor {
+  @Input() label: string | undefined;
+  @Input() id: string = uuidv4()
   @Input() waveform: string = 'sine';
   @Input() set value(value: string) {
     this.internalValue = value;

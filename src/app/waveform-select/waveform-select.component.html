@@ -1,15 +1,16 @@
+<label *ngIf="label" class="ins-waveform-select-label">{{label}}</label>
 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" value="sine" [(ngModel)]="value" name="btnradio" id="btnradio1" autocomplete="off">
-  <label class="btn btn-secondary" for="btnradio1"><img src="../../assets/img/sine32x32.png" height="16"
+  <input type="radio" class="btn-check" value="sine" [(ngModel)]="value" [name]="id" [id]="id + '-sine'" autocomplete="off">
+  <label class="btn btn-secondary" [for]="id + '-sine'"><img src="../../assets/img/sine32x32.png" height="16"
                                                         width="16"/><p *ngIf="value === 'sine'" class="ins-button-label">Sine</p></label>
-  <input type="radio" class="btn-check" value="triangle" [(ngModel)]="value" name="btnradio" id="btnradio2" autocomplete="off">
-  <label class="btn btn-secondary" for="btnradio2"><img src="../../assets/img/triangle32x32.png" height="16"
+  <input type="radio" class="btn-check" value="triangle" [(ngModel)]="value" [name]="id" [id]="id + '-triangle'" autocomplete="off">
+  <label class="btn btn-secondary" [for]="id + '-triangle'"><img src="../../assets/img/triangle32x32.png" height="16"
                                                         width="16"/><p *ngIf="value === 'triangle'" class="ins-button-label">Triangle</p></label>
 
-  <input type="radio" class="btn-check" value="square" [(ngModel)]="value" name="btnradio" id="btnradio3" autocomplete="off">
-  <label class="btn btn-secondary" for="btnradio3"><img src="../../assets/img/square32x32.png" height="16"
+  <input type="radio" class="btn-check" value="square" [(ngModel)]="value" [name]="id" [id]="id + '-square'" autocomplete="off">
+  <label class="btn btn-secondary" [for]="id + '-square'"><img src="../../assets/img/square32x32.png" height="16"
                                                         width="16"/><p *ngIf="value === 'square'" class="ins-button-label">Square</p></label>
-  <input type="radio" class="btn-check" value="sawtooth" [(ngModel)]="value" name="btnradio" id="btnradio4" autocomplete="off">
-  <label class="btn btn-secondary" for="btnradio4"><img src="../../assets/img/sawtooth32x32.png" height="16"
+  <input type="radio" class="btn-check" value="sawtooth" [(ngModel)]="value" [name]="id" [id]="id + '-sawtooth'" autocomplete="off">
+  <label class="btn btn-secondary" [for]="id + '-sawtooth'"><img src="../../assets/img/sawtooth32x32.png" height="16"
                                                         width="16"/><p *ngIf="value === 'sawtooth'" class="ins-button-label">Sawtooth</p></label>
 </div>

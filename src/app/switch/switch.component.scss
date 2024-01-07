@@ -27,6 +27,15 @@ label {
   text-transform: uppercase;
   text-align: center;
   user-select: none;
+
+  &.ins-switch-label {
+    color: var(--text-color);
+    font-size: x-small;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+  }
+
 }
 
 .form-switch {

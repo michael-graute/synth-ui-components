@@ -73,9 +73,10 @@ span.badge {
       option {
         border-radius: 3px;
 
-        &:checked {
+        &:checked, &:active, &:focus, &:focus-visible {
           color: var(--primary-color);
           background: #364551;
+          outline: none;
         }
 
       }

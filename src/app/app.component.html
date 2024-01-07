@@ -27,26 +27,31 @@
           Elements
         </div>
         <div class="card-body">
+          <ins-divider label="Sliders" class="mt-0"></ins-divider>
           <div class="d-flex mb-3">
             <ins-slider label="Vol" [max]="20" [min]="0" [height]="250" [value]="12"></ins-slider>
             <ins-slider label="Mid" [max]="100" [min]="0" [height]="250" [(ngModel)]="foo"></ins-slider>
             <ins-slider label="Hi" [max]="20" [min]="0" [height]="250" [value]="8"></ins-slider>
             <ins-slider label="Lo" [max]="20" [min]="0" [height]="250" [value]="3"></ins-slider>
           </div>
+          <ins-divider label="Knobs"></ins-divider>
           <div class="d-flex mb-3">
             <ins-knob [midiLearn]="midiLearn" [lfo]="true" [(ngModel)]="foo" label="size 80" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
             <ins-knob [midiLearn]="midiLearn" [(ngModel)]="bar" label="size 70" [size]="70" [min]="0" [max]="100"></ins-knob>
             <ins-knob [midiLearn]="midiLearn" label="size 60" [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
             <ins-knob [midiLearn]="midiLearn" [lfo]="true" label="default" [value]="9" (change)="onKnobChange($event)"></ins-knob>
-            <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-panning-knob>
           </div>
-          <div class="d-flex mb-3">
+          <div class="d-flex mb-3 gap-1">
             <ins-knob [value]="1" label="dotted" type="dot" [min]="-2" [max]="2" [step]="1" [midiLearn]="midiLearn"></ins-knob>
             <ins-knob [value]="0.3" label="fine" [min]="0.0" [max]="1.00" [step]=".01" [midiLearn]="midiLearn"></ins-knob>
             <ins-knob [value]="3" label="select" type="dot" [midiLearn]="midiLearn" [options]="['1n', '2n', '4n', '8n', '16n', '32n']"></ins-knob>
+            <ins-panning-knob [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-panning-knob>
           </div>
-          <div class="d-flex mb-3">
-            <ins-switch onLabel="active" offLabel="off"></ins-switch>
+          <ins-divider label="Misc"></ins-divider>
+          <div class="d-flex mb-3 gap-3">
+            <ins-switch label="Switch" onLabel="active" offLabel="off"></ins-switch>
+            <ins-button-group label="Select Buttons" [options]="[{label: 'Foo', value: 'foo'}, {label: 'Bar', value: 'bar'}, {label: 'Baz', value: 'baz'}]" value="bar"></ins-button-group>
+            <ins-waveform-select label="Waveform" value="sine"></ins-waveform-select>
           </div>
         </div>
       </div>
