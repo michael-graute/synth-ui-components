@@ -4,7 +4,7 @@
   <span class="ins-knob-value" [ngStyle]="{'width.px': size, 'height.px': size, 'font-size': valueTextSize, 'font-weight': valueTextWeight, 'color': baseColor}">{{getDisplayValue()}}</span>
   <div class="ins-knob-value-editor" [ngStyle]="{'height.px': size, 'width.px': size}">
     <input *ngIf="!options" #knobEditorInput class="ins-knob-value-editor-input" type="number" [step]="step" [max]="max" [min]="min" [hidden]="!editMode" [ngStyle]="{'width.px': size, 'height.px': size/2}" (change)="handleEditorInputChange($event)" (keydown)="handleEditorKeyDown($event)">
-    <select *ngIf="options" #knobEditorSelect class="ins-knob-value-editor-select" [hidden]="!editMode" [ngStyle]="{'width.px': size*2, 'height.px': size/2}" (change)="handleEditorSelectChange($event)">
+    <select *ngIf="options" #knobEditorSelect class="ins-knob-value-editor-select" [size]="options.length" [hidden]="!editMode" [ngStyle]="{'width.px': size*2}" (change)="handleEditorSelectChange($event)">
       <option *ngFor="let option of options; index as i;" [value]="i" [selected]="i == value">{{option}}</option>
     </select>
   </div>

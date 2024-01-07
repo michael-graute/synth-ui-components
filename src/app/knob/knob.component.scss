@@ -64,6 +64,23 @@ span.badge {
         outline: none;
       }
     }
+
+    .ins-knob-value-editor-select {
+      user-select: none;
+      padding: 5px;
+      border-radius: 3px;
+
+      option {
+        border-radius: 3px;
+
+        &:checked {
+          color: var(--primary-color);
+          background: #364551;
+        }
+
+      }
+
+    }
   }
 
 
