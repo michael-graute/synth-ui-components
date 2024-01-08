@@ -15,8 +15,11 @@
       <div class="ins-filter__cutoff">
         <ins-knob [(ngModel)]="cutoff" name="cutoff" id="cutoff" [min]="0" [lfo]="true" [max]="1" [step]="0.01" label="cutoff"></ins-knob>
       </div>
+      <div class="ins-filter__bandwidth" *ngIf="type === 'bandpass'">
+        <ins-knob [(ngModel)]="bandwidth" name="bandwidth" id="bandwidth" [min]="200" [lfo]="false" [max]="1200" [step]="10" label="width"></ins-knob>
+      </div>
     </div>
-    <ins-divider label="Envelope"></ins-divider>
+    <ins-divider label="Filter Envelope"></ins-divider>
     <div class="ins-filter__envelope">
       <ins-adsr-envelope [(ngModel)]="envelopeOptions" name="envelope" [height]="50" id="envelope"></ins-adsr-envelope>
     </div>

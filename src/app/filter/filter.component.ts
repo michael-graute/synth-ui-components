@@ -8,10 +8,11 @@ import * as Tone from "tone";
   styleUrl: './filter.component.scss'
 })
 export class FilterComponent {
-  @Input() type: string = 'highpass';
+  @Input() type: string = 'lowpass';
 
   cutoff: number = 0;
   resonance: number = 0;
+  bandwidth: number = 400;
 
   public envelopeOptions: RecursivePartial<Omit<Tone.EnvelopeOptions, "context">> = {
     attack: 15,

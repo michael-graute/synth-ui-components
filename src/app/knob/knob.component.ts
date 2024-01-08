@@ -23,7 +23,7 @@ export interface KnobMidiEvent {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      multi:true,
+      multi: true,
       useExisting: KnobComponent
     }
   ]
@@ -232,26 +232,28 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   }
 
   draw(): void {
-    const convertedValue: number = this.convertRange( this.value, [ this.min, this.max ], [ 0.5, 2 ] )
     if(this.knobCanvas) {
-      const element = this.knobCanvas.nativeElement;
-      const context = element.getContext('2d');
-      const valueStartAngle: number = this.type === 'line' ? Math.PI/2 -.2 : convertedValue * Math.PI - .2;
-      context.clearRect(0, 0, element.width, element.height);
-      //Outer ring
-      context.lineWidth = this.baseLineWidth;
-      context.strokeStyle = this.baseColor;
-      context.beginPath();
-      context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, Math.PI/2 -.2, 2 * Math.PI +.2);
-      context.stroke();
-      context.closePath();
-      //Inner value indicator ring / dot
-      context.lineWidth = this.valueLineWidth;
-      context.strokeStyle = this.valueColor;
-      context.beginPath();
-      context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), valueStartAngle ,convertedValue * Math.PI + .2);
-      context.stroke();
-      context.closePath();
+      const element: HTMLCanvasElement = this.knobCanvas.nativeElement;
+      const context: CanvasRenderingContext2D | null = element.getContext('2d');
+      if(context) {
+        const convertedValue: number = this.convertRange( this.value, [ this.min, this.max ], [ 0.5, 2 ] );
+        const valueStartAngle: number = this.type === 'line' ? Math.PI/2 -.2 : convertedValue * Math.PI - .2;
+        context.clearRect(0, 0, element.width, element.height);
+        //Outer ring
+        context.lineWidth = this.baseLineWidth;
+        context.strokeStyle = this.baseColor;
+        context.beginPath();
+        context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, Math.PI / 2 - .2, 2 * Math.PI + .2);
+        context.stroke();
+        context.closePath();
+        //Inner value indicator ring / dot
+        context.lineWidth = this.valueLineWidth;
+        context.strokeStyle = this.valueColor;
+        context.beginPath();
+        context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), valueStartAngle, convertedValue * Math.PI + .2);
+        context.stroke();
+        context.closePath();
+      }
     }
   }
 

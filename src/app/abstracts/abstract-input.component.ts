@@ -47,6 +47,6 @@ export class AbstractInputComponent<T = any> implements OnInit, AfterViewInit, C
   }
 
   writeValue(value: any): void {
-    this._value = value;
+    this.value = value;
   }
 }
