@@ -1,9 +1,9 @@
 <div class="ins-sequencer-step">
   <button style="width: 100%" type="button" class="btn btn-primary ins-sequencer-step__button mb-2">&nbsp;</button>
-  <div class="ins-sequencer-step__knobs d-flex flex-column">
-    <ins-knob [min]="0" [max]="1" [step]=".1" [value]=".8" label="vel" class="mb-2"></ins-knob>
-    <ins-knob type="dot" [min]="-2" [max]="2" [step]="1" [value]="0" label="octave" class="mb-2"></ins-knob>
-    <ins-knob type="dot" [min]="-12" [max]="12" [step]="1" [value]="0" label="pitch" class="mb-2"></ins-knob>
+  <div class="ins-sequencer-step__knobs d-flex flex-column align-items-center gap-2">
+    <ins-knob [min]="0" [max]="1" [step]=".1" [value]=".8" label="vel"></ins-knob>
+    <ins-knob type="dot" [min]="-2" [max]="2" [step]="1" [value]="0" label="octave"></ins-knob>
+    <ins-knob type="dot" [min]="-12" [max]="12" [step]="1" [value]="0" label="pitch"></ins-knob>
     <ins-knob type="dot" [value]="3" [options]="gateOptions" label="gate"></ins-knob>
   </div>
 </div>

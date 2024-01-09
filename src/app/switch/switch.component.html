@@ -1,5 +1,5 @@
-<label *ngIf="label" class="ins-switch-label">{{label}}</label>
+<label [for]="'switch-input-' + id" *ngIf="label" class="ins-switch-label">{{label}}</label>
 <div class="form-switch" [ngClass]="{'form-check-reverse' : labelPosition === 'left'}" data-bs-theme="dark">
-  <input class="form-check-input" [(ngModel)]="value" type="checkbox" role="switch" id="flexSwitchCheckDefault" (ngModelChange)="onChange($event)">
-  <label *ngIf="hasLabel" class="form-check-label" for="flexSwitchCheckDefault">{{value ? onLabel : offLabel}}</label>
+  <input class="form-check-input" [id]="'switch-input-' + id" [(ngModel)]="value" type="checkbox" role="switch" id="flexSwitchCheckDefault" (ngModelChange)="onChange($event)">
+  <label [for]="'switch-input-' + id" *ngIf="hasLabel" class="form-check-label" for="flexSwitchCheckDefault">{{value ? onLabel : offLabel}}</label>
 </div>

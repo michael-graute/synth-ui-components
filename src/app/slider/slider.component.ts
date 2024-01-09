@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostBinding, HostListener, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {v4 as uuidv4} from 'uuid';
 
 @Component({
   selector: 'ins-slider',
@@ -25,7 +26,7 @@ export class SliderComponent implements AfterViewInit, ControlValueAccessor {
     this.draw();
   }
   @Input() name: string = '';
-  @Input() id: string = '';
+  @HostBinding() @Input() id: string = uuidv4();
   @Input() min: number = 0;
   @Input() max: number = 10;
   @Input() step: number = 0.01;

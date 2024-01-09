@@ -2,13 +2,14 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
+  EventEmitter, HostBinding,
   HostListener,
   Input, OnInit,
   Output,
   ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {v4 as uuidv4} from 'uuid';
 
 export interface KnobMidiEvent {
   controller: number;
@@ -30,6 +31,8 @@ export interface KnobMidiEvent {
 })
 export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
+  @Input() id: string = uuidv4();
+  @HostBinding('id') _id: string = this.id;
   @Input() type: 'dot' | 'line' = 'line';
   @Input() label: string = '';
   @Input() baseColor: string = 'grey';
@@ -37,6 +40,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @Input() size: number = 50;
   @Input() baseLineWidth: number = 5;
   @Input() valueLineWidth: number = 3;
+  @Input() dotSize: number = .2;
   @Input() min: number = 0;
   @Input() max: number = 10;
   @Input() step: number = 1;
@@ -236,21 +240,33 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       const element: HTMLCanvasElement = this.knobCanvas.nativeElement;
       const context: CanvasRenderingContext2D | null = element.getContext('2d');
       if(context) {
-        const convertedValue: number = this.convertRange( this.value, [ this.min, this.max ], [ 0.5, 2 ] );
-        const valueStartAngle: number = this.type === 'line' ? Math.PI/2 -.2 : convertedValue * Math.PI - .2;
+        //const convertedValue: number = this.convertRange( this.value, [ this.min, this.max ], [ 0.5, 2 ] );
+        const convertedValue: number = this.convertRange( this.value, [ this.min, this.max ], [ (Math.PI / 180) * 120, (Math.PI / 180) * 420 ] );
+        //const valueStartAngle: number = this.type === 'line' ? Math.PI/2 -.2 : convertedValue * Math.PI - .2;
+        let valueStartAngle: number = this.type === 'line' ? (Math.PI / 180) * 120 : convertedValue - this.dotSize;
+        let valueEndAngle: number = this.type === 'line' ? convertedValue : convertedValue + this.dotSize;
+        if(this.value === this.min && this.type === 'dot') {
+          valueStartAngle = valueStartAngle + this.dotSize;
+          valueEndAngle = valueEndAngle + this.dotSize;
+        }
+        if(this.value === this.max && this.type === 'dot') {
+          valueStartAngle = valueStartAngle - this.dotSize;
+          valueEndAngle = valueEndAngle - this.dotSize;
+        }
         context.clearRect(0, 0, element.width, element.height);
         //Outer ring
         context.lineWidth = this.baseLineWidth;
         context.strokeStyle = this.baseColor;
         context.beginPath();
-        context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, Math.PI / 2 - .2, 2 * Math.PI + .2);
+        //context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, Math.PI / 2 - .2, 2 * Math.PI + .2);
+        context.arc(this.size / 2, this.size / 2, ((this.size - this.baseLineWidth)  / 2), (Math.PI / 180) * 120, (Math.PI / 180) * 420);
         context.stroke();
         context.closePath();
         //Inner value indicator ring / dot
         context.lineWidth = this.valueLineWidth;
         context.strokeStyle = this.valueColor;
         context.beginPath();
-        context.arc(this.size / 2, this.size / 2, (this.size / 2) - (this.baseLineWidth + this.valueLineWidth), valueStartAngle, convertedValue * Math.PI + .2);
+        context.arc(this.size / 2, this.size / 2, ((this.size - (this.baseLineWidth + (this.valueLineWidth * 2))) / 2), valueStartAngle, valueEndAngle);
         context.stroke();
         context.closePath();
       }

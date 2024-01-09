@@ -4,14 +4,14 @@ label {
     font-weight: 300;
     padding-top: 7px;
   }
+}
 
-  &.ins-button-group-label {
-    color: var(--text-color);
-    font-size: x-small;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 5px;
-  }
+.ins-button-group-label {
+  color: var(--text-color);
+  font-size: x-small;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .btn-check:checked + .btn {

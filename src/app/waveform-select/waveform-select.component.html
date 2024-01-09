@@ -1,4 +1,4 @@
-<label *ngIf="label" class="ins-waveform-select-label">{{label}}</label>
+<span *ngIf="label" class="ins-waveform-select-label">{{label}}</span>
 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
   <input type="radio" class="btn-check" value="sine" [(ngModel)]="value" [name]="id" [id]="id + '-sine'" autocomplete="off">
   <label class="btn btn-secondary" [for]="id + '-sine'"><img src="../../assets/img/sine32x32.png" height="16"

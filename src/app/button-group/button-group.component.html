@@ -1,4 +1,4 @@
-<label *ngIf="label" [for]="id" class="ins-button-group-label">{{label}}</label>
+<span *ngIf="label" class="ins-button-group-label">{{label}}</span>
 <div class="btn-group">
   <ng-container *ngFor="let option of options; let i = index">
     <input type="radio" class="btn-check" value="{{option.value}}" [(ngModel)]="value" [name]="name" [id]="id + i" autocomplete="off">
