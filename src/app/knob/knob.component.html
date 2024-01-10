@@ -1,4 +1,5 @@
-<div class="ins-knob">
+<div class="ins-knob" [id]="'ins-knob-' + id">
+  <div *ngIf="mouseDown && !editMode && !midiLearn" class="ins-knob-mouse-move-detector" [ngStyle]="{'top.px': size * -2, 'bottom.px': size * -2}"></div>
   <span *ngIf="lfo" class="badge bg-success">lfo</span>
   <span *ngIf="midiListen && !midiLearn" class="badge ins-badge-midi-listen">m</span>
   <span class="ins-knob-value" [ngStyle]="{'width.px': size, 'height.px': size, 'font-size': valueTextSize, 'font-weight': valueTextWeight, 'color': baseColor}">{{getDisplayValue()}}</span>
@@ -8,7 +9,7 @@
       <option *ngFor="let option of options; index as i;" [value]="i" [selected]="i == value">{{option}}</option>
     </select>
   </div>
-  <canvas class="ins-knob-canvas" #knobCanvas [width]="size" [height]="size"></canvas>
+  <canvas class="ins-knob-canvas" #knobCanvas [id]="'ins-knob-canvas-' + id" [width]="size" [height]="size"></canvas>
   <span class="ins-knob-label" [ngStyle]="{'width.px': size, 'font-size': labelTextSize, 'font-weight': labelTextWeight, 'color': baseColor}">{{label}}</span>
   <div *ngIf="midiLearn" class="ins-midi-learn" [ngClass]="{'ins-midi-listen-active': midiListen}" (click)="toggleMidiLearnEditMode()">
     <div *ngIf="midiLearnEditMode || midiListen" class="ins-midi-learn-editor" (click)="toggleMidiListen()">

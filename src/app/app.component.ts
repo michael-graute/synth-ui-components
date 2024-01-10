@@ -10,10 +10,10 @@ export class AppComponent {
   bar: number = 67;
   pan: number = -34;
   adsr: any = {
-    attack: 5,
-    decay: 1,
-    sustain: 10,
-    release: 2
+    attack: 30,
+    decay: 25,
+    sustain: .7,
+    release: 45
   }
   test: string = 'test';
 

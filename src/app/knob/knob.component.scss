@@ -22,8 +22,11 @@ span.badge {
   position: relative;
   cursor: pointer;
 
-  .ins-knob-canvas {
-    //transform: rotate(45deg);
+  .ins-knob-mouse-move-detector {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
 
   .ins-knob-value {

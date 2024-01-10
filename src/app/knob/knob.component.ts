@@ -63,7 +63,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   public midiListen: boolean = false;
   public editMode: boolean = false;
 
-  private mouseDown: boolean = false;
+  public mouseDown: boolean = false;
   private mouseDownStartY: number = 0;
   private mouseOver: boolean = false;
   private tmpValue: number = 0;
@@ -145,7 +145,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     this.mouseDown = false;
   }
 
-  @HostListener('document:mousemove', ['$event'])
+  @HostListener('mousemove', ['$event'])
   handleMouseMove(event: MouseEvent) {
     if(this.mouseDown && !this.editMode && !this.midiLearn) {
       const difference: number = Math.round((this.mouseDownStartY-event.clientY));
