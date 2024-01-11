@@ -1,12 +1,12 @@
-<div class="ins-oscilloscope card">
+<!--<div class="ins-oscilloscope card">
   <div class="ins-oscilloscope__header card-header">Analyzer</div>
-  <div class="ins-oscilloscope__body card-body">
+  <div class="ins-oscilloscope__body card-body">-->
     <canvas #canvasElement width="300" height="200"></canvas>
     <div class="d-flex">
-      <button type="button" class="btn btn-primary" (click)="toneStart()"><i class="bi-power"></i></button>
+      <!--<button type="button" class="btn btn-primary" (click)="toneStart()"><i class="bi-power"></i></button>
       <button type="button" class="btn btn-primary" (click)="play()"><i class="bi-play-fill"></i></button>
-      <button type="button" class="btn btn-primary" (click)="stop()"><i class="bi-stop-fill"></i></button>
+      <button type="button" class="btn btn-primary" (click)="stop()"><i class="bi-stop-fill"></i></button>-->
       <ins-button-group [(ngModel)]="type" name="analyzerType" id="analyzerType" [options]="[{value: 'scope', label: 'Scope'},{value: 'graph', label: 'Graph'}]"></ins-button-group>
     </div>
-  </div>
-</div>
+  <!--</div>
+</div>-->

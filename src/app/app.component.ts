@@ -17,10 +17,10 @@ export class AppComponent implements OnInit {
     sustain: .7,
     release: 45
   }
-  osc1 = new Tone.Synth();
+  //osc1 = new Tone.Synth();
 
   constructor(public synthService: SynthService) {
-    this.synthService.addOscillator({id: 'osc1', oscillator: this.osc1});
+    //this.synthService.addOscillator({id: 'osc1', oscillator: this.osc1});
   }
 
   ngOnInit() {

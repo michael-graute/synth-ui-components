@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import * as Tone from "tone";
 import {Transport} from "tone/build/esm/core/clock/Transport";
 
@@ -10,7 +10,7 @@ import {Transport} from "tone/build/esm/core/clock/Transport";
 export class OscilloscopeComponent implements AfterViewInit {
   @ViewChild('canvasElement', {static: true}) canvasElement: any;
 
-  public synth = new Tone.Synth();
+  @Input() synth = new Tone.Synth();
   public fft = new Tone.FFT({size: 512}).toDestination();
   public analyser = new Tone.Analyser('waveform', 512);
   private interval: any;
@@ -20,19 +20,24 @@ export class OscilloscopeComponent implements AfterViewInit {
   public type: "scope" | "graph" = 'scope';
 
   public constructor() {
-    this.synth.connect(this.fft);
-    this.synth.connect(this.analyser);
-    this.transport = Tone.getTransport();
+
   }
 
   ngAfterViewInit(): void {
+    this.synth.connect(this.fft);
+    this.synth.connect(this.analyser);
+    this.transport = Tone.getTransport();
+    this.transportScheduledRepeatId = this.transport?.scheduleRepeat((time) => {
+      this.draw();
+    }, this.analyser.blockTime);
+    this.transport?.start();
     //const canvas = this.canvasElement.nativeElement;
     //const canvasContext = canvas.getContext('2d');
     //canvasContext.fillStyle = 'red';
     //canvasContext.fillRect(0, canvas.height, 10, -500);
     }
 
-  toneStart() {
+  /*toneStart() {
     Tone.start().then(() => {
       console.log('audio is ready');
     });
@@ -56,7 +61,7 @@ export class OscilloscopeComponent implements AfterViewInit {
     const canvas = this.canvasElement.nativeElement;
     const canvasContext = canvas.getContext('2d');
     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-  }
+  }*/
 
 
   draw() {

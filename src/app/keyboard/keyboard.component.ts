@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SynthService} from "../synth.service";
 
 @Component({
   selector: 'ins-keyboard',
@@ -15,62 +16,33 @@ export class KeyboardComponent implements OnInit {
   public currentNote : string = "";
   public hold : boolean = false;
 
-  @Output() noteOn: EventEmitter<string> = new EventEmitter<string>();
-  @Output() noteOff: EventEmitter<string> = new EventEmitter<string>();
+  @Input() service: SynthService | undefined;
+
+  @Output() keyDown: EventEmitter<string> = new EventEmitter<string>();
+  @Output() keyUp: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
     this.changeOctave(2)
   }
 
-  play(note:string){
-    /*this.synthService.currentNote = note;
-    if(this.synthService.sequencerEnabled) {
-      this.synthService.sequencerRootNote = note;
-      this.synthService.playSequence();
-    } else {
-      this.synthService.play();
-    }*/
-  }
-
-  stop(){
-    /*if(this.synthService.sequencerEnabled) {
-      this.synthService.sequencerRootNote = "C4";
-      this.synthService.stopSequence();
-    } else {
-      this.synthService.stop();
-    }*/
-  }
-
-  mouseDown(note:string, octave:number){
+  mouseDown(note:string){
     this.msDwn = true;
-    this.play(note + octave);
-    this.lastNote = note + octave;
-    this.heldNote = note + octave;
-    this.currentNote = note + octave;
-    this.noteOn.emit(this.currentNote);
+    this.heldNote = note;
+    this.service?.noteOn(note);
+    this.keyDown.emit(note);
   }
 
   mouseUp(){
     this.msDwn = false;
     this.heldNote = "";
-    this.lastNote = "";
-    this.stop();
-    this.noteOff.emit(this.currentNote);
+    this.service?.noteOff(this.currentNote);
+    this.keyUp.emit(this.currentNote);
   }
 
-  mouseOut(){
-  }
-
-  mouseOver(note:string, octave:number){
-    /*if(this.msDwn) {
-      if(this.synthService.sequencerEnabled && (note + octave) != this.lastNote) {
-          this.synthService.currentNote = note + octave;
-          this.synthService.sequencerRootNote = note + octave;
-      } else if(!this.synthService.sequencerEnabled) {
-        this.play(note + octave);
-      }
-      this.lastNote = note + octave;
-    }*/
+  mouseOver(note:string){
+    if(this.msDwn && this.heldNote != note) {
+      this.service?.noteOn(note);
+    }
   }
 
   changeOctave(octave:number){
@@ -81,10 +53,15 @@ export class KeyboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.synthService.noteOn.subscribe((note: string) => {
+    this.service?.noteOnEvent.subscribe((note: string) => {
       this.currentNote = note;
-      this.changeDetectorRef.detectChanges();
-    });*/
+      this.lastNote = note;
+      this.heldNote = note;
+    });
+    this.service?.noteOffEvent.subscribe((note: string) => {
+      this.currentNote = "";
+      this.lastNote = "";
+    });
   }
 
   toggleHold() {
