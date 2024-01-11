@@ -75,7 +75,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     return this.internalValue;
   }
 
-  getDisplayValue(): string {
+  get displayValue(): string {
     if(this.options) {
       return this.options[this.value];
     }

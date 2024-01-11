@@ -61,7 +61,7 @@
       <ins-lfo class="mt-3"></ins-lfo>
     </div>
     <div class="col-4">
-      <ins-oscillator [midiLearn]="midiLearn"></ins-oscillator>
+      <ins-oscillator [midiLearn]="midiLearn" [synth]="osc1"></ins-oscillator>
       <ins-filter class="mt-3"></ins-filter>
     </div>
     <div class="col-4">
@@ -93,7 +93,7 @@
           Keyboard
         </div>
         <div class="card-body">
-          <ins-keyboard></ins-keyboard>
+          <ins-keyboard (noteOff)="keyBoardNoteOff($event)" (noteOn)="keyBoardNoteOn($event)"></ins-keyboard>
         </div>
       </div>
     </div>

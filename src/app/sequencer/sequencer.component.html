@@ -2,7 +2,7 @@
   <div class="ins-sequencer__header card-header">Sequencer</div>
   <div class="ins-sequencer__body card-body">
     <div class="d-flex gap-1">
-        <ins-sequencer-step style="flex-grow: 1; display: block" *ngFor="let step of availableSteps"></ins-sequencer-step>
+        <ins-sequencer-step style="flex-grow: 1; display: block" *ngFor="let step of availableSteps" [active]="step.active"></ins-sequencer-step>
     </div>
   </div>
 </div>

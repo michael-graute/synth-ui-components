@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'ins-keyboard',
@@ -14,6 +14,9 @@ export class KeyboardComponent implements OnInit {
   public lastNote : string = "";
   public currentNote : string = "";
   public hold : boolean = false;
+
+  @Output() noteOn: EventEmitter<string> = new EventEmitter<string>();
+  @Output() noteOff: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
     this.changeOctave(2)
@@ -44,6 +47,7 @@ export class KeyboardComponent implements OnInit {
     this.lastNote = note + octave;
     this.heldNote = note + octave;
     this.currentNote = note + octave;
+    this.noteOn.emit(this.currentNote);
   }
 
   mouseUp(){
@@ -51,6 +55,7 @@ export class KeyboardComponent implements OnInit {
     this.heldNote = "";
     this.lastNote = "";
     this.stop();
+    this.noteOff.emit(this.currentNote);
   }
 
   mouseOut(){

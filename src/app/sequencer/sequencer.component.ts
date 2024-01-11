@@ -7,6 +7,7 @@ export interface SequencerStep {
   duration: string;
   playing?: boolean;
   armed: boolean;
+  active: boolean;
 }
 
 @Component({
@@ -15,5 +16,18 @@ export interface SequencerStep {
   styleUrl: './sequencer.component.scss'
 })
 export class SequencerComponent {
-  availableSteps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+  availableSteps: SequencerStep[] = [];
+  constructor() {
+    for(let i = 0; i < 16; i++) {
+      const active: boolean = i < 8;
+      this.availableSteps.push({
+        id: i,
+        velocity: 0,
+        pitch: 0,
+        duration: '8n',
+        armed: false,
+        active: active
+      });
+    }
+  }
 }
