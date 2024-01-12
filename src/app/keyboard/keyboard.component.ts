@@ -29,6 +29,7 @@ export class KeyboardComponent implements OnInit {
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if(this.charMap.includes(event.key) && this.heldNote != this.notes[this.charMap.findIndex((element) => element == event.key)] + (this.octaveBase + 1)) {
+      event.preventDefault();
       const index = this.charMap.findIndex((element) => element == event.key);
       this.mouseDown(this.notes[index] + (this.octaveBase + 1));
     }
