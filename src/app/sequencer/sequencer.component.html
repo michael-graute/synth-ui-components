@@ -1,8 +1,11 @@
-<div class="ins-sequencer card">
-  <div class="ins-sequencer__header card-header">Sequencer</div>
+<div class="ins-sequencer card" [class]="{'inactive': !active}">
+  <div class="ins-sequencer__header card-header">
+    <div class="d-flex justify-content-between align-items-center">Sequenzer <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
   <div class="ins-sequencer__body card-body">
+    <input type="range" class="ins-active-steps-slider mb-3" min="0" max="16" step="1" [(ngModel)]="activeStepCount" />
     <div class="d-flex gap-1">
-        <ins-sequencer-step style="flex-grow: 1; display: block" *ngFor="let step of availableSteps" [active]="step.active"></ins-sequencer-step>
+        <ins-sequencer-step style="flex-grow: 1; display: block" [armed]="step.armed" *ngFor="let step of availableSteps; let i = index" [active]="i < activeStepCount"></ins-sequencer-step>
     </div>
   </div>
 </div>

@@ -10,7 +10,7 @@
     <div class="octave" *ngFor="let octave of octaves; let octaveLast = last">
       <div class="octave-label">C{{octave}}</div>
         <div class="keys">
-          <div class="note"
+          <div class="note" draggable="false"
              *ngFor="let note of notes; let noteLast = last"
              (mouseover)="mouseOver(note + octave)"
              (mousedown)="mouseDown(note + octave);"
