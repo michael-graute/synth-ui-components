@@ -58,21 +58,21 @@
           <ins-adsr-envelope [height]="50" [(ngModel)]="adsr"></ins-adsr-envelope>
         </div>
       </div>
-      <ins-lfo class="mt-3"></ins-lfo>
     </div>
     <div class="col-4">
       <ins-oscillator [midiLearn]="midiLearn" [service]="synthService"></ins-oscillator>
-      <ins-filter class="mt-3"></ins-filter>
     </div>
     <div class="col-4">
-      <div class="card mt-3">
+      <ins-lfo></ins-lfo>
+      <ins-filter class="mt-3"></ins-filter>
+      <!--<div class="card mt-3">
         <div class="card-header">
           Waveform
         </div>
         <div class="card-body">
           <ins-waveform-plotter></ins-waveform-plotter>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </div>

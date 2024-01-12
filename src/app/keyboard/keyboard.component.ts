@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {SynthService} from "../synth.service";
 
 @Component({
@@ -8,6 +8,7 @@ import {SynthService} from "../synth.service";
 })
 export class KeyboardComponent implements OnInit {
   octaveBase : number = 0;
+  charMap: string[] = ["a","w","s","e","d","f","t","g","z","h","u","j"];
   public notes : string[] = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
   public octaves : number[] = [];
   public msDwn : boolean = false;
@@ -23,6 +24,21 @@ export class KeyboardComponent implements OnInit {
 
   constructor() {
     this.changeOctave(2)
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if(this.charMap.includes(event.key) && this.heldNote != this.notes[this.charMap.findIndex((element) => element == event.key)] + (this.octaveBase + 1)) {
+      const index = this.charMap.findIndex((element) => element == event.key);
+      this.mouseDown(this.notes[index] + (this.octaveBase + 1));
+    }
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardUpEvent(event: KeyboardEvent) {
+    if(this.charMap.includes(event.key)) {
+      this.mouseUp();
+    }
   }
 
   mouseDown(note:string){

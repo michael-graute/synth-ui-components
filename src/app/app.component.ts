@@ -25,10 +25,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.synthService.noteOnEvent.subscribe((event: any) => {
-      console.log('noteOnEvent', event);
+      //console.log('noteOnEvent', event);
     });
     this.synthService.noteOffEvent.subscribe((event: any) => {
-      console.log('noteOffEvent', event);
+      //console.log('noteOffEvent', event);
     });
   }
 

@@ -7,11 +7,11 @@
   </div>
   <div class="col-10 mx-auto">
   <div class="keyboard">
-    <div class="octave" *ngFor="let octave of octaves; let octaveLast = last">
+    <div class="octave" *ngFor="let octave of octaves; let octaveLast = last; let oi = index">
       <div class="octave-label">C{{octave}}</div>
         <div class="keys">
           <div class="note" draggable="false"
-             *ngFor="let note of notes; let noteLast = last"
+             *ngFor="let note of notes; let noteLast = last; let ni = index"
              (mouseover)="mouseOver(note + octave)"
              (mousedown)="mouseDown(note + octave);"
              (mouseup)="mouseUp()"
@@ -20,6 +20,7 @@
                 'last':noteLast && octaveLast,
                 'playing': ((msDwn) && (currentNote === note + octave || lastNote === note + octave ))
              }">
+            <span class="ins-keyboard-char-indicator" *ngIf="charMap[ni] && oi === 0">{{charMap[ni]}}</span>
           </div>
         </div>
       </div>

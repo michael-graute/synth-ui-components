@@ -21,13 +21,10 @@ export class SynthService {
   constructor() { }
 
   noteOn(note: string) {
-    console.log('noteOn', note);
-    //this.oscillators.forEach(o => o.oscillator.triggerAttack(note));
     this.noteOnEvent.next(note);
   }
 
   noteOff(note: string) {
-    //this.oscillators.forEach(o => o.oscillator.triggerRelease());
     this.noteOffEvent.next(note);
   }
 

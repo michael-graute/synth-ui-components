@@ -29,13 +29,11 @@ export class OscillatorComponent implements OnInit {
     if(this.service) {
       this.service.noteOnEvent.subscribe((event: any) => {
         if(this.active) {
-          console.log('noteOnEvent', event);
           this.synth.triggerAttack(event);
         }
       });
       this.service.noteOffEvent.subscribe((event: any) => {
         if(this.active) {
-          console.log('noteOffEvent', event);
           this.synth.triggerRelease();
         }
       });
