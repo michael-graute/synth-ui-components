@@ -8,6 +8,13 @@ export interface InsOscillator {
   oscillator: Synth;
 }
 
+export interface InsAttackReleaseOptions {
+  note: any,
+  duration: any,
+  time?: any,
+  velocity?: any
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,6 +24,7 @@ export class SynthService {
 
   noteOnEvent: Subject<string> = new Subject<string>();
   noteOffEvent: Subject<string> = new Subject<string>();
+  attackReleaseEvent: Subject<InsAttackReleaseOptions> = new Subject<InsAttackReleaseOptions>();
 
   constructor() { }
 
@@ -26,6 +34,10 @@ export class SynthService {
 
   noteOff(note: string) {
     this.noteOffEvent.next(note);
+  }
+
+  attackRelease(note: any, duration: any, time?: any, velocity?: any) {
+    this.attackReleaseEvent.next({note: note, duration: duration, time: time, velocity: velocity});
   }
 
   addOscillator(oscillator: InsOscillator) {

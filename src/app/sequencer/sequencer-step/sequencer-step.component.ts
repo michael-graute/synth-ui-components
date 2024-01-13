@@ -13,8 +13,10 @@ export class SequencerStepComponent {
   @Input() octave: number = 0;
   @Input() gate: string = '8n';
   @Input() gateOptions: string[] = ['1n', '2n', '4n', '8n', '16n', '32n', '64n'];
+  @Input() id: number = 0;
+  @Input() playing: boolean = false;
 
-  public playing: boolean = false;
+  //public playing: boolean = false;
 
   toggleArmed() {
     this.armed = !this.armed;

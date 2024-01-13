@@ -1,4 +1,4 @@
-<div class="ins-sequencer-step" [ngClass]="{'inactive': !active}">
+<div class="ins-sequencer-step" [ngClass]="{'inactive': !active, 'playing': playing}">
   <!--<button style="width: 100%" type="button" class="btn btn-primary ins-sequencer-step__button mb-2" (click)="toggleArmed()" [ngClass]="{'active': armed}">&nbsp;</button>-->
   <div class="ins-sequencer-step__knobs d-flex flex-column align-items-center gap-2">
     <ins-switch [value]="armed" [hasLabel]="false"></ins-switch>

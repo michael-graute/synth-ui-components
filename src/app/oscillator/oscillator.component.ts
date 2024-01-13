@@ -37,6 +37,11 @@ export class OscillatorComponent implements OnInit {
           this.synth.triggerRelease();
         }
       });
+      this.service.attackReleaseEvent.subscribe((event: any) => {
+        if(this.active) {
+          this.synth.triggerAttackRelease(event.note, event.duration, event.time, event.velocity);
+        }
+      });
     }
   }
 
