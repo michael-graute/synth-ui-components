@@ -5,7 +5,7 @@
   <div class="ins-sequencer__body card-body">
     <input type="range" class="ins-active-steps-slider mb-3" min="0" max="16" step="1" [(ngModel)]="activeStepCount" />
     <div class="d-flex gap-1">
-        <ins-sequencer-step style="flex-grow: 1; display: block" [armed]="step.armed" *ngFor="let step of availableSteps; let i = index" [active]="i < activeStepCount" [id]="i" [playing]="(playing && currentStep === i)"></ins-sequencer-step>
+        <ins-sequencer-step style="flex-grow: 1; display: block" [config]="step" [armed]="step.armed" *ngFor="let step of availableSteps; let i = index" [active]="i < activeStepCount" [id]="i" [playing]="(playing && currentStep === i)"></ins-sequencer-step>
     </div>
     <button type="button" class="btn btn-primary mt-3" (click)="playSequence()">Play</button>
     <button type="button" class="btn btn-primary mt-3" (click)="stopSequence()">Stop</button>

@@ -36,8 +36,17 @@ export class SynthService {
     this.noteOffEvent.next(note);
   }
 
-  attackRelease(note: any, duration: any, time?: any, velocity?: any) {
-    this.attackReleaseEvent.next({note: note, duration: duration, time: time, velocity: velocity});
+  keyDown(note: string) {
+    this.noteOn(note);
+  }
+
+  keyUp(note: string) {
+    this.noteOff(note);
+  }
+
+  attackRelease(options: InsAttackReleaseOptions) {
+    //const eventPayload: InsAttackReleaseOptions = {note: note, duration: duration, time: time, velocity: velocity};
+    this.attackReleaseEvent.next(options);
   }
 
   addOscillator(oscillator: InsOscillator) {

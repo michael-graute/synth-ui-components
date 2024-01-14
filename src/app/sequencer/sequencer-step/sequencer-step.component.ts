@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {SequencerStep} from "../sequencer.component";
 
 @Component({
   selector: 'ins-sequencer-step',
@@ -15,7 +16,7 @@ export class SequencerStepComponent {
   @Input() gateOptions: string[] = ['1n', '2n', '4n', '8n', '16n', '32n', '64n'];
   @Input() id: number = 0;
   @Input() playing: boolean = false;
-
+  @Input() config: SequencerStep = {velocity: 1, pitch: 0, gate: '8n', armed: false, octave: 0, id: 0, duration: '8n'};
   //public playing: boolean = false;
 
   toggleArmed() {
