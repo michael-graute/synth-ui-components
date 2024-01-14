@@ -182,6 +182,8 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @HostListener('dblclick')
   handleDoubleClick(): void {
+    console.log('dblclick');
+    this.editMode = true;
     if(!this.editMode && !this.midiLearn) {
       this.editMode = true;
       setTimeout(() => { //@TODO DIRTY!!! Check why timeout is needed here and fix!

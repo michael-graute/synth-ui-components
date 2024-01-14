@@ -56,4 +56,11 @@ export class OscillatorComponent implements OnInit {
   toggleActive(): void {
     this.active = !this.active;
   }
+
+  setAdsr(): void {
+    this.synth.envelope.attack = this.envelopeOptions.attack as number / 100 ;
+    this.synth.envelope.decay = this.envelopeOptions.decay as number / 100;
+    this.synth.envelope.sustain = this.envelopeOptions.sustain as number;
+    this.synth.envelope.release = this.envelopeOptions.release as number / 100;
+  }
 }

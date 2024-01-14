@@ -5,6 +5,6 @@
     <ins-knob [min]="0" [max]="1" [step]=".1" [(ngModel)]="config.velocity" label="vel"></ins-knob>
     <ins-knob type="dot" [min]="-12" [max]="12" [step]="1" [(ngModel)]="config.pitch" label="pitch"></ins-knob>
     <ins-knob type="dot" [min]="-2" [max]="2" [step]="1" [(ngModel)]="config.octave" label="octave"></ins-knob>
-    <ins-knob type="dot" [value]="3" [options]="gateOptions" label="gate"></ins-knob>
+    <ins-knob type="dot" [(ngModel)]="config.gate" [options]="gateOptions" label="gate"></ins-knob>
   </div>
 </div>

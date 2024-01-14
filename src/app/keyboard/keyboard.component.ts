@@ -38,7 +38,11 @@ export class KeyboardComponent implements OnInit {
   @HostListener('document:keyup', ['$event'])
   handleKeyboardUpEvent(event: KeyboardEvent) {
     if(this.charMap.includes(event.key)) {
-      this.mouseUp();
+      const index = this.charMap.findIndex((element) => element == event.key);
+      const note = this.notes[index] + (this.octaveBase + 1)
+      if(note === this.currentNote) {
+        this.mouseUp(event.key);
+      }
     }
   }
 
@@ -49,7 +53,7 @@ export class KeyboardComponent implements OnInit {
     this.keyDown.emit(note);
   }
 
-  mouseUp(){
+  mouseUp(note:string){
     this.msDwn = false;
     this.heldNote = "";
     this.service?.noteOff(this.currentNote);

@@ -1,4 +1,4 @@
-<div class="ins-knob" [id]="'ins-knob-' + id">
+<div class="ins-knob" [id]="'ins-knob-' + id" draggable="false">
   <div *ngIf="mouseDown && !editMode && !midiLearn" class="ins-knob-mouse-move-detector" [ngStyle]="{'top.px': size * -2, 'bottom.px': size * -2}"></div>
   <span *ngIf="lfo" class="badge bg-success">lfo</span>
   <span *ngIf="midiListen && !midiLearn" class="badge ins-badge-midi-listen">m</span>

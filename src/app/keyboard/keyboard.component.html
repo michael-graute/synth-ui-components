@@ -14,7 +14,7 @@
              *ngFor="let note of notes; let noteLast = last; let ni = index"
              (mouseover)="mouseOver(note + octave)"
              (mousedown)="mouseDown(note + octave);"
-             (mouseup)="mouseUp()"
+             (mouseup)="mouseUp(note + octave);"
              [ngClass]="{
                 'sharp':( note.indexOf('#') >= 1),
                 'last':noteLast && octaveLast,
