@@ -182,15 +182,13 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @HostListener('dblclick')
   handleDoubleClick(): void {
-    console.log('dblclick');
-    this.editMode = true;
     if(!this.editMode && !this.midiLearn) {
       this.editMode = true;
-      setTimeout(() => { //@TODO DIRTY!!! Check why timeout is needed here and fix!
-        if (!this.knobEditorInput) return;
-        this.knobEditorInput.nativeElement.value = this.value;
-        this.knobEditorInput.nativeElement.focus();
-      }, 100);
+      if (!this.knobEditorInput) return;
+      this.knobEditorInput.nativeElement.value = this.value;
+      setTimeout(() => { //prevent overlap of double click and document click
+        this.knobEditorInput?.nativeElement.select();
+      }, 50);
     }
   }
 
@@ -217,19 +215,20 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   handleEditorKeyDown(event: KeyboardEvent): void {
     const target: HTMLInputElement = event.currentTarget as HTMLInputElement;
-    if(event.key === 'Enter') {
+    if(event.key === 'Enter' || event.key === 'Tab') {
       this.editMode = false;
-      this.value = target.value === '' || target.value === null ? this.min : target.valueAsNumber;
+      this.value = (target.value === '' || target.value === null) ? this.min : target.valueAsNumber;
       if(this.value > this.max) this.value = this.max;
       if(this.value < this.min) this.value = this.min;
       target.value = this.value + '';
+      this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
     } else if(event.key === 'Escape') {
       this.editMode = false;
     }
   }
 
   handleEditorInputChange(event: any): void {
-    this.value = event.target.value;
+    //this.value = event.target.value;
   }
 
   handleEditorSelectChange(event: any): void {

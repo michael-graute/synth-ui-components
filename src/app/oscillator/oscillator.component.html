@@ -24,7 +24,7 @@
       </div>
       <ins-divider label="Amplitude Envelope"></ins-divider>
       <div class="ins-oscillator__envelope">
-        <ins-adsr-envelope [(ngModel)]="envelopeOptions" [midiLearn]="midiLearn" [height]="50" (ngModelChange)="setAdsr()"></ins-adsr-envelope>
+        <ins-adsr-envelope [(ngModel)]="envelopeOptions" [midiLearn]="midiLearn" [width]="210" [height]="50" (ngModelChange)="setAdsr()"></ins-adsr-envelope>
       </div>
       <!--<ins-oscilloscope [synth]="synth"></ins-oscilloscope>-->
     </div>

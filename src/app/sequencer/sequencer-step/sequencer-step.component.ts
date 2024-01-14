@@ -17,8 +17,10 @@ export class SequencerStepComponent {
   @Input() id: number = 0;
   @Input() playing: boolean = false;
   @Input() config: SequencerStep = {velocity: 1, pitch: 0, gate: 3, armed: false, octave: 0, id: 0, duration: '8n'};
+  @Input() keyboardConnected: boolean = false;
   //public playing: boolean = false;
   gateValue = 3;
+  noteOptions: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G','G#', 'A', 'A#', 'B'];
   toggleArmed() {
     this.armed = !this.armed;
   }
