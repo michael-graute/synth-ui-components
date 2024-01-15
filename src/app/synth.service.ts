@@ -24,9 +24,16 @@ export class SynthService {
 
   noteOnEvent: Subject<string> = new Subject<string>();
   noteOffEvent: Subject<string> = new Subject<string>();
+  keyDownEvent: Subject<string> = new Subject<string>();
+  keyUpEvent: Subject<string> = new Subject<string>();
   attackReleaseEvent: Subject<InsAttackReleaseOptions> = new Subject<InsAttackReleaseOptions>();
+  sequencerKeyboardConnected: boolean = false;
 
   constructor() { }
+
+  toggleSequencerKeyboardConnected() {
+    this.sequencerKeyboardConnected = !this.sequencerKeyboardConnected;
+  }
 
   noteOn(note: string) {
     this.noteOnEvent.next(note);
@@ -37,24 +44,16 @@ export class SynthService {
   }
 
   keyDown(note: string) {
-    this.noteOn(note);
+    if(!this.sequencerKeyboardConnected) this.noteOn(note);
+    this.keyDownEvent.next(note);
   }
 
   keyUp(note: string) {
-    this.noteOff(note);
+    if(!this.sequencerKeyboardConnected) this.noteOff(note);
+    this.keyUpEvent.next(note);
   }
 
   attackRelease(options: InsAttackReleaseOptions) {
-    //const eventPayload: InsAttackReleaseOptions = {note: note, duration: duration, time: time, velocity: velocity};
     this.attackReleaseEvent.next(options);
-  }
-
-  addOscillator(oscillator: InsOscillator) {
-    oscillator.oscillator.toDestination();
-    this.oscillators.push(oscillator);
-  }
-
-  getOscillator(id: string): Synth | undefined {
-    return this.oscillators.find(o => o.id === id)?.oscillator;
   }
 }

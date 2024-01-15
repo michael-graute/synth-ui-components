@@ -63,21 +63,22 @@ export class SequencerComponent implements OnInit {
   ngOnInit() {
   }
 
-  setKeyboardConnection() {
-    if(this.keyboardConnected) {
-      this.service?.noteOnEvent.subscribe((event: any) => {
+  setKeyboardConnection(event: boolean) {
+    this.service?.toggleSequencerKeyboardConnected();
+    if(event) {
+      this.service?.keyDownEvent.subscribe((event: any) => {
         console.log('note on event', event);
         this.rootNote = event;
-        this.playSequence();
+        if(!this.playing) this.playSequence();
       });
-      this.service?.noteOffEvent.subscribe((event: any) => {
+      this.service?.keyUpEvent.subscribe((event: any) => {
         console.log('note off event', event);
         this.rootNote = 'C';
-        this.stopSequence()
+        this.stopSequence();
       });
     } else {
-      this.service?.noteOnEvent.unsubscribe();
-      this.service?.noteOffEvent.unsubscribe();
+      this.service?.keyDownEvent.unsubscribe();
+      this.service?.keyUpEvent.unsubscribe();
     }
   }
 

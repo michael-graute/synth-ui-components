@@ -4,7 +4,7 @@
   </div>
   <div class="ins-sequencer__body card-body">
     <div class="d-flex mb-3 gap-3 align-items-end">
-      <ins-switch [(ngModel)]="keyboardConnected" (ngModelChange)="setKeyboardConnection()" label="Connect keyboard" [hasLabel]="false"></ins-switch>
+      <ins-switch [(ngModel)]="keyboardConnected" (change)="setKeyboardConnection($event)" label="Connect keyboard" [hasLabel]="false"></ins-switch>
       <ins-knob [(ngModel)]="tempo" [min]="20" [max]="300" [step]="1" [label]="'BPM'"></ins-knob>
       <ins-knob [(ngModel)]="interval" [options]="gateOptions" [min]="0" [max]="1" [step]="0.01" [label]="'Interval'"></ins-knob>
     </div>
