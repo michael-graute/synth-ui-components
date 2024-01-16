@@ -10,9 +10,10 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
+import {MidiService} from "../midi.service";
 
 export interface KnobMidiEvent {
-  controller: number;
+  control: number;
   value: number;
   channel: number;
 }
@@ -50,7 +51,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @Input() valueTextWeight: number = 300;
   @Input() midiLearn: boolean = false;
   @Input() midiLearnEditMode: boolean = false;
-  @Input() midiEventListener: KnobMidiEvent = { controller: 0, value: 0, channel: 0 };
+  @Input() midiEventListener: KnobMidiEvent = { control: 0, value: 0, channel: 0 };
   @Input() lfo: boolean = false;
   @Input() options: any[] | undefined = undefined;
 
@@ -83,9 +84,15 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   }
 
   @Input() set value(value: number) {
+    if(this.midiListen) {
+      value = this.convertRange( value, [ 0, 127 ], [ this.min, this.max ] );
+    }
     this.internalValue = Math.round(value * (100 / this.step)) / (100 / this.step);
     this.onChange(this.internalValue);
     this.draw();
+  }
+
+  constructor(private midiService: MidiService) {
   }
 
   toggleMidiLearnEditMode(): void {
@@ -94,7 +101,6 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   toggleMidiListen(): void {
     this.midiListen = !this.midiListen;
-    this.midiEventListener = { controller: Math.floor(Math.random() * 100), value: 100, channel: 1 };
   }
 
   public writeValue(obj: any): void {
@@ -126,6 +132,21 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       this.max = this.options.length - 1;
       this.step = 1;
     }
+    this.midiService.midiLearnToggleEvent.subscribe((midiLearn: boolean) => {
+      this.midiLearn = midiLearn;
+    });
+    this.midiService.controlChangeEvent.subscribe((midiEvent: KnobMidiEvent) => {
+      if(midiEvent.control === this.midiEventListener.control && midiEvent.channel === this.midiEventListener.channel && this.midiListen) {
+        this.value = midiEvent.value;
+      }
+    });
+    this.midiService.midiLearnControlEvent.subscribe((midiEvent: KnobMidiEvent) => {
+      if(this.midiLearn && this.midiLearnEditMode && !this.midiListen) {
+        this.midiEventListener = midiEvent;
+        this.midiListen = true;
+        console.log(midiEvent);
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -136,8 +157,10 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @HostListener('mousedown', ['$event'])
   handleMouseDown(event: MouseEvent): void {
-    this.mouseDown = true;
-    this.mouseDownStartY = event.clientY;
+    if(!this.midiListen) {
+      this.mouseDown = true;
+      this.mouseDownStartY = event.clientY;
+    }
   }
 
   @HostListener('mouseup')
@@ -172,7 +195,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   handleMouseWheel(event: WheelEvent): void {
     event.preventDefault();
     this.mouseWheelEvent = event;
-    if(!this.midiLearn && !this.editMode && !this.mouseDown && this.mouseOver) {
+    if(!this.midiLearn && !this.editMode &&!this.midiListen && !this.mouseDown && this.mouseOver) {
       this.tmpValue += event.deltaY/4;
       if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator;
       if(this.tmpValue <= 0) this.tmpValue = 0;

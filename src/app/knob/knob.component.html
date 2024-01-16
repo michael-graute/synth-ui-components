@@ -14,7 +14,7 @@
   <div *ngIf="midiLearn" class="ins-midi-learn" [ngClass]="{'ins-midi-listen-active': midiListen}" (click)="toggleMidiLearnEditMode()">
     <div *ngIf="midiLearnEditMode || midiListen" class="ins-midi-learn-editor" (click)="toggleMidiListen()">
       <p>CH: {{midiEventListener.channel}}</p>
-      <p>CC: {{midiEventListener.controller}}</p>
+      <p>CC: {{midiEventListener.control}}</p>
     </div>
   </div>
 </div>

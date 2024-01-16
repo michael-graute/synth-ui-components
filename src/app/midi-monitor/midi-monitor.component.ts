@@ -12,6 +12,7 @@ export type InsNote = {
 }
 
 export type InsControlChange = {
+  channel: number,
   control: number,
   value: number
 }
@@ -52,6 +53,7 @@ export class MidiMonitorComponent implements OnInit{
     });
     this.controlChanges$.subscribe((controlChange: InsControlChange): void => {
       console.log(controlChange);
+      this.midiService.controlChange(controlChange);
     });
   }
 
@@ -65,6 +67,7 @@ export class MidiMonitorComponent implements OnInit{
 
   toInsControlChange = (message: Uint8Array): InsControlChange => {
     return {
+      channel: 1,
       control: message[1],
       value: message[2]
     }
