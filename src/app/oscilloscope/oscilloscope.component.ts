@@ -10,7 +10,7 @@ import {Transport} from "tone/build/esm/core/clock/Transport";
 export class OscilloscopeComponent implements AfterViewInit {
   @ViewChild('canvasElement', {static: true}) canvasElement: any;
 
-  @Input() synth = new Tone.Synth();
+  @Input() synth: any = new Tone.Synth();
   public fft = new Tone.FFT({size: 512}).toDestination();
   public analyser = new Tone.Analyser('waveform', 512);
   private interval: any;

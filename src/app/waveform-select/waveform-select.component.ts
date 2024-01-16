@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from "uuid";
 
@@ -22,13 +22,18 @@ export class WaveformSelectComponent implements ControlValueAccessor {
     this.internalValue = value;
     this.onChange(this.value)
   }
+
+  @Output() waveformChange: EventEmitter<string> = new EventEmitter<string>();
+
   public internalValue: string = 'triangle';
 
   get value(): string {
     return this.internalValue;
   }
 
-  public onChange = (value: string): void => {};
+  public onChange = (value: string): void => {
+    this.waveformChange.emit(value);
+  };
 
   registerOnChange(fn: any): void {
     this.onChange = fn;

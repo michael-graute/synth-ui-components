@@ -5,7 +5,7 @@
     <div class="ins-oscillator__body card-body">
       <ins-divider label="waveform" class="mt-0"></ins-divider>
       <div class="ins-oscillator__waveform">
-          <ins-waveform-select [(ngModel)]="synth.oscillator.type"></ins-waveform-select>
+          <ins-waveform-select value="sine" (waveformChange)="setWaveForm($event)"></ins-waveform-select>
       </div>
       <ins-divider label="Settings"></ins-divider>
       <div class="d-flex">

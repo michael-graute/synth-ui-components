@@ -145,6 +145,9 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
         this.midiEventListener = midiEvent;
         this.midiListen = true;
       }
+      if(midiEvent.control === this.midiEventListener.control && midiEvent.channel === this.midiEventListener.channel && this.midiListen) {
+        this.value = midiEvent.value;
+      }
     });
   }
 

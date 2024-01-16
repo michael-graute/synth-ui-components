@@ -15,7 +15,7 @@ export class OscillatorComponent implements OnInit {
     sustain: .7,
     release: 25
   };
-  @Input() synth: Tone.Synth = new Tone.Synth({oscillator: {type: 'sawtooth'}, envelope: this.envelopeOptions}).toDestination();
+  @Input() synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth, {envelope: this.envelopeOptions}).toDestination();
   @Input() name: string = 'Oscillator'
   @Input() midiLearn: boolean = false;
   @Input() service: SynthService | undefined = undefined
@@ -23,6 +23,8 @@ export class OscillatorComponent implements OnInit {
   public active: boolean = true;
 
   constructor() {
+    this.synth.volume.value = -10;
+    this.synth.set({oscillator: {type: 'sine'}});
   }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class OscillatorComponent implements OnInit {
       });
       this.service.noteOffEvent.subscribe((event: any) => {
         if(this.active) {
-          this.synth.triggerRelease();
+          this.synth.triggerRelease(event);
         }
       });
       this.service.attackReleaseEvent.subscribe((event: any) => {
@@ -57,10 +59,21 @@ export class OscillatorComponent implements OnInit {
     this.active = !this.active;
   }
 
+  setWaveForm(waveForm: any): void {
+    this.synth.set({oscillator: {type: waveForm}});
+  }
+
   setAdsr(): void {
-    this.synth.envelope.attack = this.envelopeOptions.attack as number / 100 ;
+    const options = {
+      attack: this.envelopeOptions.attack as number / 100,
+      decay: this.envelopeOptions.decay as number / 100,
+      sustain: this.envelopeOptions.sustain as number,
+      release: this.envelopeOptions.release as number / 100
+    }
+    this.synth.set({envelope: options});
+    /*envelope.attack = this.envelopeOptions.attack as number / 100 ;
     this.synth.envelope.decay = this.envelopeOptions.decay as number / 100;
     this.synth.envelope.sustain = this.envelopeOptions.sustain as number;
-    this.synth.envelope.release = this.envelopeOptions.release as number / 100;
+    this.synth.envelope.release = this.envelopeOptions.release as number / 100;*/
   }
 }
