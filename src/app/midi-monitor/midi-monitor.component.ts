@@ -13,7 +13,7 @@ export type InsNote = {
 
 export type InsControlChange = {
   control: number,
-  on: boolean
+  value: number
 }
 
 @Component({
@@ -24,7 +24,7 @@ export type InsControlChange = {
 export class MidiMonitorComponent implements OnInit{
 
   readonly notes$: Observable<InsNote>;
-  readonly controlChanges$: Observable<any>;
+  readonly controlChanges$: Observable<InsControlChange>;
 
   constructor(@Inject(MIDI_MESSAGES) messages$: Observable<WebMidi.MIDIMessageEvent>, public midiService: MidiService) {
     this.notes$ = messages$.pipe(
@@ -66,7 +66,7 @@ export class MidiMonitorComponent implements OnInit{
   toInsControlChange = (message: Uint8Array): InsControlChange => {
     return {
       control: message[1],
-      on: message[2] !== 0
+      value: message[2]
     }
   }
 

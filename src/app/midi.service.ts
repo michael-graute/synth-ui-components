@@ -11,10 +11,10 @@ export class MidiService {
   constructor(private synthService: SynthService) { }
 
   noteOn(note: string, velocity: number) {
-    this.synthService.noteOn(note);
+    this.synthService.keyDown(note);
   }
 
   noteOff(note: string) {
-    this.synthService.noteOff(note);
+    this.synthService.keyUp(note);
   }
 }
