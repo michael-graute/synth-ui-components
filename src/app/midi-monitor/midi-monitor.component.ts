@@ -44,7 +44,6 @@ export class MidiMonitorComponent implements OnInit{
 
   ngOnInit(): void {
     this.notes$.subscribe((note: InsNote): void => {
-      console.log(note);
       if(note.on) {
         this.midiService.noteOn(note.note, note.velocity);
       } else {
@@ -52,7 +51,6 @@ export class MidiMonitorComponent implements OnInit{
       }
     });
     this.controlChanges$.subscribe((controlChange: InsControlChange): void => {
-      console.log(controlChange);
       this.midiService.controlChange(controlChange);
     });
   }
