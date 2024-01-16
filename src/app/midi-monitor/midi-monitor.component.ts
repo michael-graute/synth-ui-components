@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MIDI_MESSAGES, toData, notes, filterByChannel} from "@ng-web-apis/midi";
-import {Observable, OperatorFunction, Subscriber} from "rxjs";
+import {Observable, Subscriber} from "rxjs";
 import {map} from 'rxjs/operators';
 import * as Tone from "tone";
 import {MidiService} from "../midi.service";
