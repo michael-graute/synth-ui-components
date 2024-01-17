@@ -67,12 +67,10 @@ export class SequencerComponent implements OnInit {
     this.service?.toggleSequencerKeyboardConnected();
     if(event) {
       this.service?.keyDownEvent.subscribe((event: any) => {
-        console.log('note on event', event);
         this.rootNote = event;
         if(!this.playing) this.playSequence();
       });
       this.service?.keyUpEvent.subscribe((event: any) => {
-        console.log('note off event', event);
         this.rootNote = 'C';
         this.stopSequence();
       });

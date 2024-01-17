@@ -12,10 +12,10 @@ export class OscillatorComponent implements OnInit {
   public envelopeOptions: RecursivePartial<Omit<Tone.EnvelopeOptions, "context">> = {
     attack: 15,
     decay: 30,
-    sustain: .7,
+    sustain: 70,
     release: 25
   };
-  @Input() synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth, {envelope: this.envelopeOptions}).toDestination();
+  @Input() synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth).toDestination();
   @Input() name: string = 'Oscillator'
   @Input() midiLearn: boolean = false;
   @Input() service: SynthService | undefined = undefined
@@ -25,6 +25,7 @@ export class OscillatorComponent implements OnInit {
   constructor() {
     this.synth.volume.value = -10;
     this.synth.set({oscillator: {type: 'sine'}});
+    this.setAdsr();
   }
 
   ngOnInit() {
@@ -65,15 +66,11 @@ export class OscillatorComponent implements OnInit {
 
   setAdsr(): void {
     const options = {
-      attack: this.envelopeOptions.attack as number / 100,
+      attack: this.envelopeOptions.attack as number <= 0 ? 0.05 : this.envelopeOptions.attack as number / 100,
       decay: this.envelopeOptions.decay as number / 100,
-      sustain: this.envelopeOptions.sustain as number,
-      release: this.envelopeOptions.release as number / 100
+      sustain: this.envelopeOptions.sustain as number / 100,
+      release: this.envelopeOptions.release as number <= 0 ? 0.05 : this.envelopeOptions.release as number / 100
     }
     this.synth.set({envelope: options});
-    /*envelope.attack = this.envelopeOptions.attack as number / 100 ;
-    this.synth.envelope.decay = this.envelopeOptions.decay as number / 100;
-    this.synth.envelope.sustain = this.envelopeOptions.sustain as number;
-    this.synth.envelope.release = this.envelopeOptions.release as number / 100;*/
   }
 }

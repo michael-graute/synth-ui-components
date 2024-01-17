@@ -12,13 +12,14 @@
         <div class="keys">
           <div class="note" draggable="false"
              *ngFor="let note of notes; let noteLast = last; let ni = index"
-             (mouseover)="mouseOver(note + octave)"
-             (mousedown)="keyDown(note + octave);"
-             (mouseup)="keyUp(note + octave);"
+             (mouseover)="mouseOver(note + octave);"
+             (mousedown)="mouseDown(note + octave);"
+             (mouseup)="mouseUp(note + octave);"
+             (mouseout)="mouseOut(note + octave);"
              [ngClass]="{
                 'sharp':( note.indexOf('#') >= 1),
                 'last':noteLast && octaveLast,
-                'playing': isKeyDown && currentKey === note + octave
+                'playing': (isKeyDown && heldKey === note + octave) || (heldKeys.includes(note + octave)),
              }">
             <span class="ins-keyboard-char-indicator" *ngIf="charMap[ni] && oi === 0">{{charMap[ni]}}</span>
           </div>

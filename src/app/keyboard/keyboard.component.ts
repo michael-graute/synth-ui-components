@@ -13,7 +13,7 @@ export class KeyboardComponent implements OnInit {
   public octaves : number[] = [];
   public isKeyDown : boolean = false;
   public heldKey: string = "";
-  public currentKey : string = "";
+  public heldKeys: string[] = [];
   public hold : boolean = false;
 
   @Input() service: SynthService | undefined;
@@ -22,9 +22,19 @@ export class KeyboardComponent implements OnInit {
     this.changeOctave(2)
   }
 
+  @HostListener('document:mouseup', ['$event'])
+  handleDocumentMouseUpEvent(event: MouseEvent) {
+    this.isKeyDown = false;
+  }
+
   @HostListener('document:keydown', ['$event'])
   handleKeyDownEvent(event: KeyboardEvent) {
-    if(this.charMap.includes(event.key) && this.heldKey != this.notes[this.charMap.findIndex((element) => element == event.key)] + (this.octaveBase + 1)) {
+    /*if(this.charMap.includes(event.key) && this.heldKey != this.notes[this.charMap.findIndex((element) => element == event.key)] + (this.octaveBase + 1)) {
+      const index = this.charMap.findIndex((element) => element == event.key);
+      const note = this.notes[index] + (this.octaveBase + 1);
+      this.keyDown(note);
+    }*/
+    if(this.charMap.includes(event.key) && !this.heldKeys.includes(this.notes[this.charMap.findIndex((element) => element == event.key)] + (this.octaveBase + 1))) {
       const index = this.charMap.findIndex((element) => element == event.key);
       const note = this.notes[index] + (this.octaveBase + 1);
       this.keyDown(note);
@@ -33,32 +43,55 @@ export class KeyboardComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event'])
   handleKeyUpEvent(event: KeyboardEvent) {
+    /*if(this.charMap.includes(event.key)) {
+      const index = this.charMap.findIndex((element) => element == event.key);
+      const note = this.notes[index] + (this.octaveBase + 1);
+      if(note === this.heldKey) {
+        this.keyUp(note);
+      }
+    }*/
     if(this.charMap.includes(event.key)) {
       const index = this.charMap.findIndex((element) => element == event.key);
       const note = this.notes[index] + (this.octaveBase + 1);
-      if(note === this.currentKey) {
-        this.keyUp(note);
-      }
+      this.keyUp(note);
     }
   }
 
   keyUp(key:string){
-    if(!this.hold) {
+    //if(!this.hold) {
       this.service?.keyUp(key);
-    }
+    //}
   }
 
   keyDown(key:string){
-    if(this.hold && this.heldKey === key) {
-      this.service?.keyUp(key);
-    } else {
+    //if(this.hold && this.heldKey === key) {
       this.service?.keyDown(key);
+    /*} else {
+      this.service?.keyDown(key);
+    }*/
+  }
+
+  mouseDown(key:string){
+    this.isKeyDown = true;
+    this.service?.keyDown(key);
+  }
+
+  mouseUp(key:string){
+    if(this.isKeyDown && this.heldKeys.includes(key)) {
+      this.service?.keyUp(key);
+      this.isKeyDown = false;
     }
   }
 
   mouseOver(key:string){
-    if(this.isKeyDown && this.heldKey != key && !this.hold) {
+    if(this.isKeyDown && !this.heldKeys.includes(key) && !this.hold) {
       this.service?.keyDown(key);
+    }
+  }
+
+  mouseOut(key:string){
+    if(this.isKeyDown && this.heldKeys.includes(key)) {
+      this.service?.keyUp(key);
     }
   }
 
@@ -72,13 +105,13 @@ export class KeyboardComponent implements OnInit {
   ngOnInit(): void {
     this.service?.keyDownEvent.subscribe((note: string) => {
       this.isKeyDown = true;
-      this.currentKey = note;
       this.heldKey = note;
+      this.heldKeys.push(note);
     });
     this.service?.keyUpEvent.subscribe((note: string) => {
-      this.isKeyDown = false;
-      this.currentKey = "";
+      //this.isKeyDown = false;
       this.heldKey = "";
+      this.heldKeys = this.heldKeys.filter((element) => element != note);
     });
   }
 

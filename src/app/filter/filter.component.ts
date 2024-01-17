@@ -17,7 +17,7 @@ export class FilterComponent {
   public envelopeOptions: RecursivePartial<Omit<Tone.EnvelopeOptions, "context">> = {
     attack: 15,
     decay: 30,
-    sustain: .7,
+    sustain: 70,
     release: 25
   };
 

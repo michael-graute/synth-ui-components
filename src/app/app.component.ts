@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   adsr: any = {
     attack: 30,
     decay: 25,
-    sustain: .7,
+    sustain: 70,
     release: 45
   }
   //osc1 = new Tone.Synth();
