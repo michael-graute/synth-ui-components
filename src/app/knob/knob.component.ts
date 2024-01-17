@@ -84,9 +84,6 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   }
 
   @Input() set value(value: number) {
-    if(this.midiListen) {
-      value = this.convertRange( value, [ 0, 127 ], [ this.min, this.max ] );
-    }
     this.internalValue = Math.round(value * (100 / this.step)) / (100 / this.step);
     this.onChange(this.internalValue);
     this.draw();
@@ -136,19 +133,21 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       this.midiLearn = midiLearn;
     });
     this.midiService.controlChangeEvent.subscribe((midiEvent: KnobMidiEvent) => {
-      if(midiEvent.control === this.midiEventListener.control && midiEvent.channel === this.midiEventListener.channel && this.midiListen) {
-        this.value = midiEvent.value;
-      }
+      this.setMidiEventValue(midiEvent);
     });
     this.midiService.midiLearnControlEvent.subscribe((midiEvent: KnobMidiEvent) => {
       if(this.midiLearn && this.midiLearnEditMode && !this.midiListen) {
         this.midiEventListener = midiEvent;
         this.midiListen = true;
       }
-      if(midiEvent.control === this.midiEventListener.control && midiEvent.channel === this.midiEventListener.channel && this.midiListen) {
-        this.value = midiEvent.value;
-      }
+      this.setMidiEventValue(midiEvent);
     });
+  }
+
+  setMidiEventValue(midiEvent: KnobMidiEvent): void {
+    if(midiEvent.control === this.midiEventListener.control && midiEvent.channel === this.midiEventListener.channel && this.midiListen) {
+      this.value = Math.round(this.convertRange( midiEvent.value, [ 0, 127 ], [ this.min, this.max ] )/ this.step) * this.step;
+    }
   }
 
   ngAfterViewInit(): void {
