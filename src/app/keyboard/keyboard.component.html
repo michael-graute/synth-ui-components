@@ -19,7 +19,7 @@
              [ngClass]="{
                 'sharp':( note.indexOf('#') >= 1),
                 'last':noteLast && octaveLast,
-                'playing': (isKeyDown && heldKey === note + octave) || (heldKeys.includes(note + octave)),
+                'playing': heldKeys.includes(note + octave),
              }">
             <span class="ins-keyboard-char-indicator" *ngIf="charMap[ni] && oi === 0">{{charMap[ni]}}</span>
           </div>
