@@ -10,42 +10,62 @@ import {SynthService} from "../synth.service";
 })
 export class OscillatorComponent implements OnInit {
   public envelopeOptions: RecursivePartial<Omit<Tone.EnvelopeOptions, "context">> = {
-    attack: 15,
-    decay: 30,
-    sustain: 70,
-    release: 25
+    attack: 1,
+    decay: 10,
+    sustain: 30,
+    release: 100
   };
   @Input() synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth).toDestination();
   @Input() name: string = 'Oscillator'
   @Input() midiLearn: boolean = false;
   @Input() service: SynthService | undefined = undefined
+  @Input() type: 'sine' | 'triangle' = 'sine';
 
   public active: boolean = true;
 
+  public octave: number = 0;
+
   constructor() {
-    this.synth.volume.value = -10;
-    this.synth.set({oscillator: {type: 'sine'}});
-    this.setAdsr();
+  }
+
+  @Input() set volume(value: number) {
+    this.synth.set({volume: value});
+  }
+
+  get volume(): number {
+    return Math.round(this.synth.get().volume);
+  }
+
+  set detune(value: number) {
+    this.synth.set({detune: value});
+  }
+
+  get detune(): number {
+    return this.synth.get().detune;
   }
 
   ngOnInit() {
-    if(this.service) {
-      this.service.noteOnEvent.subscribe((event: any) => {
-        if(this.active) {
-          this.synth.triggerAttack(event);
-        }
-      });
-      this.service.noteOffEvent.subscribe((event: any) => {
-        if(this.active) {
-          this.synth.triggerRelease(event);
-        }
-      });
-      this.service.attackReleaseEvent.subscribe((event: any) => {
-        if(this.active) {
-          this.synth.triggerAttackRelease(event.note, event.duration, event.time, event.velocity);
-        }
-      });
-    }
+    //this.synth.set({volume: -10});
+    this.synth.set({oscillator: {type: this.type}});
+    this.setAdsr();
+
+    this.service?.noteOnEvent.subscribe((event: any) => {
+      if(this.active) {
+        const note = Tone.Frequency(event).transpose((this.octave || 0) * 12).toNote();
+        this.synth.triggerAttack(note);
+      }
+    });
+    this.service?.noteOffEvent.subscribe((event: any) => {
+      if(this.active) {
+        const note = Tone.Frequency(event).transpose((this.octave || 0) * 12).toNote();
+        this.synth.triggerRelease(note);
+      }
+    });
+    this.service?.attackReleaseEvent.subscribe((event: any) => {
+      if(this.active) {
+        this.synth.triggerAttackRelease(event.note, event.duration, event.time, event.velocity);
+      }
+    });
   }
 
   connectTo(destination: any): void {
@@ -71,6 +91,9 @@ export class OscillatorComponent implements OnInit {
       sustain: this.envelopeOptions.sustain as number / 100,
       release: this.envelopeOptions.release as number <= 0 ? 0.05 : this.envelopeOptions.release as number / 100
     }
+    //console.log(this.synth.get());
+    //console.log(options);
     this.synth.set({envelope: options});
+    //console.log(this.synth.get());
   }
 }

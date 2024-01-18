@@ -5,18 +5,18 @@
     <div class="ins-oscillator__body card-body">
       <ins-divider label="waveform" class="mt-0"></ins-divider>
       <div class="ins-oscillator__waveform">
-          <ins-waveform-select value="sine" (waveformChange)="setWaveForm($event)"></ins-waveform-select>
+          <ins-waveform-select [value]="type" (waveformChange)="setWaveForm($event)"></ins-waveform-select>
       </div>
       <ins-divider label="Settings"></ins-divider>
       <div class="d-flex">
         <div class="ins-oscillator__detune">
-          <ins-panning-knob label="detune" [min]="-12" [max]="12" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
+          <ins-knob type="dot" label="detune" [min]="-100" [max]="100" [step]="1" [(ngModel)]="detune"></ins-knob>
         </div>
         <div class="ins-oscillator__octave">
-          <ins-panning-knob label="octave" [min]="-3" [max]="3" [step]="1" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
+          <ins-panning-knob label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0"></ins-panning-knob>
         </div>
         <div class="ins-oscillator__volume">
-          <ins-knob label="Volume" [min]="0" [max]="100" [value]="80"></ins-knob>
+          <ins-knob label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-knob>
         </div>
         <div class="ins-oscillator__pan">
           <ins-panning-knob label="pan" [min]="-10" [max]="10" [step]="1"></ins-panning-knob>

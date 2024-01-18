@@ -10,6 +10,7 @@ import * as Tone from "tone";
 export class AppComponent implements OnInit {
   foo: number = 48;
   bar: number = 67;
+  barbaz: number = 34;
   pan: number = -34;
   adsr: any = {
     attack: 30,
