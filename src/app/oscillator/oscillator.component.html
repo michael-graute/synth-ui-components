@@ -19,12 +19,12 @@
           <ins-knob label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-knob>
         </div>
         <div class="ins-oscillator__pan">
-          <ins-panning-knob label="pan" [min]="-10" [max]="10" [step]="1"></ins-panning-knob>
+          <ins-panning-knob label="pan" [(ngModel)]="pan" [min]="-10" [max]="10" [step]="1"></ins-panning-knob>
         </div>
       </div>
       <ins-divider label="Amplitude Envelope"></ins-divider>
       <div class="ins-oscillator__envelope">
-        <ins-adsr-envelope [(ngModel)]="envelopeOptions" [midiLearn]="midiLearn" [width]="210" [height]="50" (ngModelChange)="setAdsr()"></ins-adsr-envelope>
+        <ins-adsr-envelope [(ngModel)]="envelopeOptions" [width]="210" [height]="50" (ngModelChange)="setAdsr()"></ins-adsr-envelope>
       </div>
       <!--<ins-oscilloscope [synth]="synth"></ins-oscilloscope>-->
     </div>

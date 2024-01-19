@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SynthService} from "./synth.service";
 import * as Tone from "tone";
+import {AppService} from "./app.service";
 
 @Component({
   selector: 'ins-root',
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit {
   }
   //osc1 = new Tone.Synth();
 
-  constructor(public synthService: SynthService) {
+  constructor(public synthService: SynthService, private appService: AppService) {
   }
 
   ngOnInit() {
@@ -35,5 +36,9 @@ export class AppComponent implements OnInit {
 
   toggleMidiLearn() {
     this.midiLearn = !this.midiLearn;
+  }
+
+  savePreset() {
+    this.appService.savePreset('init', {components: {}})
   }
 }

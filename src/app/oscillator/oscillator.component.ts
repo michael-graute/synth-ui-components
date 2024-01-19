@@ -1,14 +1,30 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import * as Tone from "tone";
 import {RecursivePartial} from "tone/build/esm/core/util/Interface";
 import {SynthService} from "../synth.service";
+import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
+
+export interface OscillatorConfig {
+  volume: number;
+  detune: number;
+  active: boolean;
+  octave: number;
+  pan: number;
+  type: string;
+  envelope: {
+    attack: number;
+    decay: number;
+    sustain: number;
+    release: number;
+  }
+}
 
 @Component({
   selector: 'ins-oscillator',
   templateUrl: './oscillator.component.html',
   styleUrls: ['./oscillator.component.scss']
 })
-export class OscillatorComponent implements OnInit {
+export class OscillatorComponent extends AbstractSynthComponent {
   public envelopeOptions: RecursivePartial<Omit<Tone.EnvelopeOptions, "context">> = {
     attack: 1,
     decay: 10,
@@ -17,19 +33,58 @@ export class OscillatorComponent implements OnInit {
   };
   @Input() synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth).toDestination();
   @Input() name: string = 'Oscillator'
-  @Input() midiLearn: boolean = false;
   @Input() service: SynthService | undefined = undefined
-  @Input() type: 'sine' | 'triangle' = 'sine';
+  @Input() set type(type: any) {
+    this.synth.set({oscillator: {type: type}});
+    this.config.type = type;
+  }
 
-  public active: boolean = true;
+  get type(): any {
+    return this.config.type;
+  }
 
-  public octave: number = 0;
+  public override config: OscillatorConfig = {
+    volume: -10,
+    detune: 0,
+    active: true,
+    octave: 0,
+    type: 'sine',
+    pan: 0,
+    envelope: {
+      attack: 1,
+      decay: 10,
+      sustain: 30,
+      release: 100
+    }
+  };
 
-  constructor() {
+  set pan(value: number) {
+    this.config.pan = value;
+  }
+
+  get pan(): number {
+    return this.config.pan;
+  }
+
+  set active(value: boolean) {
+    this.config.active = value;
+  }
+
+  get active(): boolean {
+    return this.config.active;
+  }
+
+  set octave(value: number) {
+    this.config.octave = value;
+  }
+
+  get octave(): number {
+    return this.config.octave;
   }
 
   @Input() set volume(value: number) {
     this.synth.set({volume: value});
+    this.config.volume = value;
   }
 
   get volume(): number {
@@ -38,15 +93,21 @@ export class OscillatorComponent implements OnInit {
 
   set detune(value: number) {
     this.synth.set({detune: value});
+    this.config.detune = value;
   }
 
   get detune(): number {
-    return this.synth.get().detune;
+    return this.config.detune;
   }
 
-  ngOnInit() {
+  override ngOnInit() {
+    super.ngOnInit();
+    console.log(this.type);
+    if(!this.type) {
+      this.type = 'sine';
+    }
     //this.synth.set({volume: -10});
-    this.synth.set({oscillator: {type: this.type}});
+    //this.synth.set({oscillator: {type: this.type}});
     this.setAdsr();
 
     this.service?.noteOnEvent.subscribe((event: any) => {
@@ -94,6 +155,7 @@ export class OscillatorComponent implements OnInit {
     //console.log(this.synth.get());
     //console.log(options);
     this.synth.set({envelope: options});
+    this.config.envelope = options;
     //console.log(this.synth.get());
   }
 }

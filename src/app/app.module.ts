@@ -20,11 +20,13 @@ import { WaveformPlotterComponent} from "./waveform-plotter/waveform-plotter.com
 import { DividerComponent } from "./divider/divider.component";
 import { LfoComponent } from "./lfo/lfo.component";
 import { MidiMonitorComponent } from "./midi-monitor/midi-monitor.component";
+import { AbstractSynthComponent } from "./abstracts/abstract-synth.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     AbstractInputComponent,
+    AbstractSynthComponent,
     KnobComponent,
     SliderComponent,
     SwitchComponent,
