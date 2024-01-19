@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
-import {Tone} from "tone/build/esm/core/Tone";
-import {OmniOscillator, Synth} from "tone";
+import * as Tone from "tone";
 
 export interface InsOscillator {
   id: string;
-  oscillator: Synth;
+  oscillator: Tone.Synth;
 }
 
 export interface InsAttackReleaseOptions {

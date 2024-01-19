@@ -16,7 +16,7 @@
     </div>
     <form class="d-flex">
       <button class="btn btn-success me-2" type="button" (click)="savePreset()">Save Preset</button>
-      <ins-midi-monitor></ins-midi-monitor>
+      <ins-midi-monitor *ngIf="midiAllowed"></ins-midi-monitor>
     </form>
   </div>
 </nav>

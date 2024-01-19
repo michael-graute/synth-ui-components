@@ -19,23 +19,32 @@ export class AppComponent implements OnInit {
     sustain: 70,
     release: 45
   }
+  midiAllowed: boolean = false;
   //osc1 = new Tone.Synth();
 
   constructor(public synthService: SynthService, private appService: AppService) {
   }
 
   ngOnInit() {
+    // @ts-ignore
+    navigator.permissions.query({ name: "midi", sysex: true }).then((result: PermissionStatus) => {
+      if (result.state === "granted") {
+        this.midiAllowed = true;
+      } else if (result.state === "prompt") {
+        return navigator.requestMIDIAccess({ sysex: true }).then((midiAccess: WebMidi.MIDIAccess): void => {
+          this.midiAllowed = midiAccess.sysexEnabled;
+        });
+      } else if (result.state === "denied") {
+        this.midiAllowed = false;
+      }
+    });
   }
 
   public page: string = 'main';
-  public midiLearn: boolean = false;
+
 
   onKnobChange(event: number) {
     //console.log('knobChange', event);
-  }
-
-  toggleMidiLearn() {
-    this.midiLearn = !this.midiLearn;
   }
 
   savePreset() {
