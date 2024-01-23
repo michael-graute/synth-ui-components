@@ -9,7 +9,11 @@ import * as Tone from "tone";
 export class ReverbComponent {
 
   private _active: boolean = false;
-  reverb: Tone.Reverb = new Tone.Reverb(1);
+  reverb: Tone.Reverb = new Tone.Reverb({decay: 2.5, wet: 0.8});
+
+  constructor() {
+    this.active = true;
+  }
 
   set reverbDecay(value: number) {
     this.reverb.decay = value;
