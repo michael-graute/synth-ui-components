@@ -1,32 +1,34 @@
-span.badge {
-  position: absolute;
-  z-index: 1;
-  font-size: 8px;
-  font-weight: 300;
-  text-transform: uppercase;
-  border-radius: 2px;
-  color: #86d486;
-  padding: 2px 3px;
-  user-select: none;
-
-  &.ins-badge-midi-listen {
-    background: #00a4e1;
-    right: 0;
-    bottom: 12px;
-    color: #7ddcff;;
-  }
-
+:host {
+  display: block;
 }
 
 .ins-knob {
   position: relative;
   cursor: pointer;
 
+  span.badge {
+    position: absolute;
+    z-index: 1;
+    font-size: 8px;
+    font-weight: 300;
+    text-transform: uppercase;
+    border-radius: 2px;
+    color: #86d486;
+    padding: 2px 3px;
+    user-select: none;
+
+    &.ins-badge-midi-listen {
+      background: #00a4e1;
+      right: 0;
+      bottom: 12px;
+      color: #7ddcff;;
+    }
+  }
+
   .ins-knob-mouse-move-detector {
     position: absolute;
     left: 0;
     right: 0;
-    //z-index: 100;
   }
 
   .ins-knob-value {
@@ -57,7 +59,6 @@ span.badge {
       z-index: 100;
       background: var(--value-editor-bg-color);
       border: 1px solid var(--value-editor-text-color);
-      //border-radius: 50%;
       color: var(--value-editor-text-color);
       font-size: small;
       font-weight: 300;
@@ -81,11 +82,7 @@ span.badge {
           background: #364551;
           outline: none;
         }
-
       }
-
     }
   }
-
-
 }
