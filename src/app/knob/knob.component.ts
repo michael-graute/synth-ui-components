@@ -59,6 +59,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @Input() zeroValueReplacement: string = 'C';
 
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
+  @Output() contextClick: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('knobCanvas') knobCanvas: ElementRef | undefined;
   @ViewChild('knobEditorInput') knobEditorInput: ElementRef | undefined;
@@ -161,6 +162,12 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     this.rangeIndicator = this.size + this.size / 2;
     this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
     this.draw();
+  }
+
+  @HostListener('contextmenu', ['$event'])
+  handleContextMenu(event: MouseEvent): void {
+    event.preventDefault();
+    this.contextClick.emit(event);
   }
 
   @HostListener('mousedown', ['$event'])
