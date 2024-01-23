@@ -188,13 +188,13 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     }
   }
 
-  @HostListener('mouseover', ['$event'])
-  handleMouseOver(event: MouseEvent): void {
+  @HostListener('mouseover')
+  handleMouseOver(): void {
     this.mouseOver = true;
   }
 
-  @HostListener('mouseout', ['$event'])
-  handleMouseOut(event: MouseEvent): void {
+  @HostListener('mouseout')
+  handleMouseOut(): void {
     this.mouseOver = false;
     if(this.mouseWheelEvent) this.mouseWheelEvent.stopPropagation();
   }
@@ -256,10 +256,6 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     } else if(event.key === 'Escape') {
       this.editMode = false;
     }
-  }
-
-  handleEditorInputChange(event: any): void {
-    //this.value = event.target.value;
   }
 
   handleEditorSelectChange(event: any): void {
