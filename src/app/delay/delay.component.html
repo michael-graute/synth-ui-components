@@ -1,0 +1,12 @@
+<div class="ins-delay card" [class]="{'inactive': !active}">
+  <div class="ins-delay__header card-header">
+    <div class="d-flex justify-content-between align-items-center">Delay <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-delay__body card-body">
+    <div class="d-flex gap-1">
+      <ins-knob [(ngModel)]="delayTime" [min]="0" [max]="1" [step]=".01" label="time"></ins-knob>
+      <ins-knob [(ngModel)]="delayFeedback" [min]="0" [max]="1" [step]=".01" label="feedb"></ins-knob>
+      <ins-knob [(ngModel)]="delayWet" [min]="0" [max]="1" [step]=".01" label="wet"></ins-knob>
+    </div>
+  </div>
+</div>
