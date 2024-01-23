@@ -34,7 +34,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @Input() id: string = uuidv4();
   @HostBinding('id') _id: string = this.id;
-  @Input() type: 'dot' | 'line' = 'line';
+  @Input() type: 'dot' | 'line' | 'pan' = 'line';
   @Input() label: string = '';
   @Input() baseColor: string = 'grey';
   @Input() valueColor: string = '#00a4e1';
@@ -54,6 +54,9 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @Input() midiEventListener: KnobMidiEvent = { control: 0, value: 0, channel: 0 };
   @Input() lfo: boolean = false;
   @Input() options: any[] | undefined = undefined;
+  @Input() negativeValuePrefix: string = 'L';
+  @Input() positiveValuePrefix: string = 'R';
+  @Input() zeroValueReplacement: string = 'C';
 
   @Output() change: EventEmitter<number> = new EventEmitter<number>();
 
@@ -79,6 +82,10 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   get displayValue(): string {
     if(this.options) {
       return this.options[this.value];
+    }
+    if(this.type === 'pan') {
+      if(this.value === 0) return this.zeroValueReplacement;
+      return this.value > 0 ? this.positiveValuePrefix + this.value : this.negativeValuePrefix + this.value * -1;
     }
     return this.value + '';
   }
@@ -265,33 +272,43 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       const element: HTMLCanvasElement = this.knobCanvas.nativeElement;
       const context: CanvasRenderingContext2D | null = element.getContext('2d');
       if(context) {
-        //const convertedValue: number = this.convertRange( this.value, [ this.min, this.max ], [ 0.5, 2 ] );
-        const convertedValue: number = this.convertRange( this.value, [ this.min, this.max ], [ (Math.PI / 180) * 120, (Math.PI / 180) * 420 ] );
-        //const valueStartAngle: number = this.type === 'line' ? Math.PI/2 -.2 : convertedValue * Math.PI - .2;
-        let valueStartAngle: number = this.type === 'line' ? (Math.PI / 180) * 120 : convertedValue - this.dotSize;
-        let valueEndAngle: number = this.type === 'line' ? convertedValue : convertedValue + this.dotSize;
-        if(this.value === this.min && this.type === 'dot') {
-          valueStartAngle = valueStartAngle + this.dotSize;
-          valueEndAngle = valueEndAngle + this.dotSize;
-        }
-        if(this.value === this.max && this.type === 'dot') {
-          valueStartAngle = valueStartAngle - this.dotSize;
-          valueEndAngle = valueEndAngle - this.dotSize;
-        }
+
         context.clearRect(0, 0, element.width, element.height);
+
         //Outer ring
         context.lineWidth = this.baseLineWidth;
         context.strokeStyle = this.baseColor;
         context.beginPath();
-        //context.arc(this.size / 2, this.size / 2, (this.size / 2) - this.baseLineWidth, Math.PI / 2 - .2, 2 * Math.PI + .2);
-        context.arc(this.size / 2, this.size / 2, ((this.size - this.baseLineWidth)  / 2), (Math.PI / 180) * 120, (Math.PI / 180) * 420);
+        context.arc(this.size / 2, this.size / 2, ((this.size - this.baseLineWidth) / 2), (Math.PI / 180) * 120, (Math.PI / 180) * 420);
         context.stroke();
         context.closePath();
+
+        let valueStartAngle: number = 0;
+        let valueEndAngle: number = 0;
+        const convertedValue:number = this.convertRange(this.value, [this.min, this.max], [(Math.PI / 180) * 120, (Math.PI / 180) * 420]);
+        let renderCounterClockwise: boolean = false;
+
         //Inner value indicator ring / dot
+        if (this.type === 'dot' || this.type === 'line') {
+          valueStartAngle = this.type === 'line' ? (Math.PI / 180) * 120 : convertedValue - this.dotSize;
+          valueEndAngle = this.type === 'line' ? convertedValue : convertedValue + this.dotSize;
+          if (this.value === this.min && this.type === 'dot') {
+            valueStartAngle = valueStartAngle + this.dotSize;
+            valueEndAngle = valueEndAngle + this.dotSize;
+          }
+          if (this.value === this.max && this.type === 'dot') {
+            valueStartAngle = valueStartAngle - this.dotSize;
+            valueEndAngle = valueEndAngle - this.dotSize;
+          }
+        } else if(this.type === 'pan') {
+          valueStartAngle = (Math.PI / 180) * 270;
+          valueEndAngle = convertedValue;
+          renderCounterClockwise = this.value < 0;
+        }
         context.lineWidth = this.valueLineWidth;
         context.strokeStyle = this.valueColor;
         context.beginPath();
-        context.arc(this.size / 2, this.size / 2, ((this.size - (this.baseLineWidth + (this.valueLineWidth * 2))) / 2), valueStartAngle, valueEndAngle);
+        context.arc(this.size / 2, this.size / 2, ((this.size - (this.baseLineWidth + (this.valueLineWidth * 2))) / 2), valueStartAngle, valueEndAngle, renderCounterClockwise);
         context.stroke();
         context.closePath();
       }
