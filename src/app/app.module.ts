@@ -22,6 +22,7 @@ import { LfoComponent } from "./lfo/lfo.component";
 import { MidiMonitorComponent } from "./midi-monitor/midi-monitor.component";
 import { AbstractSynthComponent } from "./abstracts/abstract-synth.component";
 import {DelayComponent} from "./delay/delay.component";
+import {ReverbComponent} from "./reverb/reverb.component";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {DelayComponent} from "./delay/delay.component";
     DividerComponent,
     LfoComponent,
     MidiMonitorComponent,
-    DelayComponent
+    DelayComponent,
+    ReverbComponent
   ],
   imports: [
     BrowserModule,
