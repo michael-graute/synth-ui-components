@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import * as Tone from "tone";
-import {SynthService} from "../synth.service";
 import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
 
 export interface OscillatorConfig {
@@ -23,12 +22,11 @@ export interface OscillatorConfig {
   templateUrl: './oscillator.component.html',
   styleUrls: ['./oscillator.component.scss']
 })
-export class OscillatorComponent extends AbstractSynthComponent {
+export class OscillatorComponent extends AbstractSynthComponent<OscillatorConfig> {
 
-  @Input() synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth).toDestination();
+  private synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth).toDestination();
   @Input() name: string = 'Oscillator'
-  @Input() service: SynthService | undefined = undefined
-  @Input() set type(type: any) {
+  set type(type: any) {
     this.synth.set({oscillator: {type: type}});
     this.config.type = type;
   }
@@ -37,7 +35,7 @@ export class OscillatorComponent extends AbstractSynthComponent {
     return this.config.type;
   }
 
-  @Input() set volume(value: number) {
+  set volume(value: number) {
     this.synth.set({volume: value});
     this.config.volume = value;
   }
@@ -47,7 +45,7 @@ export class OscillatorComponent extends AbstractSynthComponent {
   }
 
   public override config: OscillatorConfig = {
-    volume: -5,
+    volume: -15,
     detune: 0,
     active: true,
     octave: 0,
@@ -111,22 +109,23 @@ export class OscillatorComponent extends AbstractSynthComponent {
 
   override ngOnInit() {
     super.ngOnInit();
-    this.service?.noteOnEvent.subscribe((event: any) => {
+    this.subscriptions.add(this.synthService.noteOnEvent.subscribe((event: any) => {
       if(this.active) {
-        const note = Tone.Frequency(event).transpose((this.octave || 0) * 12).toNote();
+        const note: Tone.Unit.Note = Tone.Frequency(event).transpose((this.octave || 0) * 12).toNote();
         this.synth.triggerAttack(note);
       }
-    });
-    this.service?.noteOffEvent.subscribe((event: any) => {
+    }));
+    this.subscriptions.add(this.synthService.noteOffEvent.subscribe((event: any) => {
       if(this.active) {
-        const note = Tone.Frequency(event).transpose((this.octave || 0) * 12).toNote();
+        const note: Tone.Unit.Note = Tone.Frequency(event).transpose((this.octave || 0) * 12).toNote();
         this.synth.triggerRelease(note);
       }
-    });
-    this.service?.attackReleaseEvent.subscribe((event: any) => {
+    }));
+    this.subscriptions.add(this.synthService.attackReleaseEvent.subscribe((event: any) => {
       if(this.active) {
-        this.synth.triggerAttackRelease(event.note, event.duration, event.time, event.velocity);
+        const note: Tone.Unit.Note = Tone.Frequency(event.note).transpose((this.octave || 0) * 12).toNote();
+        this.synth.triggerAttackRelease(note, event.duration, event.time, event.velocity);
       }
-    });
+    }));
   }
 }

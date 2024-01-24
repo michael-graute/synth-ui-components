@@ -1,55 +1,67 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
+import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
+
+export type DelayConfig = {
+  active: boolean;
+  time: number;
+  feedback: number;
+  wet: number;
+}
 
 @Component({
   selector: 'ins-delay',
   templateUrl: './delay.component.html',
   styleUrl: './delay.component.scss'
 })
-export class DelayComponent {
+export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
 
-  private _active: boolean = false;
   delay: Tone.FeedbackDelay = new Tone.FeedbackDelay(.5, .5);
 
-  constructor() {
-    this.delay.wet.value = 0.5;
+  public override config: DelayConfig = {
+    active: true,
+    time: .5,
+    feedback: .5,
+    wet: .5
   }
 
-  set delayTime(value: number) {
+  set time(value: number) {
     this.delay.delayTime.value = value;
+    this.config.time = value;
   }
 
-  get delayTime(): number {
-    return this.delay.delayTime.value as number;
+  get time(): number {
+    return this.config.time;
   }
 
-  set delayFeedback(value: number) {
+  set feedback(value: number) {
     this.delay.feedback.value = value;
+    this.config.feedback = value;
   }
 
-  get delayFeedback(): number {
-    return this.delay.feedback.value as number;
+  get feedback(): number {
+    return this.config.feedback;
   }
 
-  set delayWet(value: number) {
+  set wet(value: number) {
     this.delay.wet.value = value;
+    this.config.wet = value;
   }
 
-  get delayWet(): number {
-    return this.delay.wet.value as number;
+  get wet(): number {
+    return this.config.wet;
   }
 
   set active(value: boolean) {
-    this._active = value;
-    if(this._active) {
+    this.config.active = value;
+    if(this.config.active) {
       Tone.Destination.chain(this.delay);
     } else {
       Tone.Destination.chain();
     }
-    console.log((this.delay.get().delayTime as number) );
   }
 
   get active(): boolean {
-    return this._active;
+    return this.config.active;
   }
 }

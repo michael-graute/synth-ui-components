@@ -19,17 +19,16 @@ export class AppService {
   constructor() { }
 
 
-  loadPreset(presetId: string) {
-    const presetConfigString = localStorage.getItem(presetId);
+  loadPreset(presetId: string): void {
+    const presetConfigString: string | null = localStorage.getItem(presetId);
     if(presetConfigString) {
       const presetConfig = JSON.parse(presetConfigString);
-      console.log(presetConfig);
       this.loadConfigEvent.next(presetConfig);
     }
   }
 
-  savePreset(presetId: string, config: any) {
-    const presetConfigString = localStorage.getItem(presetId);
+  savePreset(presetId: string, config: any): void {
+    const presetConfigString: string | null = localStorage.getItem(presetId);
     if(!presetConfigString) {
       localStorage.setItem(presetId, JSON.stringify(config));
     }

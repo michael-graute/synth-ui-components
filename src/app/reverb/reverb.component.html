@@ -4,8 +4,8 @@
   </div>
   <div class="ins-reverb__body card-body">
     <div class="d-flex gap-1">
-      <ins-knob [(ngModel)]="reverbDecay" [min]="0" [max]="5" [step]=".01" label="decay"></ins-knob>
-      <ins-knob [(ngModel)]="reverbWet" [min]="0" [max]="1" [step]=".01" label="wet"></ins-knob>
+      <ins-knob [id]="id + 'KnobTime'" [(ngModel)]="decay" [min]="0" [max]="5" [step]=".01" label="decay"></ins-knob>
+      <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".01" label="wet"></ins-knob>
     </div>
   </div>
 </div>

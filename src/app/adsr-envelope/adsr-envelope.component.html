@@ -1,9 +1,9 @@
 <div [ngStyle]="{ 'width.px': width }">
   <canvas #myCanvas [width]="width" [height]="height"></canvas>
   <div class="d-flex mb-3 justify-content-between">
-    <ins-knob [(ngModel)]="attackValue" label="Attack" [min]="0" [max]="100" [step]="1" [valueColor]="knobColor" [midiLearn]="midiLearn"></ins-knob>
-    <ins-knob [(ngModel)]="decayValue" label="Decay" [min]="0" [max]="100" [valueColor]="knobColor" [midiLearn]="midiLearn"></ins-knob>
-    <ins-knob [(ngModel)]="sustainValue" label="Sustain" [min]="0" [max]="100" [step]="1" [valueColor]="knobColor" [midiLearn]="midiLearn"></ins-knob>
-    <ins-knob [(ngModel)]="releaseValue" label="Release" [min]="0" [max]="100" [valueColor]="knobColor" [midiLearn]="midiLearn"></ins-knob>
+    <ins-knob [id]="id + 'KnobAttack'" [(ngModel)]="attackValue" label="Attack" [min]="0" [max]="100" [step]="1" [valueColor]="knobColor" [midiLearn]="midiLearn"></ins-knob>
+    <ins-knob [id]="id + 'KnobDecay'" [(ngModel)]="decayValue" label="Decay" [min]="0" [max]="100" [valueColor]="knobColor" [midiLearn]="midiLearn"></ins-knob>
+    <ins-knob [id]="id + 'KnobSustain'" [(ngModel)]="sustainValue" label="Sustain" [min]="0" [max]="100" [step]="1" [valueColor]="knobColor" [midiLearn]="midiLearn"></ins-knob>
+    <ins-knob [id]="id + 'KnobRelease'" [(ngModel)]="releaseValue" label="Release" [min]="0" [max]="100" [valueColor]="knobColor" [midiLearn]="midiLearn"></ins-knob>
   </div>
 </div>

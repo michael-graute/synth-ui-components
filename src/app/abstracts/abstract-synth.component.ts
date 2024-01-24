@@ -1,56 +1,51 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {v4 as uuidv4} from 'uuid';
 import {AppService, InsPreset} from "../app.service";
+import {Subscription} from "rxjs";
+import {SynthService} from "../synth.service";
 
 @Component({
   template: '',
 })
-export class AbstractSynthComponent<T = any> implements OnInit {
+export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
 
   @Input() id: string = uuidv4();
-  public config: any = null;
+  public config: T | null = null;
+  protected subscriptions: Subscription = new Subscription();
 
-  constructor(private appService: AppService) {
-    this.appService.loadConfigEvent.subscribe((preset: InsPreset) => {
-      this.loadConfig(preset);
-    });
-    this.appService.saveConfigEvent.subscribe((presetId: string) => {
+  constructor(protected appService: AppService, protected synthService: SynthService) {}
+
+  ngOnInit(): void {
+    this.setPropertiesFromPreset(this.config);
+    this.subscriptions.add(this.appService.saveConfigEvent.subscribe((presetId: string) => {
       this.saveConfig(presetId);
-    });
-  }
-
-  ngOnInit() {
-    this.appService.saveConfigEvent.subscribe((presetId: string) => {
-      console.log('saveConfigEvent', presetId, this.config);
-    });
-    this.appService.loadConfigEvent.subscribe((preset: InsPreset) => {
-      console.log('loadConfigEvent', preset);
+    }));
+    this.subscriptions.add(this.appService.loadConfigEvent.subscribe((preset: InsPreset) => {
       if(preset.components[this.id]) {
-        console.log('loadConfigEvent', preset.components[this.id]);
-        this.loadConfig(preset);
+        this.setPropertiesFromPreset(preset.components[this.id]);
       }
-    });
-    //this.parseConfig(this.config);
+    }));
   }
 
-  loadConfig(preset: InsPreset) {
-    this.config = preset.components[this.id];
-  }
-
-  /*parseConfig(config: any) {
-    let property: keyof typeof config; // Type is 'foo' | 'bar'
-    for (property in config) {
-      console.log(`${property}: ${config[property]}`);
+  setPropertiesFromPreset(preset: any): void {
+    let property: keyof typeof preset;
+    for (property in preset) {
+      // @ts-ignore
+      this[property] = preset[property];
     }
-  }*/
+  }
 
-  saveConfig(presetId: string) {
+  saveConfig(presetId: string): void {
     const preset = localStorage.getItem(presetId);
     if(preset) {
       let presetConfig = JSON.parse(preset);
       presetConfig.components[this.id] = this.config;
       localStorage.setItem(presetId, JSON.stringify(presetConfig));
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 }

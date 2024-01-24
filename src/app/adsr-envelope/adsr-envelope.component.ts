@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {v4 as uuidv4} from "uuid";
 
 export interface AdsrEnvelopeValue {
   attack: number;
@@ -24,6 +25,7 @@ export type canvasPoint = {x: number, y: number};
 })
 export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccessor {
 
+  @Input() id: string = uuidv4();
   @Input() width: number = 200;
   @Input() height: number = 100;
   @Input() knobColor: string = '#00a4e1';
@@ -31,6 +33,7 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
   @Input() lineWidth: number = 2;
   @Input() dotSize: number = 3;
   @Input() midiLearn: boolean = false;
+  @Output() change: EventEmitter<AdsrEnvelopeValue> = new EventEmitter<AdsrEnvelopeValue>();
 
 
   writeValue(obj: any): void {
@@ -50,7 +53,9 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
       //throw new Error('Method not implemented.');
   }
 
-  public onChange = (value: AdsrEnvelopeValue): void => {};
+  public onChange = (value: AdsrEnvelopeValue): void => {
+    this.change.emit(value);
+  };
 
   @ViewChild('myCanvas') myCanvas: ElementRef | undefined;
   @Input() set value(value: AdsrEnvelopeValue) {

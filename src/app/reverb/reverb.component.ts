@@ -1,39 +1,50 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
+import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
+
+export type ReverbConfig = {
+  active: boolean;
+  decay: number;
+  wet: number;
+}
 
 @Component({
   selector: 'ins-reverb',
   templateUrl: './reverb.component.html',
   styleUrl: './reverb.component.scss'
 })
-export class ReverbComponent {
+export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
 
-  private _active: boolean = false;
   reverb: Tone.Reverb = new Tone.Reverb({decay: 2.5, wet: 0.8});
 
-  constructor() {
-    this.active = true;
+  public override config: ReverbConfig = {
+    active: true,
+    decay: 2.5,
+    wet: 0.8
   }
 
-  set reverbDecay(value: number) {
+  set decay(value: number) {
     this.reverb.decay = value;
+    this.config.decay = value;
   }
 
-  get reverbDecay(): number {
-    return this.reverb.decay as number;
+  get decay(): number {
+    return this.config.decay;
+
   }
 
-  set reverbWet(value: number) {
+  set wet(value: number) {
     this.reverb.wet.value = value;
+    this.config.wet = value;
   }
 
-  get reverbWet(): number {
-    return this.reverb.wet.value as number;
+  get wet(): number {
+    return this.config.wet;
   }
 
   set active(value: boolean) {
-    this._active = value;
-    if(this._active) {
+    this.config.active = value;
+    if(this.config.active) {
       Tone.Destination.chain(this.reverb);
     } else {
       Tone.Destination.chain();
@@ -41,6 +52,6 @@ export class ReverbComponent {
   }
 
   get active(): boolean {
-    return this._active;
+    return this.config.active;
   }
 }
