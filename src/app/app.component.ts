@@ -50,4 +50,8 @@ export class AppComponent implements OnInit {
   savePreset() {
     this.appService.savePreset('init', {components: {}})
   }
+
+  loadPreset() {
+    this.appService.loadPreset('init');
+  }
 }

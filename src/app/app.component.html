@@ -16,6 +16,7 @@
     </div>
     <form class="d-flex">
       <button class="btn btn-success me-2" type="button" (click)="savePreset()">Save Preset</button>
+      <button class="btn btn-success me-2" type="button" (click)="loadPreset()">Load Preset</button>
       <ins-midi-monitor *ngIf="midiAllowed"></ins-midi-monitor>
     </form>
   </div>
@@ -58,6 +59,7 @@
           </div>
           <ins-divider label="ADSR - Envelope"></ins-divider>
           <ins-adsr-envelope [height]="50" [(ngModel)]="adsr"></ins-adsr-envelope>
+          <pre>{{adsr | json}}</pre>
         </div>
       </div>
     </div>

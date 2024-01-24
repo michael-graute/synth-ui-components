@@ -21,13 +21,28 @@ export class AbstractSynthComponent<T = any> implements OnInit {
 
   ngOnInit() {
     this.appService.saveConfigEvent.subscribe((presetId: string) => {
-      console.log('saveConfigEvent', this.config);
+      console.log('saveConfigEvent', presetId, this.config);
     });
+    this.appService.loadConfigEvent.subscribe((preset: InsPreset) => {
+      console.log('loadConfigEvent', preset);
+      if(preset.components[this.id]) {
+        console.log('loadConfigEvent', preset.components[this.id]);
+        this.loadConfig(preset);
+      }
+    });
+    //this.parseConfig(this.config);
   }
 
   loadConfig(preset: InsPreset) {
     this.config = preset.components[this.id];
   }
+
+  /*parseConfig(config: any) {
+    let property: keyof typeof config; // Type is 'foo' | 'bar'
+    for (property in config) {
+      console.log(`${property}: ${config[property]}`);
+    }
+  }*/
 
   saveConfig(presetId: string) {
     const preset = localStorage.getItem(presetId);
