@@ -114,6 +114,12 @@ pre {
     border-color: var(--text-color);
   }
 
+  &:disabled {
+    color: inherit;
+    background-color: inherit;
+    border-color: inherit;
+  }
+
   &:active {
     /*color: var(--text-color) !important;
     background-color: #252627 !important;

@@ -11,7 +11,7 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
 import {MidiService} from "../midi.service";
-import {UndoService} from "../undo.service";
+import {UndoService, UndoStep} from "../undo.service";
 
 export type KnobMidiEvent = {
   control: number;
@@ -153,6 +153,12 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
         this.midiListen = true;
       }
       this.setMidiEventValue(midiEvent);
+    });
+    this.undoService.undoEvent.subscribe((undoStep: UndoStep) => {
+      if(undoStep.componentId === this.id) {
+        this.value = undoStep.oldValue;
+        this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
+      }
     });
   }
 

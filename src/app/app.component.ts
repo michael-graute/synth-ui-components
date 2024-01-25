@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SynthService} from "./synth.service";
-import * as Tone from "tone";
 import {AppService} from "./app.service";
+import {UndoService} from "./undo.service";
 
 @Component({
   selector: 'ins-root',
@@ -22,10 +22,10 @@ export class AppComponent implements OnInit {
   midiAllowed: boolean = false;
   //osc1 = new Tone.Synth();
 
-  constructor(public synthService: SynthService, private appService: AppService) {
+  constructor(public synthService: SynthService, private appService: AppService, public undoService: UndoService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // @ts-ignore
     navigator.permissions.query({ name: "midi", sysex: true }).then((result: PermissionStatus) => {
       if (result.state === "granted") {
@@ -43,15 +43,19 @@ export class AppComponent implements OnInit {
   public page: string = 'main';
 
 
-  onKnobChange(event: number) {
+  onKnobChange(event: number): void {
     //console.log('knobChange', event);
   }
 
-  savePreset() {
+  savePreset(): void {
     this.appService.savePreset('init', {components: {}})
   }
 
-  loadPreset() {
+  loadPreset(): void {
     this.appService.loadPreset('init');
+  }
+
+  undoLastAction(): void {
+    this.undoService.undo();
   }
 }

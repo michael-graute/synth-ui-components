@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Subject} from "rxjs";
 
 export interface UndoStep {
   action: string;
@@ -12,15 +13,29 @@ export interface UndoStep {
 })
 export class UndoService {
 
+  undoEvent: Subject<UndoStep> = new Subject<UndoStep>();
+  undSteps: UndoStep[] = [];
+  maxSteps: number = 100;
+
   constructor() { }
 
-  addUndoStep(action: string, componentId: string, oldValue: any, newValue: any) {
+  addUndoStep(action: string, componentId: string, oldValue: any, newValue: any): void {
     const undoStep: UndoStep = {
       action: action,
       componentId: componentId,
       oldValue: oldValue,
       newValue: newValue
     }
-    console.log('addUndoStep', undoStep);
+    this.undSteps.push(undoStep);
+    if(this.undSteps.length > this.maxSteps) {
+      this.undSteps.shift();
+    }
+  }
+
+  undo(): void {
+    const step: UndoStep | undefined = this.undSteps.pop();
+    if(step) {
+      this.undoEvent.next(step);
+    }
   }
 }
