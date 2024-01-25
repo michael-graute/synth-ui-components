@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import * as Tone from "tone";
 import {InsAttackReleaseOptions, SynthService} from "../synth.service";
-import {Subject, Subscription} from "rxjs";
+import {Subject} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
 
 export interface SequencerStep {
@@ -46,10 +46,8 @@ export class SequencerComponent implements OnInit {
 
   stepPlaying: Subject<number> = new Subject<number>();
 
-  subscriptions: Subscription = new Subscription();
-
   constructor(private changeDetectorRef: ChangeDetectorRef) {
-    for(let i = 0; i < 16; i++) {
+    for(let i: number = 0; i < 16; i++) {
       const armed: boolean = i < 8;
       this.availableSteps.push({
         id: i,
@@ -63,17 +61,17 @@ export class SequencerComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  setKeyboardConnection(event: boolean) {
+  setKeyboardConnection(event: boolean): void {
     this.service?.toggleSequencerKeyboardConnected();
     if(event) {
-      this.service?.keyDownEvent.subscribe((event: any) => {
+      this.service?.keyDownEvent.subscribe((event: any): void => {
         this.rootNote = event;
         if(!this.playing) this.playSequence();
       });
-      this.service?.keyUpEvent.subscribe((event: any) => {
+      this.service?.keyUpEvent.subscribe((event: any): void => {
         this.rootNote = 'C';
         this.stopSequence();
       });
@@ -83,13 +81,13 @@ export class SequencerComponent implements OnInit {
     }
   }
 
-  playSequence() {
+  playSequence(): void {
     this.playing = true;
-    let index = 0;
-    this.loop = new Tone.Loop(time => {
+    let index: number = 0;
+    this.loop = new Tone.Loop((time: number): void => {
       const step: SequencerStep = this.availableSteps[index];
       if(step.armed) {
-        const tone = Tone.Frequency(this.rootNote).transpose((step.pitch || 0) + ((step.octave || 0) * 12));
+        const tone: Tone.FrequencyClass<number> = Tone.Frequency(this.rootNote).transpose((step.pitch || 0) + ((step.octave || 0) * 12));
         const attackReleaseOptions: InsAttackReleaseOptions = {
           note: tone.toNote(),
           duration: this.gateOptions[step.gate || 0],
@@ -98,7 +96,7 @@ export class SequencerComponent implements OnInit {
         }
         this.service?.attackRelease(attackReleaseOptions);
       }
-      Tone.Draw.schedule(() => {
+      Tone.Draw.schedule((): void => {
         this.currentStep = index;
         this.stepPlaying.next(index);
         index = (index + 1) % this.activeStepCount;
@@ -109,12 +107,11 @@ export class SequencerComponent implements OnInit {
     Tone.Transport.start();
   }
 
-  stopSequence() {
+  stopSequence(): void {
     this.playing = false;
     this.loop?.stop();
     Tone.Transport.stop();
     Tone.Transport.loopStart = 0;
-    //this.service?.noteOff('C3');
     this.currentStep = 0;
     this.changeDetectorRef.detectChanges();
   }
