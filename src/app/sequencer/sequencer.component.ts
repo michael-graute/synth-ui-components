@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import * as Tone from "tone";
 import {InsAttackReleaseOptions, SynthService} from "../synth.service";
 import {Subject, Subscription} from "rxjs";
+import {v4 as uuidv4} from 'uuid';
 
 export interface SequencerStep {
   id: number;
@@ -38,6 +39,8 @@ export class SequencerComponent implements OnInit {
   get active(): boolean {
     return this._active;
   }
+
+  @Input() id: string = uuidv4();
 
   gateOptions: string[] = ['1n', '2n', '4n', '8n', '16n', '32n', '64n'];
 

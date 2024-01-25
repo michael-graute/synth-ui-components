@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {v4 as uuidv4} from 'uuid';
 
 @Component({
   selector: 'ins-lfo',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class LfoComponent {
   active: boolean = true;
+  @Input() id: string = uuidv4();
 }

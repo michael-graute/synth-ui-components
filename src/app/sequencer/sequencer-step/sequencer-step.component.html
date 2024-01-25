@@ -2,10 +2,10 @@
   <!--<button style="width: 100%" type="button" class="btn btn-primary ins-sequencer-step__button mb-2" (click)="toggleArmed()" [ngClass]="{'active': armed}">&nbsp;</button>-->
   <div class="ins-sequencer-step__knobs d-flex flex-column align-items-center gap-2">
     <ins-switch [(ngModel)]="config.armed" [hasLabel]="false"></ins-switch>
-    <ins-knob [min]="0" [max]="1" [step]=".1" [(ngModel)]="config.velocity" label="vel" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
-    <ins-knob *ngIf="keyboardConnected" type="dot" [min]="-12" [max]="12" [step]="1" [(ngModel)]="config.pitch" label="pitch" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
-    <ins-knob *ngIf="!keyboardConnected" type="dot" [min]="-12" [max]="12" [step]="1" [(ngModel)]="config.pitch" [options]="noteOptions" label="note" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
-    <ins-knob type="dot" [min]="-2" [max]="2" [step]="1" [(ngModel)]="config.octave" label="octave" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
-    <ins-knob type="dot" [(ngModel)]="config.gate" [options]="gateOptions" label="gate" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
+    <ins-knob [id]="id + 'KnobVelocity'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="config.velocity" label="vel" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
+    <ins-knob [id]="id + 'KnobPitch'" *ngIf="keyboardConnected" type="dot" [min]="-12" [max]="12" [step]="1" [(ngModel)]="config.pitch" label="pitch" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
+    <ins-knob [id]="id + 'KnobNote'" *ngIf="!keyboardConnected" type="dot" [min]="-12" [max]="12" [step]="1" [(ngModel)]="config.pitch" [options]="noteOptions" label="note" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
+    <ins-knob [id]="id + 'KnobOctave'" type="dot" [min]="-2" [max]="2" [step]="1" [(ngModel)]="config.octave" label="octave" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
+    <ins-knob [id]="id + 'KnobGate'" type="dot" [(ngModel)]="config.gate" [options]="gateOptions" label="gate" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
   </div>
 </div>

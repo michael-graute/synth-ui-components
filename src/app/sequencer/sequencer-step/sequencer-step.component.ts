@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {SequencerStep} from "../sequencer.component";
+import {v4 as uuidv4} from 'uuid';
 
 @Component({
   selector: 'ins-sequencer-step',
@@ -14,7 +15,7 @@ export class SequencerStepComponent {
   @Input() octave: number = 0;
   @Input() gate: string = '8n';
   @Input() gateOptions: string[] = ['1n', '2n', '4n', '8n', '16n', '32n', '64n'];
-  @Input() id: number = 0;
+  @Input() id: string = uuidv4();
   @Input() playing: boolean = false;
   @Input() config: SequencerStep = {velocity: 1, pitch: 0, gate: 3, armed: false, octave: 0, id: 0, duration: '8n'};
   @Input() keyboardConnected: boolean = false;

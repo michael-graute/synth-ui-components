@@ -75,6 +75,8 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   private internalValue: number = 0;
   private rangeIndicator: number = 71;
   private mouseWheelEvent: WheelEvent | undefined = undefined;
+  private valueChangedInterval: any = null;
+  private oldValue: number = 0;
 
   get value(): number {
     return this.internalValue;
@@ -175,12 +177,14 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     if(!this.midiListen) {
       this.mouseDown = true;
       this.mouseDownStartY = event.clientY;
+      this.oldValue = this.value;
     }
   }
 
   @HostListener('mouseup')
   handleMouseUp(): void {
     this.mouseDown = false;
+    this.triggerUndo();
   }
 
   @HostListener('mousemove', ['$event'])
@@ -215,12 +219,18 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator;
       if(this.tmpValue <= 0) this.tmpValue = 0;
       this.value = Math.round(this.convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
+      clearTimeout(this.valueChangedInterval);
+      this.valueChangedInterval = setTimeout(() => {
+        this.triggerUndo();
+        this.oldValue = this.value;
+      }, 100);
     }
   }
 
   @HostListener('dblclick')
   handleDoubleClick(): void {
     if(!this.editMode && !this.midiLearn) {
+      this.oldValue = this.value;
       this.editMode = true;
       if (!this.knobEditorInput) return;
       this.knobEditorInput.nativeElement.value = this.value;
@@ -260,6 +270,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       if(this.value < this.min) this.value = this.min;
       target.value = this.value + '';
       this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
+      this.triggerUndo();
     } else if(event.key === 'Escape') {
       this.editMode = false;
     }
@@ -320,6 +331,13 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   private convertRange( value: number, r1: any, r2: any ): number {
     return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
+  }
+
+  triggerUndo(): void {
+    //this.midiService.triggerUndo();
+    if(this.oldValue !== this.value) {
+      console.log('undo', this.id, this.oldValue, this.value);
+    }
   }
 
 }
