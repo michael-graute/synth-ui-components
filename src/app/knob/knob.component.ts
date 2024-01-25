@@ -11,6 +11,7 @@ import {
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
 import {MidiService} from "../midi.service";
+import {UndoService} from "../undo.service";
 
 export type KnobMidiEvent = {
   control: number;
@@ -99,7 +100,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     this.draw();
   }
 
-  constructor(private midiService: MidiService) {
+  constructor(private midiService: MidiService, private undoService: UndoService) {
   }
 
   toggleMidiLearnEditMode(): void {
@@ -134,6 +135,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   }
 
   ngOnInit() {
+    this.oldValue = this.value;
     if(this.options) {
       this.min = 0;
       this.max = this.options.length - 1;
@@ -336,7 +338,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   triggerUndo(): void {
     //this.midiService.triggerUndo();
     if(this.oldValue !== this.value) {
-      console.log('undo', this.id, this.oldValue, this.value);
+      this.undoService.addUndoStep(this.id, this.oldValue, this.value);
     }
   }
 

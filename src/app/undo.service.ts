@@ -6,4 +6,8 @@ import { Injectable } from '@angular/core';
 export class UndoService {
 
   constructor() { }
+
+  addUndoStep(componentId: string, oldValue: any, newValue: any) {
+    console.log('addUndoStep', componentId, oldValue, newValue);
+  }
 }
