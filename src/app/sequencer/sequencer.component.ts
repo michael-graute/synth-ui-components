@@ -3,6 +3,7 @@ import * as Tone from "tone";
 import {InsAttackReleaseOptions, SynthService} from "../synth.service";
 import {Subject} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
+import {AppService, InsPreset} from "../app.service";
 
 export interface SequencerStep {
   id: number;
@@ -16,28 +17,80 @@ export interface SequencerStep {
   note?: number;
 }
 
+export type SequencerConfig = {
+  availableSteps: SequencerStep[];
+  activeStepCount: number;
+  interval: number;
+  tempo: number;
+  keyboardConnected: boolean;
+  active: boolean;
+}
+
 @Component({
   selector: 'ins-sequencer',
   templateUrl: './sequencer.component.html',
   styleUrl: './sequencer.component.scss'
 })
 export class SequencerComponent implements OnInit {
-  availableSteps: SequencerStep[] = [];
-  activeStepCount: number = 8;
   rootNote: string = 'C3';
   currentStep: number = 0;
-  interval: number = 2;
-  tempo: number = 120;
   playing: boolean = false;
-  keyboardConnected: boolean = false;
-  private _active: boolean = true;
   private loop: Tone.Loop | undefined;
-  @Input() service: SynthService | undefined;
+
   set active(value: boolean) {
-    this._active = value;
+    this.config.active = value;
   }
   get active(): boolean {
-    return this._active;
+    return this.config.active;
+  }
+
+  set activeStepCount(value: number) {
+    this.config.activeStepCount = value;
+  }
+
+  get activeStepCount(): number {
+    return this.config.activeStepCount;
+  }
+
+  set availableSteps(value: SequencerStep[]) {
+    this.config.availableSteps = value;
+  }
+
+  get availableSteps(): SequencerStep[] {
+    return this.config.availableSteps;
+  }
+
+  set interval(value: number) {
+    this.config.interval = value;
+  }
+
+  get interval(): number {
+    return this.config.interval;
+  }
+
+  set tempo(value: number) {
+    this.config.tempo = value;
+  }
+
+  get tempo(): number {
+    return this.config.tempo;
+  }
+
+  set keyboardConnected(value: boolean) {
+    this.config.keyboardConnected = value;
+  }
+
+  get keyboardConnected(): boolean {
+    return this.config.keyboardConnected;
+  }
+
+  config: SequencerConfig = {
+    availableSteps: [],
+    activeStepCount: 8,
+    interval: 2,
+    tempo: 120,
+    keyboardConnected: false,
+    active: true
   }
 
   @Input() id: string = uuidv4();
@@ -46,7 +99,7 @@ export class SequencerComponent implements OnInit {
 
   stepPlaying: Subject<number> = new Subject<number>();
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private changeDetectorRef: ChangeDetectorRef, private appService: AppService, private synthService: SynthService) {
     for(let i: number = 0; i < 16; i++) {
       const armed: boolean = i < 8;
       this.availableSteps.push({
@@ -62,22 +115,35 @@ export class SequencerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.appService.loadConfigEvent.subscribe((preset: InsPreset): void => {
+      if(preset.components[this.id]) {
+        this.config = preset.components[this.id];
+      }
+    });
+    this.appService.saveConfigEvent.subscribe((presetId: string): void => {
+      const preset: string | null = localStorage.getItem(presetId);
+      if(preset) {
+        let presetConfig = JSON.parse(preset);
+        presetConfig.components[this.id] = this.config;
+        localStorage.setItem(presetId, JSON.stringify(presetConfig));
+      }
+    });
   }
 
   setKeyboardConnection(event: boolean): void {
-    this.service?.toggleSequencerKeyboardConnected();
+    this.synthService.toggleSequencerKeyboardConnected();
     if(event) {
-      this.service?.keyDownEvent.subscribe((event: any): void => {
+      this.synthService.keyDownEvent.subscribe((event: any): void => {
         this.rootNote = event;
         if(!this.playing) this.playSequence();
       });
-      this.service?.keyUpEvent.subscribe((event: any): void => {
+      this.synthService.keyUpEvent.subscribe((event: any): void => {
         this.rootNote = 'C';
         this.stopSequence();
       });
     } else {
-      this.service?.keyDownEvent.unsubscribe();
-      this.service?.keyUpEvent.unsubscribe();
+      this.synthService.keyDownEvent.unsubscribe();
+      this.synthService.keyUpEvent.unsubscribe();
     }
   }
 
@@ -94,7 +160,7 @@ export class SequencerComponent implements OnInit {
           velocity: step.velocity,
           time: time
         }
-        this.service?.attackRelease(attackReleaseOptions);
+        this.synthService.attackRelease(attackReleaseOptions);
       }
       Tone.Draw.schedule((): void => {
         this.currentStep = index;
