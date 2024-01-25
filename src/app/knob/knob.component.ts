@@ -338,7 +338,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   triggerUndo(): void {
     //this.midiService.triggerUndo();
     if(this.oldValue !== this.value) {
-      this.undoService.addUndoStep(this.id, this.oldValue, this.value);
+      this.undoService.addUndoStep('inputValueChanged', this.id, this.oldValue, this.value);
     }
   }
 
