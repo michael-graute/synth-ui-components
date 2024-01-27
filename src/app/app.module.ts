@@ -23,6 +23,7 @@ import { MidiMonitorComponent } from "./midi-monitor/midi-monitor.component";
 import { AbstractSynthComponent } from "./abstracts/abstract-synth.component";
 import {DelayComponent} from "./delay/delay.component";
 import {ReverbComponent} from "./reverb/reverb.component";
+import {PresetManagerComponent} from "./preset-manager/preset-manager.component";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {ReverbComponent} from "./reverb/reverb.component";
     LfoComponent,
     MidiMonitorComponent,
     DelayComponent,
-    ReverbComponent
+    ReverbComponent,
+    PresetManagerComponent
   ],
   imports: [
     BrowserModule,

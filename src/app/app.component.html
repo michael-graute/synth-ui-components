@@ -1,7 +1,8 @@
+<div class="ins-main-container">
 <nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><span style="color: #8BC34A">BASIC</span>SYNTH</a>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" [ngClass]="{'active': page === 'main'}" (click)="page = 'main'" href="#">Main</a>
@@ -12,7 +13,13 @@
         <li class="nav-item">
           <a class="nav-link" [ngClass]="{'active': page === 'sequencer'}" (click)="page = 'sequencer'" href="#">Sequencer</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{'active': page === 'elements'}" (click)="page = 'elements'" href="#">Elements</a>
+        </li>
       </ul>
+    </div>
+    <div class="m-auto">
+      <ins-preset-manager></ins-preset-manager>
     </div>
     <form class="d-flex">
       <button class="btn btn-success me-2" type="button" (click)="undoLastAction()" [disabled]="undoService.undSteps.length === 0">Undo</button>
@@ -22,74 +29,84 @@
     </form>
   </div>
 </nav>
-<div class="container" *ngIf="page === 'main'">
-  <div class="row">
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header">
-          Elements
+  <div style="overflow: auto">
+    <div class="container" [ngClass]="{'hidden': page !== 'main'}">
+      <div class="row">
+        <div class="col-4">
+          <ins-oscillator id="oscillator1"></ins-oscillator>
         </div>
-        <div class="card-body">
-          <ins-divider label="Sliders" class="mt-0"></ins-divider>
-          <div class="d-flex mb-3">
-            <ins-slider label="Vol" [max]="20" [min]="0" [height]="250" [value]="12"></ins-slider>
-            <ins-slider label="Mid" [max]="100" [min]="0" [height]="250" [(ngModel)]="foo"></ins-slider>
-            <ins-slider label="Hi" [max]="20" [min]="0" [height]="250" [value]="8"></ins-slider>
-            <ins-slider label="Lo" [max]="20" [min]="0" [height]="250" [value]="3"></ins-slider>
-          </div>
-          <ins-divider label="Knobs"></ins-divider>
-          <div class="d-flex mb-3">
-            <ins-knob id="showcaseKnobSize80" [lfo]="true" [(ngModel)]="foo" label="size 80" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
-            <ins-knob id="showcaseKnobSize70" [(ngModel)]="bar" label="size 70" [size]="70" [min]="0" [max]="100"></ins-knob>
-            <ins-knob id="showcaseKnobSize60" label="size 60" [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
-            <ins-knob id="showcaseKnobDefault" [lfo]="true" label="default" [value]="9" (change)="onKnobChange($event)"></ins-knob>
-            <ins-knob id="showcaseKnobFoo" label="Foo" [value]="20" [min]="-100" [max]="100" [size]="40" [step]="1" type="line"></ins-knob>
-            <ins-knob id="showcaseKnobBar" label="Bar" [value]="20" [min]="0" [max]="100"  [step]=".1" type="line" [(ngModel)]="barbaz"></ins-knob>
-          </div>
-          <div class="d-flex mb-3 gap-1">
-            <ins-knob id="showcaseKnobDotted" [value]="1" label="dotted" type="dot" [min]="-2" [max]="2" [step]="1"></ins-knob>
-            <ins-knob id="showcaseKnobFine" [value]="0.3" label="fine" [min]="0.0" [max]="1.00" [step]=".01"></ins-knob>
-            <ins-knob id="showcaseKnobSelect" [value]="3" label="select" type="dot" [options]="['1n', '2n', '4n', '8n', '16n', '32n']"></ins-knob>
-            <ins-knob id="showcaseKnobPan" type="pan" [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-knob>
-          </div>
-          <ins-divider label="Misc"></ins-divider>
-          <div class="d-flex mb-3 gap-3">
-            <ins-switch label="Switch" onLabel="active" offLabel="off"></ins-switch>
-            <ins-button-group label="Select Buttons" [options]="[{label: 'Foo', value: 'foo'}, {label: 'Bar', value: 'bar'}, {label: 'Baz', value: 'baz'}]" value="bar"></ins-button-group>
-            <ins-waveform-select label="Waveform" value="sine"></ins-waveform-select>
-          </div>
-          <ins-divider label="ADSR - Envelope"></ins-divider>
-          <ins-adsr-envelope id="showcaseADSR" [height]="50" [(ngModel)]="adsr"></ins-adsr-envelope>
+        <div class="col-4">
+          <ins-oscillator id="oscillator2"></ins-oscillator>
+        </div>
+        <div class="col-4">
+          <ins-filter id="filter"></ins-filter>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-4">
+          <ins-lfo id="lfo"></ins-lfo>
+        </div>
+        <div class="col-4">
+          <ins-delay id="delay"></ins-delay>
+        </div>
+        <div class="col-4">
+          <ins-reverb id="reverb"></ins-reverb>
         </div>
       </div>
     </div>
-    <div class="col-4">
-      <ins-oscillator id="oscillator1"></ins-oscillator>
-      <ins-oscillator id="oscillator2" class="mt-3"></ins-oscillator>
+    <div class="container" [ngClass]="{'hidden': page !== 'sequencer'}">
+      <div class="row mt-4">
+        <div class="col-12">
+          <ins-sequencer id="sequencer"></ins-sequencer>
+        </div>
+      </div>
     </div>
-    <div class="col-4">
-      <ins-lfo id="lfo"></ins-lfo>
-      <ins-filter id="filter" class="mt-3"></ins-filter>
-      <ins-delay id="delay" class="mt-3"></ins-delay>
-      <ins-reverb id="reverb" class="mt-3"></ins-reverb>
-      <!--<div class="card mt-3">
-        <div class="card-header">
-          Waveform
+    <div class="container" [ngClass]="{'hidden': page !== 'effects'}"></div>
+    <div class="container" style="overflow: auto" [ngClass]="{'hidden': page !== 'elements'}">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              Elements
+            </div>
+            <div class="card-body">
+              <ins-divider label="Sliders" class="mt-0"></ins-divider>
+              <div class="d-flex mb-3">
+                <ins-slider label="Vol" [max]="20" [min]="0" [height]="250" [value]="12"></ins-slider>
+                <ins-slider label="Mid" [max]="100" [min]="0" [height]="250" [(ngModel)]="foo"></ins-slider>
+                <ins-slider label="Hi" [max]="20" [min]="0" [height]="250" [value]="8"></ins-slider>
+                <ins-slider label="Lo" [max]="20" [min]="0" [height]="250" [value]="3"></ins-slider>
+              </div>
+              <ins-divider label="Knobs"></ins-divider>
+              <div class="d-flex mb-3">
+                <ins-knob id="showcaseKnobSize80" [lfo]="true" [(ngModel)]="foo" label="size 80" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
+                <ins-knob id="showcaseKnobSize70" [(ngModel)]="bar" label="size 70" [size]="70" [min]="0" [max]="100"></ins-knob>
+                <ins-knob id="showcaseKnobSize60" label="size 60" [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
+                <ins-knob id="showcaseKnobDefault" [lfo]="true" label="default" [value]="9" (change)="onKnobChange($event)"></ins-knob>
+                <ins-knob id="showcaseKnobFoo" label="Foo" [value]="20" [min]="-100" [max]="100" [size]="40" [step]="1" type="line"></ins-knob>
+                <ins-knob id="showcaseKnobBar" label="Bar" [value]="20" [min]="0" [max]="100"  [step]=".1" type="line" [(ngModel)]="barbaz"></ins-knob>
+              </div>
+              <div class="d-flex mb-3 gap-1">
+                <ins-knob id="showcaseKnobDotted" [value]="1" label="dotted" type="dot" [min]="-2" [max]="2" [step]="1"></ins-knob>
+                <ins-knob id="showcaseKnobFine" [value]="0.3" label="fine" [min]="0.0" [max]="1.00" [step]=".01"></ins-knob>
+                <ins-knob id="showcaseKnobSelect" [value]="3" label="select" type="dot" [options]="['1n', '2n', '4n', '8n', '16n', '32n']"></ins-knob>
+                <ins-knob id="showcaseKnobPan" type="pan" [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-knob>
+              </div>
+              <ins-divider label="Misc"></ins-divider>
+              <div class="d-flex mb-3 gap-3">
+                <ins-switch label="Switch" onLabel="active" offLabel="off"></ins-switch>
+                <ins-button-group label="Select Buttons" [options]="[{label: 'Foo', value: 'foo'}, {label: 'Bar', value: 'bar'}, {label: 'Baz', value: 'baz'}]" value="bar"></ins-button-group>
+                <ins-waveform-select label="Waveform" value="sine"></ins-waveform-select>
+              </div>
+              <ins-divider label="ADSR - Envelope"></ins-divider>
+              <ins-adsr-envelope id="showcaseADSR" [height]="50" [(ngModel)]="adsr"></ins-adsr-envelope>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <ins-waveform-plotter></ins-waveform-plotter>
-        </div>
-      </div>-->
+      </div>
     </div>
   </div>
-  <div class="row mt-4">
-    <div class="col-12">
-      <ins-sequencer id="sequencer"></ins-sequencer>
-    </div>
-  </div>
-</div>
-<div class="container" *ngIf="page === 'effects'"></div>
-<div class="container">
+<div>
   <div class="row mt-4">
     <div class="col-12">
       <div class="card">
@@ -102,4 +119,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>

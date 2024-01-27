@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import * as Tone from "tone";
 import {InsAttackReleaseOptions, SynthService} from "../synth.service";
-import {Subject} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
 import {AppService, InsPreset} from "../app.service";
 
@@ -36,6 +36,7 @@ export class SequencerComponent implements OnInit {
   currentStep: number = 0;
   playing: boolean = false;
   private loop: Tone.Loop | undefined;
+  private subscriptions: Subscription = new Subscription();
 
   set active(value: boolean) {
     this.config.active = value;
@@ -47,7 +48,6 @@ export class SequencerComponent implements OnInit {
   set activeStepCount(value: number) {
     this.config.activeStepCount = value;
   }
-
   get activeStepCount(): number {
     return this.config.activeStepCount;
   }
@@ -55,7 +55,6 @@ export class SequencerComponent implements OnInit {
   set availableSteps(value: SequencerStep[]) {
     this.config.availableSteps = value;
   }
-
   get availableSteps(): SequencerStep[] {
     return this.config.availableSteps;
   }
@@ -63,7 +62,6 @@ export class SequencerComponent implements OnInit {
   set interval(value: number) {
     this.config.interval = value;
   }
-
   get interval(): number {
     return this.config.interval;
   }
@@ -71,7 +69,6 @@ export class SequencerComponent implements OnInit {
   set tempo(value: number) {
     this.config.tempo = value;
   }
-
   get tempo(): number {
     return this.config.tempo;
   }
@@ -79,7 +76,6 @@ export class SequencerComponent implements OnInit {
   set keyboardConnected(value: boolean) {
     this.config.keyboardConnected = value;
   }
-
   get keyboardConnected(): boolean {
     return this.config.keyboardConnected;
   }
@@ -130,20 +126,22 @@ export class SequencerComponent implements OnInit {
     });
   }
 
-  setKeyboardConnection(event: boolean): void {
+  setKeyboardConnection(): void {
     this.synthService.toggleSequencerKeyboardConnected();
-    if(event) {
-      this.synthService.keyDownEvent.subscribe((event: any): void => {
+    if(this.keyboardConnected) {
+      this.subscriptions = new Subscription();
+      this.subscriptions.add(this.synthService.keyDownEvent.subscribe((event: any): void => {
         this.rootNote = event;
         if(!this.playing) this.playSequence();
-      });
-      this.synthService.keyUpEvent.subscribe((event: any): void => {
+        console.log('keyDownEvent', event);
+      }));
+      this.subscriptions.add(this.synthService.keyUpEvent.subscribe((event: any): void => {
         this.rootNote = 'C';
         this.stopSequence();
-      });
+        console.log('keyUpEvent', event);
+      }));
     } else {
-      this.synthService.keyDownEvent.unsubscribe();
-      this.synthService.keyUpEvent.unsubscribe();
+      this.subscriptions.unsubscribe();
     }
   }
 
