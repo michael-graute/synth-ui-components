@@ -32,9 +32,12 @@ export type SequencerConfig = {
   styleUrl: './sequencer.component.scss'
 })
 export class SequencerComponent implements OnInit {
+  noteOptions: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G','G#', 'A', 'A#', 'B'];
   rootNote: string = 'C3';
   currentStep: number = 0;
   playing: boolean = false;
+  recordMode: boolean = false;
+  currentRecordStep: number = 0;
   private loop: Tone.Loop | undefined;
   private subscriptions: Subscription = new Subscription();
 
@@ -143,6 +146,27 @@ export class SequencerComponent implements OnInit {
     } else {
       this.subscriptions.unsubscribe();
     }
+  }
+
+  toggleRecordMode(): void {
+    this.recordMode = !this.recordMode;
+    if(this.recordMode) {
+      this.currentRecordStep = 0;
+      this.subscriptions = new Subscription();
+      this.subscriptions.add(this.synthService.keyDownEvent.subscribe((event: any): void => {
+        console.log('keyDownEvent', event);
+      }));
+      this.subscriptions.add(this.synthService.keyUpEvent.subscribe((event: any): void => {
+        console.log('keyUpEvent', event);
+        this.availableSteps[this.currentRecordStep].pitch = this.noteOptions.indexOf(event.substring(0, event.length - 1));
+        //this.availableSteps[this.currentRecordStep].octave = event.substring(-1);
+        //console.log('this.availableSteps[this.currentRecordStep].pitch', this.availableSteps[this.currentRecordStep].pitch);
+        this.currentRecordStep = (this.currentRecordStep + 1) % this.activeStepCount;
+      }));
+    }  else {
+      this.subscriptions.unsubscribe();
+    }
+    this.changeDetectorRef.detectChanges();
   }
 
   playSequence(): void {
