@@ -14,10 +14,17 @@ export interface InsAttackReleaseOptions {
   velocity?: any
 }
 
+export interface InsEffect {
+  id: string;
+  effect: any;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class SynthService {
+
+  effects: InsEffect[] = [];
 
   oscillators: InsOscillator[] = [];
 
@@ -54,5 +61,28 @@ export class SynthService {
 
   attackRelease(options: InsAttackReleaseOptions) {
     this.attackReleaseEvent.next(options);
+  }
+
+  addEffect(effect: InsEffect) {
+    this.effects.push(effect);
+    const tmpEffects: any[] = [];
+    this.effects.forEach((effect: InsEffect) => {
+      tmpEffects.push(effect.effect);
+    });
+    console.log(this.effects);
+    Tone.Destination.chain(...tmpEffects);
+  }
+
+  removeEffect(effectId: string) {
+    const effectIndex: number = this.effects.findIndex((effect: InsEffect) => effect.id === effectId);
+    if(effectIndex >= 0) {
+      this.effects.splice(effectIndex, 1);
+      const tmpEffects: any[] = [];
+      this.effects.forEach((effect: InsEffect) => {
+        tmpEffects.push(effect.effect);
+      });
+      console.log(this.effects);
+      Tone.Destination.chain(...tmpEffects);
+    }
   }
 }

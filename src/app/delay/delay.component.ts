@@ -55,9 +55,9 @@ export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
   set active(value: boolean) {
     this.config.active = value;
     if(this.config.active) {
-      Tone.Destination.chain(this.delay);
+      this.synthService.addEffect({id: this.id, effect: this.delay})
     } else {
-      Tone.Destination.chain();
+      this.synthService.removeEffect(this.id);
     }
   }
 

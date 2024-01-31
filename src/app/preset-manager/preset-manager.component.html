@@ -1,1 +1,11 @@
-init
+<!--<input class="form-control me-2" type="text" [(ngModel)]="newPresetName" name="newPresetName" id="newPresetName">
+<ul>
+  <li *ngFor="let preset of appService.availablePresets" style="display: inline-block">
+    <a href="#">{{preset.name}}</a>
+</ul>-->
+<span (click)="togglePresetList()">{{currentPreset?.name}}</span>
+<div *ngIf="showPresetList">
+  <div *ngFor="let preset of appService.availablePresets" style="display: inline-block">
+    <a href="#" (click)="loadPreset(preset.id); togglePresetList();">{{preset.name}}</a>
+  </div>
+</div>

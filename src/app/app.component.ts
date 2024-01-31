@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SynthService} from "./synth.service";
-import {AppService} from "./app.service";
+import {AppService, InsPreset} from "./app.service";
 import {UndoService} from "./undo.service";
 
 @Component({
@@ -42,17 +42,20 @@ export class AppComponent implements OnInit {
 
   public page: string = 'main';
 
+  currentPreset: InsPreset | undefined;
+
+  newPresetName: string = '';
 
   onKnobChange(event: number): void {
     //console.log('knobChange', event);
   }
 
   savePreset(): void {
-    this.appService.savePreset('init', {components: {}})
+    this.appService.savePreset('', this.newPresetName, {components: {}})
   }
 
   loadPreset(): void {
-    this.appService.loadPreset('init');
+    this.currentPreset = this.appService.loadPreset('init');
   }
 
   undoLastAction(): void {
