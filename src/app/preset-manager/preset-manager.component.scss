@@ -1,6 +1,10 @@
 :host {
   display: block;
   width: 100%;
+}
+
+.ins-preset-display {
+  display: block;
   background: #212529;
   border: 1px solid #494b4f;
   border-radius: 3px;
@@ -12,4 +16,18 @@
   min-width: 300px;
   height: 25px;
   text-align: center;
+}
+
+.ins-preset-save-dialog {
+  position: absolute;
+  top: 0;
+  margin: 0 auto;
+  z-index: 100;
+}
+
+.ins-preset-list {
+  position: absolute;
+  top: 0;
+  margin: 0 auto;
+  z-index: 100;
 }

@@ -28,6 +28,8 @@ export class SynthService {
 
   oscillators: InsOscillator[] = [];
 
+  keyboardDisabled: boolean = false;
+
   noteOnEvent: Subject<string> = new Subject<string>();
   noteOffEvent: Subject<string> = new Subject<string>();
   keyDownEvent: Subject<string> = new Subject<string>();
@@ -50,12 +52,12 @@ export class SynthService {
   }
 
   keyDown(note: string) {
-    if(!this.sequencerKeyboardConnected) this.noteOn(note);
+    if(!this.sequencerKeyboardConnected && !this.keyboardDisabled) this.noteOn(note);
     this.keyDownEvent.next(note);
   }
 
   keyUp(note: string) {
-    if(!this.sequencerKeyboardConnected) this.noteOff(note);
+    if(!this.sequencerKeyboardConnected && !this.keyboardDisabled) this.noteOff(note);
     this.keyUpEvent.next(note);
   }
 

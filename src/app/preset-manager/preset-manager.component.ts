@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {AppService} from "../app.service";
+import {SynthService} from "../synth.service";
 
 export type InsPreset = {
   id: string,
@@ -18,13 +19,26 @@ export class PresetManagerComponent {
   newPresetName: string = '';
   currentPreset: InsPreset | undefined;
   showPresetList: boolean = false;
+  showPresetSaveDialog: boolean = false;
 
-  constructor(public appService: AppService) {
+  constructor(public appService: AppService, private synthService: SynthService) {
     this.loadPreset('init')
   }
 
+  showSaveDialog(): void {
+    this.showPresetSaveDialog = true;
+    this.newPresetName = this.currentPreset?.name || '';
+    this.synthService.keyboardDisabled = true;
+  }
+
+  hideSaveDialog(): void {
+    this.showPresetSaveDialog = false;
+    this.synthService.keyboardDisabled = false;
+  }
+
   savePreset(): void {
-    this.appService.savePreset('', this.newPresetName, {components: {}})
+    this.appService.savePreset('', this.newPresetName, {components: {}});
+    this.hideSaveDialog();
   }
 
   loadPreset(presetId: string): void {
