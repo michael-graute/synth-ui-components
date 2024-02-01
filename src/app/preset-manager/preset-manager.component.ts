@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {AppService} from "../app.service";
 import {SynthService} from "../synth.service";
+import {PresetManagerService} from "./preset-manager.service";
 
 export type InsPreset = {
   id: string,
@@ -21,7 +21,7 @@ export class PresetManagerComponent {
   showPresetList: boolean = false;
   showPresetSaveDialog: boolean = false;
 
-  constructor(public appService: AppService, private synthService: SynthService) {
+  constructor(public presetManagerService: PresetManagerService, private synthService: SynthService) {
     this.loadPreset('init')
   }
 
@@ -37,12 +37,12 @@ export class PresetManagerComponent {
   }
 
   savePreset(): void {
-    this.appService.savePreset('', this.newPresetName, {components: {}});
+    this.presetManagerService.savePreset('', this.newPresetName, {components: {}});
     this.hideSaveDialog();
   }
 
   loadPreset(presetId: string): void {
-    this.currentPreset = this.appService.loadPreset(presetId);
+    this.currentPreset = this.presetManagerService.loadPreset(presetId);
     console.log(this.currentPreset);
   }
 

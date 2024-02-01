@@ -3,7 +3,7 @@ import * as Tone from "tone";
 import {InsAttackReleaseOptions, SynthService} from "../synth.service";
 import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
-import {AppService, InsPreset} from "../app.service";
+import {PresetManagerService, InsPreset} from "../preset-manager/preset-manager.service";
 
 export interface SequencerStep {
   id: number;
@@ -98,7 +98,7 @@ export class SequencerComponent implements OnInit {
 
   stepPlaying: Subject<number> = new Subject<number>();
 
-  constructor(private changeDetectorRef: ChangeDetectorRef, private appService: AppService, private synthService: SynthService) {
+  constructor(private changeDetectorRef: ChangeDetectorRef, private presetManagerService: PresetManagerService, private synthService: SynthService) {
     for(let i: number = 0; i < 16; i++) {
       const armed: boolean = i < 8;
       this.availableSteps.push({
@@ -114,12 +114,12 @@ export class SequencerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appService.loadConfigEvent.subscribe((preset: InsPreset): void => {
+    this.presetManagerService.loadConfigEvent.subscribe((preset: InsPreset): void => {
       if(preset.components[this.id]) {
         this.config = preset.components[this.id];
       }
     });
-    this.appService.saveConfigEvent.subscribe((presetId: string): void => {
+    this.presetManagerService.saveConfigEvent.subscribe((presetId: string): void => {
       const preset: string | null = localStorage.getItem(presetId);
       if(preset) {
         let presetConfig = JSON.parse(preset);

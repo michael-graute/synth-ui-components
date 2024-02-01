@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SynthService} from "./synth.service";
-import {AppService, InsPreset} from "./app.service";
 import {UndoService} from "./undo.service";
 
 @Component({
@@ -22,7 +21,7 @@ export class AppComponent implements OnInit {
   midiAllowed: boolean = false;
   //osc1 = new Tone.Synth();
 
-  constructor(public synthService: SynthService, private appService: AppService, public undoService: UndoService) {
+  constructor(public synthService: SynthService, public undoService: UndoService) {
   }
 
   ngOnInit(): void {
@@ -42,23 +41,7 @@ export class AppComponent implements OnInit {
 
   public page: string = 'main';
 
-  currentPreset: InsPreset | undefined;
-
-  newPresetName: string = '';
-
   onKnobChange(event: number): void {
     //console.log('knobChange', event);
-  }
-
-  savePreset(): void {
-    this.appService.savePreset('', this.newPresetName, {components: {}})
-  }
-
-  loadPreset(): void {
-    this.currentPreset = this.appService.loadPreset('init');
-  }
-
-  undoLastAction(): void {
-    this.undoService.undo();
   }
 }

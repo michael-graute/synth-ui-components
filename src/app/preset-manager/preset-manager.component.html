@@ -9,15 +9,11 @@
 <div *ngIf="showPresetList" class="card ins-preset-list">
   <div class="card-body">
     <h5 class="card-title">Save Preset</h5>
-    <div *ngFor="let preset of appService.availablePresets" style="display: inline-block">
+    <div *ngFor="let preset of presetManagerService.availablePresets" style="display: inline-block">
       <a href="#" (click)="loadPreset(preset.id); togglePresetList();">{{preset.name}}</a>
     </div>
   </div>
 </div>
-<!--<ul>
-  <li *ngFor="let preset of appService.availablePresets" style="display: inline-block">
-    <a href="#">{{preset.name}}</a>
-</ul>-->
 <div class="d-flex gap-2">
   <span class="ins-preset-display" (click)="togglePresetList()">{{currentPreset?.name}}</span>
   <button *ngIf="!showPresetSaveDialog" class="btn btn-success me-2" type="button" (click)="showSaveDialog()">Save Preset</button>

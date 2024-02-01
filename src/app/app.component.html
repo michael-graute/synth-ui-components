@@ -22,7 +22,7 @@
       <ins-preset-manager></ins-preset-manager>
     </div>
     <form class="d-flex">
-      <button class="btn btn-success me-2" type="button" (click)="undoLastAction()" [disabled]="undoService.undSteps.length === 0">Undo</button>
+      <ins-undo-manager></ins-undo-manager>
       <ins-midi-monitor *ngIf="midiAllowed"></ins-midi-monitor>
     </form>
   </div>

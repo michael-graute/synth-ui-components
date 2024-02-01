@@ -12,6 +12,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
 import {MidiService} from "../midi.service";
 import {UndoService, UndoStep} from "../undo.service";
+import {UndoManagerService} from "../undo-manager/undo-manager.service";
 
 export type KnobMidiEvent = {
   control: number;
@@ -100,7 +101,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     this.draw();
   }
 
-  constructor(private midiService: MidiService, private undoService: UndoService) {
+  constructor(private midiService: MidiService, private undoService: UndoManagerService) {
   }
 
   toggleMidiLearnEditMode(): void {

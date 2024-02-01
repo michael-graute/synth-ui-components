@@ -24,6 +24,7 @@ import { AbstractSynthComponent } from "./abstracts/abstract-synth.component";
 import {DelayComponent} from "./delay/delay.component";
 import {ReverbComponent} from "./reverb/reverb.component";
 import {PresetManagerComponent} from "./preset-manager/preset-manager.component";
+import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {PresetManagerComponent} from "./preset-manager/preset-manager.component"
     MidiMonitorComponent,
     DelayComponent,
     ReverbComponent,
-    PresetManagerComponent
+    PresetManagerComponent,
+    UndoManagerComponent
   ],
   imports: [
     BrowserModule,
