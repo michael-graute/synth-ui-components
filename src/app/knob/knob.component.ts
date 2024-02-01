@@ -249,7 +249,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     }
   }
 
-  @HostListener('document:click', ['$event'])
+  //@HostListener('document:click', ['$event'])
   handleDocumentClick(event: MouseEvent): void {
     if(this.knobEditorInput) {
       if (event.target !== this.knobEditorInput.nativeElement) {
@@ -263,7 +263,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     }
   }
 
-  @HostListener('document:mouseup')
+  //@HostListener('document:mouseup')
   handleDocumentMouseUp(): void {
     if(this.mouseDown) {
       this.mouseDown = false;

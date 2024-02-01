@@ -1,17 +1,23 @@
 <div *ngIf="showPresetSaveDialog" class="card ins-preset-save-dialog">
+  <div class="card-header">
+    Save Preset
+  </div>
   <div class="card-body">
-    <h5 class="card-title">Save Preset</h5>
     <p class="card-text">Enter a name for the preset.</p>
     <input class="form-control me-2" type="text" [(ngModel)]="newPresetName" name="newPresetName" id="newPresetName">
     <button class="btn btn-success me-2" type="button" (click)="savePreset()">Save Preset</button>
   </div>
 </div>
 <div *ngIf="showPresetList" class="card ins-preset-list">
+  <div class="card-header">
+    Load Preset
+  </div>
   <div class="card-body">
-    <h5 class="card-title">Save Preset</h5>
-    <div *ngFor="let preset of presetManagerService.availablePresets" style="display: inline-block">
-      <a href="#" (click)="loadPreset(preset.id); togglePresetList();">{{preset.name}}</a>
-    </div>
+    <ul>
+      <li *ngFor="let preset of presetManagerService.availablePresets">
+        <a href="#" (click)="loadPreset(preset.id); togglePresetList();">{{preset.name}}</a>
+      </li>
+    </ul>
   </div>
 </div>
 <div class="d-flex gap-2">

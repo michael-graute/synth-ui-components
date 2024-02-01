@@ -1,6 +1,7 @@
 :host {
   display: block;
   width: 100%;
+  position: relative;
 }
 
 .ins-preset-display {
@@ -8,14 +9,15 @@
   background: #212529;
   border: 1px solid #494b4f;
   border-radius: 3px;
-  padding: 2px 5px;
+  padding: 5px 5px;
   font-size: small;
   font-weight: 300;
   color: gray;
   text-transform: uppercase;
   min-width: 300px;
-  height: 25px;
+  height: 32px;
   text-align: center;
+  cursor: pointer;
 }
 
 .ins-preset-save-dialog {
@@ -27,7 +29,25 @@
 
 .ins-preset-list {
   position: absolute;
-  top: 0;
+  top: 45px;
+  left: 0;
   margin: 0 auto;
   z-index: 100;
+  right: 0;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      text-transform: uppercase;
+      font-size: small;
+      font-weight: 300;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
 }
