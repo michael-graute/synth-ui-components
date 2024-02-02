@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
+import {InsNoteOnPayload} from "../synth.service";
 
 export interface OscillatorConfig {
   volume: number;
@@ -109,10 +110,10 @@ export class OscillatorComponent extends AbstractSynthComponent<OscillatorConfig
 
   override ngOnInit() {
     super.ngOnInit();
-    this.subscriptions.add(this.synthService.noteOnEvent.subscribe((event: any) => {
+    this.subscriptions.add(this.synthService.noteOnEvent.subscribe((event: InsNoteOnPayload) => {
       if(this.active) {
-        const note: Tone.Unit.Note = Tone.Frequency(event).transpose((this.octave || 0) * 12).toNote();
-        this.synth.triggerAttack(note);
+        const note: Tone.Unit.Note = Tone.Frequency(event.note).transpose((this.octave || 0) * 12).toNote();
+        this.synth.triggerAttack(note, undefined, event.velocity);
       }
     }));
     this.subscriptions.add(this.synthService.noteOffEvent.subscribe((event: any) => {

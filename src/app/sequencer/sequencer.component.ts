@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import * as Tone from "tone";
-import {InsAttackReleaseOptions, SynthService} from "../synth.service";
+import {InsAttackReleasePayload, SynthService} from "../synth.service";
 import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
 import {PresetManagerService, InsPreset} from "../preset-manager/preset-manager.service";
@@ -176,7 +176,7 @@ export class SequencerComponent implements OnInit {
       const step: SequencerStep = this.availableSteps[index];
       if(step.armed) {
         const tone: Tone.FrequencyClass<number> = Tone.Frequency(this.rootNote).transpose((step.pitch || 0) + ((step.octave || 0) * 12));
-        const attackReleaseOptions: InsAttackReleaseOptions = {
+        const attackReleaseOptions: InsAttackReleasePayload = {
           note: tone.toNote(),
           duration: this.gateOptions[step.gate || 0],
           velocity: step.velocity,
