@@ -1,5 +1,1 @@
-<!--<p>Midi Monitor</p>
-<div *ngFor="let note of notes$ | async">
-  <p>{{note}}</p>
-</div>-->
-<button class="btn btn-primary" type="button" (click)="midiService.toggleMidiLearn()" [ngClass]="{'active': midiService.midiLearn}">Midi Learn</button>
+<button *ngIf="midiService.midiAccessGranted" class="btn btn-primary" type="button" (click)="midiService.toggleMidiLearn()" [ngClass]="{'active': midiService.midiLearn}">Midi Learn</button>

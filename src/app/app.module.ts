@@ -25,6 +25,7 @@ import {DelayComponent} from "./delay/delay.component";
 import {ReverbComponent} from "./reverb/reverb.component";
 import {PresetManagerComponent} from "./preset-manager/preset-manager.component";
 import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
+import {ElementsShowcaseComponent} from "./elements-showcase/elements-showcase.component";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
     DelayComponent,
     ReverbComponent,
     PresetManagerComponent,
-    UndoManagerComponent
+    UndoManagerComponent,
+    ElementsShowcaseComponent
   ],
   imports: [
     BrowserModule,

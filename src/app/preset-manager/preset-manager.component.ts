@@ -43,7 +43,6 @@ export class PresetManagerComponent {
 
   loadPreset(presetId: string): void {
     this.currentPreset = this.presetManagerService.loadPreset(presetId);
-    console.log(this.currentPreset);
   }
 
   togglePresetList(): void {

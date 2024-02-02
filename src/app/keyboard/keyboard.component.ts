@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Component, HostListener, Input, OnInit} from '@angular/core';
-import {SynthService} from "../synth.service";
+import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
+import {InsAttackReleasePayload, InsNoteOnPayload, SynthService} from "../synth.service";
 import * as Tone from "tone";
 
 
@@ -17,14 +17,12 @@ export class KeyboardComponent implements OnInit {
   public heldKeys: string[] = [];
   public hold : boolean = false;
 
-  @Input() service: SynthService | undefined;
-
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private changeDetectorRef: ChangeDetectorRef, private synthService: SynthService) {
     this.changeOctave(2)
   }
 
-  @HostListener('document:mouseup', ['$event'])
-  handleDocumentMouseUpEvent(event: MouseEvent): void {
+  @HostListener('document:mouseup')
+  handleDocumentMouseUpEvent(): void {
     this.isMouseDown = false;
   }
 
@@ -33,7 +31,7 @@ export class KeyboardComponent implements OnInit {
     if(this.charMap.includes(event.key) && !this.heldKeys.includes(this.notes[this.charMap.findIndex((element: string): boolean => element == event.key)] + (this.octaveBase + 1))) {
       const index: number = this.charMap.findIndex((element: string): boolean => element == event.key);
       const note: string = this.notes[index] + (this.octaveBase + 1);
-      this.service?.keyDown(note);
+      this.synthService.keyDown(note);
     }
   }
 
@@ -42,31 +40,31 @@ export class KeyboardComponent implements OnInit {
     if(this.charMap.includes(event.key)) {
       const index: number = this.charMap.findIndex((element: string): boolean => element == event.key);
       const note: string = this.notes[index] + (this.octaveBase + 1);
-      this.service?.keyUp(note);
+      this.synthService.keyUp(note);
     }
   }
 
   mouseDown(key:string): void {
     this.isMouseDown = true;
-    this.service?.keyDown(key);
+    this.synthService.keyDown(key);
   }
 
   mouseUp(key:string): void{
     if(this.isMouseDown && this.heldKeys.includes(key)) {
-      this.service?.keyUp(key);
+      this.synthService.keyUp(key);
       this.isMouseDown = false;
     }
   }
 
   mouseOver(key:string): void {
     if(this.isMouseDown && !this.heldKeys.includes(key) && !this.hold) {
-      this.service?.keyDown(key);
+      this.synthService.keyDown(key);
     }
   }
 
   mouseOut(key:string): void {
     if(this.isMouseDown && this.heldKeys.includes(key)) {
-      this.service?.keyUp(key);
+      this.synthService.keyUp(key);
     }
   }
 
@@ -78,13 +76,13 @@ export class KeyboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service?.noteOnEvent.subscribe((note: string): void => {
-      this.heldKeys.push(note);
+    this.synthService.noteOnEvent.subscribe((event: InsNoteOnPayload): void => {
+      this.heldKeys.push(event.note);
     });
-    this.service?.noteOffEvent.subscribe((note: string): void => {
+    this.synthService.noteOffEvent.subscribe((note: string): void => {
       this.heldKeys = this.heldKeys.filter((element: string): boolean => element != note);
     });
-    this.service?.attackReleaseEvent.subscribe((event: any): void => {
+    this.synthService.attackReleaseEvent.subscribe((event: InsAttackReleasePayload): void => {
       this.heldKeys.push(event.note);
       setTimeout(() => {
         this.heldKeys = this.heldKeys.filter((element: string): boolean => element != event.note);
@@ -96,6 +94,6 @@ export class KeyboardComponent implements OnInit {
 
   toggleHold(): void {
     this.hold = !this.hold;
-    //if(!this.hold && this.heldKey != "") this.service?.keyUp(this.heldKey);
+    //if(!this.hold && this.heldKey != "") this.synthService.keyUp(this.heldKey);
   }
 }

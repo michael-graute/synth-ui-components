@@ -1,5 +1,5 @@
 <div class="ins-main-container">
-<nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><span style="color: #8BC34A">BASIC</span>SYNTH</a>
     <div id="navbarNavDropdown">
@@ -23,7 +23,7 @@
     </div>
     <form class="d-flex">
       <ins-undo-manager></ins-undo-manager>
-      <ins-midi-monitor *ngIf="midiAllowed"></ins-midi-monitor>
+      <ins-midi-monitor></ins-midi-monitor>
     </form>
   </div>
 </nav>
@@ -61,61 +61,18 @@
     </div>
     <div class="container" [ngClass]="{'hidden': page !== 'effects'}"></div>
     <div class="container" style="overflow: auto" [ngClass]="{'hidden': page !== 'elements'}">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              Elements
-            </div>
-            <div class="card-body">
-              <ins-divider label="Sliders" class="mt-0"></ins-divider>
-              <div class="d-flex mb-3">
-                <ins-slider label="Vol" [max]="20" [min]="0" [height]="250" [value]="12"></ins-slider>
-                <ins-slider label="Mid" [max]="100" [min]="0" [height]="250" [(ngModel)]="foo"></ins-slider>
-                <ins-slider label="Hi" [max]="20" [min]="0" [height]="250" [value]="8"></ins-slider>
-                <ins-slider label="Lo" [max]="20" [min]="0" [height]="250" [value]="3"></ins-slider>
-              </div>
-              <ins-divider label="Knobs"></ins-divider>
-              <div class="d-flex mb-3">
-                <ins-knob id="showcaseKnobSize80" [lfo]="true" [(ngModel)]="foo" label="size 80" [size]="80" baseColor="gray" [baseLineWidth]="8" [valueLineWidth]="5" valueColor="#00a4e1" [min]="0" [max]="100"></ins-knob>
-                <ins-knob id="showcaseKnobSize70" [(ngModel)]="bar" label="size 70" [size]="70" [min]="0" [max]="100"></ins-knob>
-                <ins-knob id="showcaseKnobSize60" label="size 60" [value]="9" [size]="60" (change)="onKnobChange($event)"></ins-knob>
-                <ins-knob id="showcaseKnobDefault" [lfo]="true" label="default" [value]="9" (change)="onKnobChange($event)"></ins-knob>
-                <ins-knob id="showcaseKnobFoo" label="Foo" [value]="20" [min]="-100" [max]="100" [size]="40" [step]="1" type="line"></ins-knob>
-                <ins-knob id="showcaseKnobBar" label="Bar" [value]="20" [min]="0" [max]="100"  [step]=".1" type="line" [(ngModel)]="barbaz"></ins-knob>
-              </div>
-              <div class="d-flex mb-3 gap-1">
-                <ins-knob id="showcaseKnobDotted" [value]="1" label="dotted" type="dot" [min]="-2" [max]="2" [step]="1"></ins-knob>
-                <ins-knob id="showcaseKnobFine" [value]="0.3" label="fine" [min]="0.0" [max]="1.00" [step]=".01"></ins-knob>
-                <ins-knob id="showcaseKnobSelect" [value]="3" label="select" type="dot" [options]="['1n', '2n', '4n', '8n', '16n', '32n']"></ins-knob>
-                <ins-knob id="showcaseKnobPan" type="pan" [size]="50" label="pan" [value]="pan" [(ngModel)]="pan" [min]="-100" [max]="100"></ins-knob>
-              </div>
-              <ins-divider label="Misc"></ins-divider>
-              <div class="d-flex mb-3 gap-3">
-                <ins-switch label="Switch" onLabel="active" offLabel="off"></ins-switch>
-                <ins-button-group label="Select Buttons" [options]="[{label: 'Foo', value: 'foo'}, {label: 'Bar', value: 'bar'}, {label: 'Baz', value: 'baz'}]" value="bar"></ins-button-group>
-                <ins-waveform-select label="Waveform" value="sine"></ins-waveform-select>
-              </div>
-              <ins-divider label="ADSR - Envelope"></ins-divider>
-              <ins-adsr-envelope id="showcaseADSR" [height]="50" [(ngModel)]="adsr"></ins-adsr-envelope>
-            </div>
+      <ins-elements-showcase></ins-elements-showcase>
+    </div>
+  </div>
+  <div>
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <ins-keyboard></ins-keyboard>
           </div>
         </div>
       </div>
     </div>
   </div>
-<div>
-  <div class="row mt-4">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          Keyboard
-        </div>
-        <div class="card-body">
-          <ins-keyboard [service]="synthService"></ins-keyboard>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 </div>

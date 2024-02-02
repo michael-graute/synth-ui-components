@@ -22,10 +22,12 @@ export type InsControlChange = {
   templateUrl: './midi-monitor.component.html',
   styleUrls: ['./midi-monitor.component.scss']
 })
-export class MidiMonitorComponent implements OnInit{
+export class MidiMonitorComponent implements OnInit {
 
   readonly notes$: Observable<InsNote>;
   readonly controlChanges$: Observable<InsControlChange>;
+
+  public midiAccessGranted: boolean = false;
 
   constructor(@Inject(MIDI_MESSAGES) messages$: Observable<WebMidi.MIDIMessageEvent>, public midiService: MidiManagerService) {
     this.notes$ = messages$.pipe(
@@ -43,6 +45,7 @@ export class MidiMonitorComponent implements OnInit{
   }
 
   ngOnInit(): void {
+
     this.notes$.subscribe((note: InsNote): void => {
       if(note.on) {
         this.midiService.noteOn(note.note, note.velocity);

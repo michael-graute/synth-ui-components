@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import {Subject} from "rxjs";
 import * as Tone from "tone";
 
-export interface InsOscillator {
-  id: string;
-  oscillator: Tone.Synth;
-}
-
-export interface InsAttackReleaseOptions {
+export interface InsAttackReleasePayload {
   note: any,
   duration: any,
   time?: any,
@@ -19,6 +14,11 @@ export interface InsEffect {
   effect: any;
 }
 
+export type InsNoteOnPayload = {
+  note: string;
+  velocity: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,15 +26,13 @@ export class SynthService {
 
   effects: InsEffect[] = [];
 
-  oscillators: InsOscillator[] = [];
-
   keyboardDisabled: boolean = false;
 
-  noteOnEvent: Subject<string> = new Subject<string>();
+  noteOnEvent: Subject<InsNoteOnPayload> = new Subject<InsNoteOnPayload>();
   noteOffEvent: Subject<string> = new Subject<string>();
   keyDownEvent: Subject<string> = new Subject<string>();
   keyUpEvent: Subject<string> = new Subject<string>();
-  attackReleaseEvent: Subject<InsAttackReleaseOptions> = new Subject<InsAttackReleaseOptions>();
+  attackReleaseEvent: Subject<InsAttackReleasePayload> = new Subject<InsAttackReleasePayload>();
   sequencerKeyboardConnected: boolean = false;
 
   constructor() { }
@@ -43,16 +41,16 @@ export class SynthService {
     this.sequencerKeyboardConnected = !this.sequencerKeyboardConnected;
   }
 
-  noteOn(note: string) {
-    this.noteOnEvent.next(note);
+  noteOn(note: string, velocity: number = 1): void {
+    this.noteOnEvent.next({note: note, velocity: velocity});
   }
 
   noteOff(note: string) {
     this.noteOffEvent.next(note);
   }
 
-  keyDown(note: string) {
-    if(!this.sequencerKeyboardConnected && !this.keyboardDisabled) this.noteOn(note);
+  keyDown(note: string, velocity: number = 1) {
+    if(!this.sequencerKeyboardConnected && !this.keyboardDisabled) this.noteOn(note, velocity);
     this.keyDownEvent.next(note);
   }
 
@@ -61,7 +59,7 @@ export class SynthService {
     this.keyUpEvent.next(note);
   }
 
-  attackRelease(options: InsAttackReleaseOptions) {
+  attackRelease(options: InsAttackReleasePayload) {
     this.attackReleaseEvent.next(options);
   }
 
@@ -71,7 +69,6 @@ export class SynthService {
     this.effects.forEach((effect: InsEffect) => {
       tmpEffects.push(effect.effect);
     });
-    console.log(this.effects);
     Tone.Destination.chain(...tmpEffects);
   }
 
@@ -83,7 +80,6 @@ export class SynthService {
       this.effects.forEach((effect: InsEffect) => {
         tmpEffects.push(effect.effect);
       });
-      console.log(this.effects);
       Tone.Destination.chain(...tmpEffects);
     }
   }
