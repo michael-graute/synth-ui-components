@@ -1,19 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {SynthService} from "./synth.service";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'ins-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   public page: string = 'main';
-
-  constructor(public synthService: SynthService) {
-  }
-
-  ngOnInit(): void {
-  }
 
 }
