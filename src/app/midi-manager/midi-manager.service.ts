@@ -1,11 +1,11 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {SynthService} from "./synth.service";
+import {SynthService} from "../synth.service";
 import {InsControlChange} from "./midi-monitor/midi-monitor.component";
 
 @Injectable({
   providedIn: 'root'
 })
-export class MidiService {
+export class MidiManagerService {
 
   public midiLearn: boolean = false;
 

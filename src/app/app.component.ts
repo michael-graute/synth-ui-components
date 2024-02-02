@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {SynthService} from "./synth.service";
-import {UndoService} from "./undo.service";
 
 @Component({
   selector: 'ins-root',
@@ -21,7 +20,7 @@ export class AppComponent implements OnInit {
   midiAllowed: boolean = false;
   //osc1 = new Tone.Synth();
 
-  constructor(public synthService: SynthService, public undoService: UndoService) {
+  constructor(public synthService: SynthService) {
   }
 
   ngOnInit(): void {

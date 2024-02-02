@@ -3,7 +3,7 @@ import {MIDI_MESSAGES, toData, notes, filterByChannel} from "@ng-web-apis/midi";
 import {Observable, Subscriber} from "rxjs";
 import {map} from 'rxjs/operators';
 import * as Tone from "tone";
-import {MidiService} from "../midi.service";
+import {MidiManagerService} from "../midi-manager.service";
 
 export type InsNote = {
   on: boolean,
@@ -27,7 +27,7 @@ export class MidiMonitorComponent implements OnInit{
   readonly notes$: Observable<InsNote>;
   readonly controlChanges$: Observable<InsControlChange>;
 
-  constructor(@Inject(MIDI_MESSAGES) messages$: Observable<WebMidi.MIDIMessageEvent>, public midiService: MidiService) {
+  constructor(@Inject(MIDI_MESSAGES) messages$: Observable<WebMidi.MIDIMessageEvent>, public midiService: MidiManagerService) {
     this.notes$ = messages$.pipe(
       filterByChannel(0),
       notes(),
