@@ -1,5 +1,6 @@
-<div *ngIf="midiManagerService.midiLearn" class="ins-midi-learn" [ngClass]="{'ins-midi-listen-active': midiListen}" (click)="toggleMidiLearnEditMode()">
-  <div *ngIf="midiLearnEditMode || midiListen" class="ins-midi-learn-editor" (click)="toggleMidiListen()">
+<div *ngIf="midiManagerService.midiLearn || midiListen" class="ins-midi-learn" [ngClass]="{'ins-midi-listen-active': midiListen}" (click)="toggleMidiLearnEditMode()">
+  <span *ngIf="midiListen && !midiLearn" class="badge ins-badge-midi-listen">m</span>
+  <div *ngIf="midiLearnEditMode" class="ins-midi-learn-editor" (click)="toggleMidiListen()">
     <p>CH: {{midiEventListener.channel}}</p>
     <p>CC: {{midiEventListener.control}}</p>
   </div>
