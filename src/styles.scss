@@ -155,12 +155,14 @@ fieldset {
 .ins-midi-learn {
   background: rgb(0 164 225 / 25%);
   position: absolute;
-  top: 1px;
-  right: 1px;
-  left: 1px;
+  top: 0;
+  right: 0;
+  left: 0;
   bottom: -5px;
   cursor: pointer;
   border-radius: 3px;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
 
   &.ins-midi-listen-active {
     background: rgba(109, 225, 0, 0.35);

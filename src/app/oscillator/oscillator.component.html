@@ -8,7 +8,7 @@
           <ins-waveform-select [(ngModel)]="type" ></ins-waveform-select>
       </div>
       <ins-divider label="Settings"></ins-divider>
-      <div class="d-flex">
+      <div class="d-flex gap-1">
         <div class="ins-knob-container ins-oscillator__detune">
           <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-100" [max]="100" [step]="1" [(ngModel)]="detune"></ins-knob>
           <ins-midi-overlay></ins-midi-overlay>

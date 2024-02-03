@@ -30,20 +30,21 @@
   <div style="overflow: auto">
     <div class="container" [ngClass]="{'hidden': page !== 'main'}">
       <div class="row">
-        <div class="col-4">
+        <div class="col-xl-3 col-4">
           <ins-oscillator id="oscillator1"></ins-oscillator>
         </div>
-        <div class="col-4">
+        <div class="col-xl-3 col-4">
           <ins-oscillator id="oscillator2"></ins-oscillator>
         </div>
-        <div class="col-4">
+        <div class="col-xl-3 col-4">
           <ins-filter id="filter"></ins-filter>
+        </div>
+        <div class="col-xl-3 col-4">
+          <ins-lfo id="lfo"></ins-lfo>
         </div>
       </div>
       <div class="row mt-3">
-        <div class="col-4">
-          <ins-lfo id="lfo"></ins-lfo>
-        </div>
+
         <div class="col-4">
           <ins-delay id="delay"></ins-delay>
         </div>
