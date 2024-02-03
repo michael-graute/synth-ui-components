@@ -50,9 +50,6 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @Input() labelTextWeight: number = 300;
   @Input() valueTextSize: string = 'small';
   @Input() valueTextWeight: number = 300;
-  @Input() midiLearn: boolean = false;
-  @Input() midiLearnEditMode: boolean = false;
-  @Input() midiEventListener: KnobMidiEvent = { control: 0, value: 0, channel: 0 };
   @Input() lfo: boolean = false;
   @Input() options: any[] | undefined = undefined;
   @Input() negativeValuePrefix: string = 'L';
@@ -65,10 +62,9 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @ViewChild('knobCanvas') knobCanvas: ElementRef | undefined;
   @ViewChild('knobEditorInput') knobEditorInput: ElementRef | undefined;
   @ViewChild('knobEditorSelect') knobEditorSelect: ElementRef | undefined;
+  @ViewChild('mouseMoveDetector') mouseMoveDetector: ElementRef | undefined;
 
-  public midiListen: boolean = false;
   public editMode: boolean = false;
-
   public mouseDown: boolean = false;
   private mouseDownStartY: number = 0;
   private mouseOver: boolean = false;
@@ -103,14 +99,6 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   constructor(private midiService: MidiManagerService, private undoService: UndoManagerService) {
   }
 
-  toggleMidiLearnEditMode(): void {
-    this.midiLearnEditMode = !this.midiLearnEditMode;
-  }
-
-  toggleMidiListen(): void {
-    this.midiListen = !this.midiListen;
-  }
-
   public writeValue(obj: any): void {
     if(obj === null || obj === undefined) return;
     this.internalValue = obj;
@@ -141,10 +129,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       this.max = this.options.length - 1;
       this.step = 1;
     }
-    this.midiService.midiLearnToggleEvent.subscribe((midiLearn: boolean) => {
-      this.midiLearn = midiLearn;
-    });
-    this.midiService.controlChangeEvent.subscribe((midiEvent: KnobMidiEvent) => {
+    /*this.midiService.controlChangeEvent.subscribe((midiEvent: KnobMidiEvent) => {
       this.setMidiEventValue(midiEvent);
     });
     this.midiService.midiLearnControlEvent.subscribe((midiEvent: KnobMidiEvent) => {
@@ -153,7 +138,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
         this.midiListen = true;
       }
       this.setMidiEventValue(midiEvent);
-    });
+    });*/
     this.undoService.undoEvent.subscribe((undoStep: UndoStep) => {
       if(undoStep.componentId === this.id) {
         this.value = undoStep.oldValue;
@@ -162,11 +147,11 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     });
   }
 
-  setMidiEventValue(midiEvent: KnobMidiEvent): void {
+  /*setMidiEventValue(midiEvent: KnobMidiEvent): void {
     if(midiEvent.control === this.midiEventListener.control && midiEvent.channel === this.midiEventListener.channel && this.midiListen) {
       this.value = Math.round(this.convertRange( midiEvent.value, [ 0, 127 ], [ this.min, this.max ] )/ this.step) * this.step;
     }
-  }
+  }*/
 
   ngAfterViewInit(): void {
     this.rangeIndicator = this.size + this.size / 2;
@@ -182,11 +167,14 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @HostListener('mousedown', ['$event'])
   handleMouseDown(event: MouseEvent): void {
-    if(!this.midiListen) {
-      this.mouseDown = true;
-      this.mouseDownStartY = event.clientY;
-      this.oldValue = this.value;
-    }
+    this.mouseDown = true;
+    this.mouseDownStartY = event.clientY;
+    this.oldValue = this.value;
+    this.mouseMoveDetector?.nativeElement.addEventListener('mouseout', () => {
+      this.mouseMoveDetector?.nativeElement.removeEventListener('mouseout', () => {});
+      this.mouseDown = false;
+      this.mouseOver = false;
+    });
   }
 
   @HostListener('mouseup')
@@ -197,7 +185,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @HostListener('mousemove', ['$event'])
   handleMouseMove(event: MouseEvent) {
-    if(this.mouseDown && !this.editMode && !this.midiLearn) {
+    if(this.mouseDown && !this.editMode) {
       const difference: number = Math.round((this.mouseDownStartY-event.clientY));
       this.tmpValue += difference;
       this.mouseDownStartY = event.clientY;
@@ -222,7 +210,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   handleMouseWheel(event: WheelEvent): void {
     event.preventDefault();
     this.mouseWheelEvent = event;
-    if(!this.midiLearn && !this.editMode &&!this.midiListen && !this.mouseDown && this.mouseOver) {
+    if(!this.mouseDown && this.mouseOver) {
       this.tmpValue += event.deltaY/4;
       if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator;
       if(this.tmpValue <= 0) this.tmpValue = 0;
@@ -237,7 +225,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
   @HostListener('dblclick')
   handleDoubleClick(): void {
-    if(!this.editMode && !this.midiLearn) {
+    if(!this.editMode) {
       this.oldValue = this.value;
       this.editMode = true;
       if (!this.knobEditorInput) return;

@@ -29,6 +29,12 @@
     position: absolute;
     left: 0;
     right: 0;
+    z-index: 100000;
+    display: none;
+
+    &.visible {
+      display: block;
+    }
   }
 
   .ins-knob-value {

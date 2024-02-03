@@ -26,6 +26,7 @@ import {ReverbComponent} from "./reverb/reverb.component";
 import {PresetManagerComponent} from "./preset-manager/preset-manager.component";
 import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
 import {ElementsShowcaseComponent} from "./elements-showcase/elements-showcase.component";
+import {MidiOverlayComponent} from "./midi-manager/midi-overlay/midi-overlay.component";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {ElementsShowcaseComponent} from "./elements-showcase/elements-showcase.c
     ReverbComponent,
     PresetManagerComponent,
     UndoManagerComponent,
-    ElementsShowcaseComponent
+    ElementsShowcaseComponent,
+    MidiOverlayComponent
   ],
   imports: [
     BrowserModule,
