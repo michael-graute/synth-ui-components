@@ -187,12 +187,14 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       this.mouseDown = false;
       this.mouseOver = false;
     });
+    this.draw();
   }
 
   @HostListener('mouseup')
   handleMouseUp(): void {
     this.mouseDown = false;
     this.triggerUndo();
+    this.draw();
   }
 
   @HostListener('mousemove', ['$event'])
@@ -210,12 +212,14 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @HostListener('mouseover')
   handleMouseOver(): void {
     this.mouseOver = true;
+    this.draw();
   }
 
   @HostListener('mouseout')
   handleMouseOut(): void {
     this.mouseOver = false;
     if(this.mouseWheelEvent) this.mouseWheelEvent.stopPropagation();
+    this.draw();
   }
 
   @HostListener('mousewheel', ['$event'])
@@ -296,6 +300,23 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       if(context) {
 
         context.clearRect(0, 0, element.width, element.height);
+
+        if(this.mouseOver && !this.mouseDown) {
+          context.beginPath();
+          context.fillStyle = 'rgba(255,255,255,0.1)';
+          context.arc(this.size / 2, this.size / 2, ((this.size - this.baseLineWidth) / 2), (Math.PI / 180) * 120, (Math.PI / 180) * 420);
+          context.fill();
+          context.closePath();
+        }
+
+        if(this.mouseDown) {
+          context.beginPath();
+          context.fillStyle = 'rgba(164,164,164,0.1)';
+          context.arc(this.size / 2, this.size / 2, ((this.size - this.baseLineWidth) / 2), (Math.PI / 180) * 120, (Math.PI / 180) * 420);
+          context.fill();
+          context.closePath();
+        }
+
 
         //Outer ring
         context.lineWidth = this.baseLineWidth;
