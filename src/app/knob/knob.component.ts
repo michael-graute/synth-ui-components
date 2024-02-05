@@ -37,8 +37,8 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @HostBinding('id') _id: string = this.id;
   @Input() type: 'dot' | 'line' | 'pan' = 'line';
   @Input() label: string = '';
-  @Input() baseColor: string = 'grey';
-  @Input() valueColor: string = '#00a4e1';
+  @Input() baseColor: string | null = null;
+  @Input() valueColor: string | null = null;
   @Input() size: number = 50;
   @Input() baseLineWidth: number = 5;
   @Input() valueLineWidth: number = 3;
@@ -123,6 +123,19 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   }
 
   ngOnInit() {
+
+    //console.log(getComputedStyle(document.documentElement).getPropertyValue('--primary-color'));
+
+    const cssValueColor: string = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+    if(cssValueColor && this.valueColor === null) {
+      this.valueColor = cssValueColor;
+    }
+
+    const cssBaseColor: string = getComputedStyle(document.documentElement).getPropertyValue('--text-color');
+    if(cssBaseColor && this.baseColor === null) {
+      this.baseColor = cssBaseColor;
+    }
+
     this.oldValue = this.value;
     if(this.options) {
       this.min = 0;
@@ -287,7 +300,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
 
         //Outer ring
         context.lineWidth = this.baseLineWidth;
-        context.strokeStyle = this.baseColor;
+        context.strokeStyle = this.baseColor|| getComputedStyle(document.documentElement).getPropertyValue('--text-color');
         context.beginPath();
         context.arc(this.size / 2, this.size / 2, ((this.size - this.baseLineWidth) / 2), (Math.PI / 180) * 120, (Math.PI / 180) * 420);
         context.stroke();
@@ -316,7 +329,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
           renderCounterClockwise = this.value < 0;
         }
         context.lineWidth = this.valueLineWidth;
-        context.strokeStyle = this.valueColor;
+        context.strokeStyle = this.valueColor || getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
         context.beginPath();
         context.arc(this.size / 2, this.size / 2, ((this.size - (this.baseLineWidth + (this.valueLineWidth * 2))) / 2), valueStartAngle, valueEndAngle, renderCounterClockwise);
         context.stroke();

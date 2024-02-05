@@ -28,8 +28,8 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
   @Input() id: string = uuidv4();
   @Input() width: number = 200;
   @Input() height: number = 100;
-  @Input() knobColor: string = '#00a4e1';
-  @Input() lineColor: string = '#00a4e1';
+  @Input() knobColor: string | null = null;
+  @Input() lineColor: string | null = null;
   @Input() lineWidth: number = 2;
   @Input() dotSize: number = 3;
   @Input() midiLearn: boolean = false;
@@ -144,9 +144,9 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
     const sustainEnd: canvasPoint = {y : sustainStart.y, x: canvas.width - this.dotSize - (this.releaseValue * ((canvas.width/4)/100))};
     const releaseStart: canvasPoint = sustainEnd;
     const releaseEnd: canvasPoint = {y : canvas.height - this.dotSize, x: canvas.width - this.dotSize};
-    ctx.strokeStyle = this.lineColor;
+    ctx.strokeStyle = this.lineColor || getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     ctx.lineWidth = this.lineWidth;
-    ctx.fillStyle = this.lineColor;
+    ctx.fillStyle = this.lineColor || getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.moveTo(attackStart.x,  attackStart.y);
