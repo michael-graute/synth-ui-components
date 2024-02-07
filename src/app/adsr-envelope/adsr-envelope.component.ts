@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewC
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from "uuid";
 
-export interface AdsrEnvelopeValue {
+export type AdsrEnvelopeValue = {
   attack: number;
   decay: number;
   sustain: number;
@@ -11,7 +11,7 @@ export interface AdsrEnvelopeValue {
 
 export type ChangeEventPayload = {old: AdsrEnvelopeValue, new: AdsrEnvelopeValue};
 
-export type canvasPoint = {x: number, y: number};
+export type CanvasPoint = {x: number, y: number};
 
 @Component({
   selector: 'ins-adsr-envelope',
@@ -111,11 +111,6 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
     return this.internalAttackValue;
   }
 
-  attackValueChanged(event: number) {
-    console.log(event);
-    this.attackValue = event;
-  }
-
   set decayValue(value: number) {
     this.internalDecayValue = value;
     this.value.decay = this.internalDecayValue;
@@ -155,14 +150,14 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
     }
     const canvas = this.myCanvas.nativeElement;
     const ctx = canvas.getContext('2d');
-    const attackStart: canvasPoint = {y : canvas.height - (this.dotSize), x: this.dotSize};
-    const attackEnd: canvasPoint = {y : this.dotSize, x: this.dotSize + ((this.attackValue) * ((canvas.width/4)/100))};
-    const sustainStart: canvasPoint = {y : canvas.height - this.dotSize - ((this.sustainValue) * ((canvas.height-this.dotSize*2)/100)), x: attackEnd.x};
-    const decayStart: canvasPoint = attackEnd;
-    const decayEnd: canvasPoint = {y : sustainStart.y, x: attackEnd.x + (this.decayValue * ((canvas.width/4)/100))};
-    const sustainEnd: canvasPoint = {y : sustainStart.y, x: canvas.width - this.dotSize - (this.releaseValue * ((canvas.width/4)/100))};
-    const releaseStart: canvasPoint = sustainEnd;
-    const releaseEnd: canvasPoint = {y : canvas.height - this.dotSize, x: canvas.width - this.dotSize};
+    const attackStart: CanvasPoint = {y : canvas.height - (this.dotSize), x: this.dotSize};
+    const attackEnd: CanvasPoint = {y : this.dotSize, x: this.dotSize + ((this.attackValue) * ((canvas.width/4)/100))};
+    const sustainStart: CanvasPoint = {y : canvas.height - this.dotSize - ((this.sustainValue) * ((canvas.height-this.dotSize*2)/100)), x: attackEnd.x};
+    const decayStart: CanvasPoint = attackEnd;
+    const decayEnd: CanvasPoint = {y : sustainStart.y, x: attackEnd.x + (this.decayValue * ((canvas.width/4)/100))};
+    const sustainEnd: CanvasPoint = {y : sustainStart.y, x: canvas.width - this.dotSize - (this.releaseValue * ((canvas.width/4)/100))};
+    const releaseStart: CanvasPoint = sustainEnd;
+    const releaseEnd: CanvasPoint = {y : canvas.height - this.dotSize, x: canvas.width - this.dotSize};
     ctx.strokeStyle = this.lineColor;
     ctx.lineWidth = this.lineWidth;
     ctx.fillStyle = this.lineColor;
