@@ -32,7 +32,7 @@ export class WaveformSelectComponent implements ControlValueAccessor {
   }
 
   public onChange = (value: string): void => {
-    this.waveformChange.emit(value);
+    //this.waveformChange.emit(value);
   };
 
   registerOnChange(fn: any): void {

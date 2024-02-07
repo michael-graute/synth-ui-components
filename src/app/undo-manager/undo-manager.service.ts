@@ -4,6 +4,7 @@ import {Subject} from "rxjs";
 export interface UndoStep {
   action: string;
   componentId: string;
+  propertyName: string;
   oldValue: any;
   newValue: any;
 }
@@ -19,10 +20,11 @@ export class UndoManagerService {
 
   constructor() { }
 
-  addUndoStep(action: string, componentId: string, oldValue: any, newValue: any): void {
+  addUndoStep(action: string, componentId: string, propertyName: string, oldValue: any, newValue: any): void {
     const undoStep: UndoStep = {
       action: action,
       componentId: componentId,
+      propertyName: propertyName,
       oldValue: oldValue,
       newValue: newValue
     }
@@ -30,6 +32,7 @@ export class UndoManagerService {
     if(this.undSteps.length > this.maxSteps) {
       this.undSteps.shift();
     }
+    console.log(this.undSteps);
   }
 
   undo(): void {

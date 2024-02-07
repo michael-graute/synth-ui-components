@@ -66,6 +66,7 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
   }
 
   public onChange = (value: AdsrEnvelopeValue): void => {
+    console.log('onChange', value);
     this.change.emit(value);
   };
 

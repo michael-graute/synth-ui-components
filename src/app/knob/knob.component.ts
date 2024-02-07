@@ -10,13 +10,16 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
-import {MidiManagerService} from "../midi-manager/midi-manager.service";
-import {UndoManagerService, UndoStep} from "../undo-manager/undo-manager.service";
 
 export type KnobMidiEvent = {
   control: number;
   value: number;
   channel: number;
+}
+
+export type changeEventPayload = {
+  old: number;
+  new: number;
 }
 
 @Component({
@@ -39,6 +42,8 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @Input() label: string = '';
   @Input() baseColor: string = '';
   @Input() valueColor: string  = '';
+  @Input() hoverColor: string = '';
+  @Input() clickColor: string = '';
   @Input() size: number = 50;
   @Input() baseLineWidth: number = 5;
   @Input() valueLineWidth: number = 3;
@@ -56,7 +61,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @Input() positiveValuePrefix: string = 'R';
   @Input() zeroValueReplacement: string = 'C';
 
-  @Output() change: EventEmitter<number> = new EventEmitter<number>();
+  @Output() change: EventEmitter<changeEventPayload> = new EventEmitter<changeEventPayload>();
   @Output() contextClick: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('knobCanvas') knobCanvas: ElementRef | undefined;
@@ -96,7 +101,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     this.draw();
   }
 
-  constructor(private midiService: MidiManagerService, private undoService: UndoManagerService) {
+  constructor() {
     const cssValueColor: string = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
     if(cssValueColor && this.valueColor === '') {
       this.valueColor = cssValueColor;
@@ -105,6 +110,16 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     const cssBaseColor: string = getComputedStyle(document.documentElement).getPropertyValue('--text-color');
     if(cssBaseColor && this.baseColor === '') {
       this.baseColor = cssBaseColor;
+    }
+
+    const cssHoverColor: string = getComputedStyle(document.documentElement).getPropertyValue('--button-hover-bg');
+    if(cssHoverColor && this.hoverColor === '') {
+      this.hoverColor = cssHoverColor;
+    }
+
+    const cssClickColor: string = getComputedStyle(document.documentElement).getPropertyValue('--button-click-bg');
+    if(cssClickColor && this.clickColor === '') {
+      this.clickColor = cssClickColor;
     }
   }
 
@@ -120,7 +135,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   }
 
   public onChange = (value: number): void => {
-    this.change.emit(value);
+    this.change.emit({old: this.oldValue, new: value});
   };
 
   public registerOnTouched(fn: any): void {
@@ -132,9 +147,6 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   }
 
   ngOnInit() {
-
-    //console.log(getComputedStyle(document.documentElement).getPropertyValue('--primary-color'));
-
     this.oldValue = this.value;
     if(this.options) {
       this.min = 0;
@@ -151,12 +163,12 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       }
       this.setMidiEventValue(midiEvent);
     });*/
-    this.undoService.undoEvent.subscribe((undoStep: UndoStep) => {
+    /*this.undoService.undoEvent.subscribe((undoStep: UndoStep) => {
       if(undoStep.componentId === this.id) {
         this.value = undoStep.oldValue;
         this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
       }
-    });
+    });*/
   }
 
   /*setMidiEventValue(midiEvent: KnobMidiEvent): void {
@@ -193,7 +205,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   @HostListener('mouseup')
   handleMouseUp(): void {
     this.mouseDown = false;
-    this.triggerUndo();
+    this.triggerValueChange();
     this.draw();
   }
 
@@ -233,7 +245,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       this.value = Math.round(this.convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
       clearTimeout(this.valueChangedInterval);
       this.valueChangedInterval = setTimeout(() => {
-        this.triggerUndo();
+        this.triggerValueChange();
         this.oldValue = this.value;
       }, 100);
     }
@@ -252,27 +264,6 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     }
   }
 
-  //@HostListener('document:click', ['$event'])
-  handleDocumentClick(event: MouseEvent): void {
-    if(this.knobEditorInput) {
-      if (event.target !== this.knobEditorInput.nativeElement) {
-        this.editMode = false;
-      }
-    }
-    if(this.knobEditorSelect) {
-      if (event.target !== this.knobEditorSelect.nativeElement) {
-        this.editMode = false;
-      }
-    }
-  }
-
-  //@HostListener('document:mouseup')
-  handleDocumentMouseUp(): void {
-    if(this.mouseDown) {
-      this.mouseDown = false;
-    }
-  }
-
   handleEditorKeyDown(event: KeyboardEvent): void {
     const target: HTMLInputElement = event.currentTarget as HTMLInputElement;
     if(event.key === 'Enter' || event.key === 'Tab') {
@@ -282,7 +273,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       if(this.value < this.min) this.value = this.min;
       target.value = this.value + '';
       this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
-      this.triggerUndo();
+      this.triggerValueChange();
     } else if(event.key === 'Escape') {
       this.editMode = false;
     }
@@ -298,25 +289,17 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       const element: HTMLCanvasElement = this.knobCanvas.nativeElement;
       const context: CanvasRenderingContext2D | null = element.getContext('2d');
       if(context) {
-
         context.clearRect(0, 0, element.width, element.height);
 
-        if(this.mouseOver && !this.mouseDown) {
+        //Hover / click fill
+        if(this.mouseOver || this.mouseDown) {
+          const fillStyle: string = this.mouseDown ? this.clickColor : this.hoverColor;
           context.beginPath();
-          context.fillStyle = 'rgba(255,255,255,0.1)';
+          context.fillStyle = fillStyle;
           context.arc(this.size / 2, this.size / 2, ((this.size - this.baseLineWidth) / 2), (Math.PI / 180) * 120, (Math.PI / 180) * 420);
           context.fill();
           context.closePath();
         }
-
-        if(this.mouseDown) {
-          context.beginPath();
-          context.fillStyle = 'rgba(164,164,164,0.1)';
-          context.arc(this.size / 2, this.size / 2, ((this.size - this.baseLineWidth) / 2), (Math.PI / 180) * 120, (Math.PI / 180) * 420);
-          context.fill();
-          context.closePath();
-        }
-
 
         //Outer ring
         context.lineWidth = this.baseLineWidth;
@@ -326,12 +309,12 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
         context.stroke();
         context.closePath();
 
+        //Inner value indicator ring / dot
         let valueStartAngle: number = 0;
         let valueEndAngle: number = 0;
         const convertedValue:number = this.convertRange(this.value, [this.min, this.max], [(Math.PI / 180) * 120, (Math.PI / 180) * 420]);
         let renderCounterClockwise: boolean = false;
 
-        //Inner value indicator ring / dot
         if (this.type === 'dot' || this.type === 'line') {
           valueStartAngle = this.type === 'line' ? (Math.PI / 180) * 120 : convertedValue - this.dotSize;
           valueEndAngle = this.type === 'line' ? convertedValue : convertedValue + this.dotSize;
@@ -362,10 +345,12 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
   }
 
-  triggerUndo(): void {
+  triggerValueChange(): void {
     //this.midiService.triggerUndo();
     if(this.oldValue !== this.value) {
-      this.undoService.addUndoStep('inputValueChanged', this.id, this.oldValue, this.value);
+      //this.undoService.addUndoStep('inputValueChanged', this.id, this.oldValue, this.value);
+      //console.log('change', this.id, this.oldValue, this.value);
+      this.change.emit({old: this.oldValue, new: this.value});
     }
   }
 
