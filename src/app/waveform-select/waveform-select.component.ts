@@ -1,6 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from "uuid";
+
+export type changeEventPayload = {old: string, new: string};
 
 @Component({
   selector: 'ins-waveform-select',
@@ -14,18 +16,19 @@ import {v4 as uuidv4} from "uuid";
     }
   ]
 })
-export class WaveformSelectComponent implements ControlValueAccessor {
+export class WaveformSelectComponent implements OnInit, ControlValueAccessor {
   @Input() label: string | undefined;
   @Input() id: string = uuidv4()
-  @Input() waveform: string = 'sine';
+  @Input() waveform: string = 'triangle';
   @Input() set value(value: string) {
     this.internalValue = value;
     this.onChange(this.value)
   }
 
-  @Output() waveformChange: EventEmitter<string> = new EventEmitter<string>();
+  @Output() waveformChange: EventEmitter<changeEventPayload> = new EventEmitter<changeEventPayload>();
 
   public internalValue: string = 'triangle';
+  public oldValue: string = 'triangle';
 
   get value(): string {
     return this.internalValue;
@@ -47,5 +50,17 @@ export class WaveformSelectComponent implements ControlValueAccessor {
 
   writeValue(value: string): void {
     this.value = value;
+    this.oldValue = value;
+  }
+
+  triggerValueChange(): void {
+    if(this.oldValue !== this.value) {
+      this.waveformChange.emit({old: this.oldValue, new: this.value});
+    }
+    this.oldValue = this.value;
+  }
+
+  ngOnInit(): void {
+    this.oldValue = this.value;
   }
 }

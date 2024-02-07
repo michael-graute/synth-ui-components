@@ -32,7 +32,6 @@ export class UndoManagerService {
     if(this.undSteps.length > this.maxSteps) {
       this.undSteps.shift();
     }
-    console.log(this.undSteps);
   }
 
   undo(): void {

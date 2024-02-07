@@ -9,6 +9,8 @@ export interface AdsrEnvelopeValue {
   release: number;
 }
 
+export type ChangeEventPayload = {old: AdsrEnvelopeValue, new: AdsrEnvelopeValue};
+
 export type canvasPoint = {x: number, y: number};
 
 @Component({
@@ -33,8 +35,10 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
   @Input() lineWidth: number = 2;
   @Input() dotSize: number = 3;
   @Input() midiLearn: boolean = false;
-  @Output() change: EventEmitter<AdsrEnvelopeValue> = new EventEmitter<AdsrEnvelopeValue>();
+  @Output() change: EventEmitter<ChangeEventPayload> = new EventEmitter<ChangeEventPayload>();
 
+
+  oldValue: AdsrEnvelopeValue = {attack: 0, decay: 0, sustain: 0, release: 0};
 
   constructor() {
     const cssKnobColor: string = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
@@ -54,6 +58,7 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
       this.decayValue = obj.decay;
       this.sustainValue = obj.sustain;
       this.releaseValue = obj.release;
+      this.oldValue = obj;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -67,7 +72,8 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
 
   public onChange = (value: AdsrEnvelopeValue): void => {
     console.log('onChange', value);
-    this.change.emit(value);
+    this.change.emit({old: this.oldValue, new: value});
+    this.oldValue = value;
   };
 
   @ViewChild('myCanvas') myCanvas: ElementRef | undefined;
@@ -197,6 +203,13 @@ export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccesso
 
   ngAfterViewInit() {
     this.draw();
+  }
+
+  triggerValueChange(): void {
+    if(this.oldValue !== this.value) {
+      this.change.emit({old: this.oldValue, new: this.value});
+      this.oldValue = this.value;
+    }
   }
 
 }

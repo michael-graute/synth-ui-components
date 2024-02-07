@@ -26,6 +26,12 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
         this.setPropertiesFromPreset(preset.components[this.id]);
       }
     }));
+    this.undoManagerService.undoEvent.subscribe((undoStep) => {
+      if(undoStep.componentId === this.id && undoStep.action === 'valueChange') {
+        // @ts-ignore
+        this[undoStep.propertyName] = undoStep.oldValue;
+      }
+    });
   }
 
   setPropertiesFromPreset(preset: any): void {
@@ -46,9 +52,7 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
   }
 
   triggerUndo(propertyName: string, value: any): void {
-    //this.synthService.undoStack.push({componentId: this.id, propertyName, value});
     // @ts-ignore
-    console.log('triggerUndo', this.id, propertyName, value, this.config[propertyName]);
     this.undoManagerService.addUndoStep('valueChange', this.id, propertyName, value.old , value.new);
   }
 
