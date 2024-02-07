@@ -10,12 +10,7 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
-
-export type KnobMidiEvent = {
-  control: number;
-  value: number;
-  channel: number;
-}
+import {convertRange} from "../utils";
 
 export type changeEventPayload = {
   old: number;
@@ -126,7 +121,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
   public writeValue(obj: any): void {
     if(obj === null || obj === undefined) return;
     this.internalValue = obj;
-    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
+    this.tmpValue = convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
     this.draw();
   }
 
@@ -153,33 +148,11 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       this.max = this.options.length - 1;
       this.step = 1;
     }
-    /*this.midiService.controlChangeEvent.subscribe((midiEvent: KnobMidiEvent) => {
-      this.setMidiEventValue(midiEvent);
-    });
-    this.midiService.midiLearnControlEvent.subscribe((midiEvent: KnobMidiEvent) => {
-      if(this.midiLearn && this.midiLearnEditMode && !this.midiListen) {
-        this.midiEventListener = midiEvent;
-        this.midiListen = true;
-      }
-      this.setMidiEventValue(midiEvent);
-    });*/
-    /*this.undoService.undoEvent.subscribe((undoStep: UndoStep) => {
-      if(undoStep.componentId === this.id) {
-        this.value = undoStep.oldValue;
-        this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
-      }
-    });*/
   }
-
-  /*setMidiEventValue(midiEvent: KnobMidiEvent): void {
-    if(midiEvent.control === this.midiEventListener.control && midiEvent.channel === this.midiEventListener.channel && this.midiListen) {
-      this.value = Math.round(this.convertRange( midiEvent.value, [ 0, 127 ], [ this.min, this.max ] )/ this.step) * this.step;
-    }
-  }*/
 
   ngAfterViewInit(): void {
     this.rangeIndicator = this.size + this.size / 2;
-    this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
+    this.tmpValue = convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
     this.draw();
   }
 
@@ -217,7 +190,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       this.mouseDownStartY = event.clientY;
       if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator;
       if(this.tmpValue <= 0) this.tmpValue = 0;
-      this.value = Math.round(this.convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
+      this.value = Math.round(convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
     }
   }
 
@@ -242,7 +215,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       this.tmpValue += event.deltaY/4;
       if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator;
       if(this.tmpValue <= 0) this.tmpValue = 0;
-      this.value = Math.round(this.convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
+      this.value = Math.round(convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
       clearTimeout(this.valueChangedInterval);
       this.valueChangedInterval = setTimeout(() => {
         this.triggerValueChange();
@@ -272,7 +245,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
       if(this.value > this.max) this.value = this.max;
       if(this.value < this.min) this.value = this.min;
       target.value = this.value + '';
-      this.tmpValue = this.convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
+      this.tmpValue = convertRange( this.value, [ this.min, this.max ], [ 0, this.rangeIndicator ] );
       this.triggerValueChange();
     } else if(event.key === 'Escape') {
       this.editMode = false;
@@ -312,7 +285,7 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
         //Inner value indicator ring / dot
         let valueStartAngle: number = 0;
         let valueEndAngle: number = 0;
-        const convertedValue:number = this.convertRange(this.value, [this.min, this.max], [(Math.PI / 180) * 120, (Math.PI / 180) * 420]);
+        const convertedValue:number = convertRange(this.value, [this.min, this.max], [(Math.PI / 180) * 120, (Math.PI / 180) * 420]);
         let renderCounterClockwise: boolean = false;
 
         if (this.type === 'dot' || this.type === 'line') {
@@ -339,10 +312,6 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
         context.closePath();
       }
     }
-  }
-
-  private convertRange( value: number, r1: any, r2: any ): number {
-    return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
   }
 
   triggerValueChange(): void {
