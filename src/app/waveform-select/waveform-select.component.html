@@ -1,16 +1,131 @@
 <span *ngIf="label" class="ins-waveform-select-label">{{label}}</span>
 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
   <input type="radio" class="btn-check" value="sine" [(ngModel)]="value" [name]="id" [id]="id + '-sine'" autocomplete="off" (change)="triggerValueChange()">
-  <label class="btn btn-secondary" [for]="id + '-sine'"><img src="../../assets/img/sine32x32.png" height="16"
-                                                        width="16"/><p *ngIf="value === 'sine'" class="ins-button-label">Sine</p></label>
+  <label class="btn btn-secondary" [for]="id + '-sine'">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 7.9374998 7.9375002"
+      stroke="#ffffff"
+      fill="none"
+      id="svgSine">
+      <g
+        id="layer1">
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 3.7417734,11.987038 H 4.9110776 L 5.6182722,9.3477517 7.0371376,14.643029 8.4560028,9.3477517 9.8748682,14.643029 10.586539,11.987038 h 1.089798"
+          id="path1410" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 9.9858577,10.162924 H 10.734212 V 7.5236372 h 1.800729 l -0.04677,5.2952778 h 2.876488 V 7.5236372 h 1.800728 v 2.6392868 h 0.724969"
+          id="path1432" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="m -1.8708867,15.962672 0.7015825,0 1.8297266,-2.639286 -0.00769,5.295277 3.1962076,-5.295277 0.0157,5.295277 1.4834115,-2.655991 0.7156209,0"
+          id="path1410-7" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="m -0.02338608,3.9422253 h 0.65481032 c 0.66928746,-10e-8 0.39100046,-2.6392866 1.40686236,-2.6392866 1.0633702,0 0.6204947,5.2952775 1.9333591,5.2952775 1.3811477,0 0.7764447,-5.2718914 1.8398149,-5.2718914 1.039248,0 0.5796218,2.6392865 1.289932,2.6392866 0.4625852,0 0.8966479,-0.023386 0.8966479,-0.023386"
+          id="path1456" />
+      </g>
+    </svg>
+    <p *ngIf="value === 'sine'" class="ins-button-label">Sine</p>
+  </label>
   <input type="radio" class="btn-check" value="triangle" [(ngModel)]="value" [name]="id" [id]="id + '-triangle'" autocomplete="off" (change)="triggerValueChange()">
-  <label class="btn btn-secondary" [for]="id + '-triangle'"><img src="../../assets/img/triangle32x32.png" height="16"
-                                                        width="16"/><p *ngIf="value === 'triangle'" class="ins-button-label">Triangle</p></label>
+  <label class="btn btn-secondary" [for]="id + '-triangle'">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 7.9374998 7.9375002"
+      fill="none"
+      stroke="#ffffff"
+      id="svgTriangle">
+      <g
+        id="layer1">
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 0,3.9422252 H 1.1693042 L 1.8764988,1.3029389 3.2953642,6.5982162 4.7142294,1.3029389 6.1330948,6.5982162 6.8447656,3.9422252 h 1.089798"
+          id="path1410" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 9.9858577,10.162924 H 10.734212 V 7.5236372 h 1.800729 l -0.04677,5.2952778 h 2.876488 V 7.5236372 h 1.800728 v 2.6392868 h 0.724969"
+          id="path1432" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="m 10.336649,3.3108011 h 0.701582 l 1.829727,-2.63928596 -0.0077,5.29527696 3.196208,-5.29527696 0.0157,5.29527696 1.483411,-2.655991 h 0.715621"
+          id="path1410-7" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 8.5593066,14.769982 H 9.214117 c 0.6692874,0 0.3910004,-2.639287 1.406862,-2.639287 1.063371,0 0.620495,5.295278 1.933359,5.295278 1.381148,0 0.776445,-5.271891 1.839815,-5.271891 1.039248,0 0.579622,2.639286 1.289932,2.639286 0.462586,0 0.896648,-0.02339 0.896648,-0.02339"
+          id="path1456" />
+      </g>
+    </svg>
+    <p *ngIf="value === 'triangle'" class="ins-button-label">Triangle</p>
+  </label>
 
   <input type="radio" class="btn-check" value="square" [(ngModel)]="value" [name]="id" [id]="id + '-square'" autocomplete="off" (change)="triggerValueChange()">
-  <label class="btn btn-secondary" [for]="id + '-square'"><img src="../../assets/img/square32x32.png" height="16"
-                                                        width="16"/><p *ngIf="value === 'square'" class="ins-button-label">Square</p></label>
+  <label class="btn btn-secondary" [for]="id + '-square'">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 7.9374998 7.9375002"
+      stroke="#ffffff"
+      fill="none"
+      id="svgSquare">
+      <g
+        id="layer1">
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="m -0.32740517,13.998241 h 1.1693042 l 0.70719457,-2.639286 1.4188654,5.295277 1.4188652,-5.295277 1.4188654,5.295277 0.7116708,-2.655991 h 1.089798"
+          id="path1410" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 0.02338605,3.9422254 H 0.77174033 V 1.3029386 H 2.5724693 l -0.04677,5.2952778 h 2.876488 V 1.3029386 h 1.800728 v 2.6392868 h 0.724969"
+          id="path1432" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="m 10.336649,3.3108011 h 0.701582 l 1.829727,-2.63928596 -0.0077,5.29527696 3.196208,-5.29527696 0.0157,5.29527696 1.483411,-2.655991 h 0.715621"
+          id="path1410-7" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 8.5593066,14.769982 H 9.214117 c 0.6692874,0 0.3910004,-2.639287 1.406862,-2.639287 1.063371,0 0.620495,5.295278 1.933359,5.295278 1.381148,0 0.776445,-5.271891 1.839815,-5.271891 1.039248,0 0.579622,2.639286 1.289932,2.639286 0.462586,0 0.896648,-0.02339 0.896648,-0.02339"
+          id="path1456" />
+      </g>
+    </svg>
+    <p *ngIf="value === 'square'" class="ins-button-label">Square</p>
+  </label>
   <input type="radio" class="btn-check" value="sawtooth" [(ngModel)]="value" [name]="id" [id]="id + '-sawtooth'" autocomplete="off" (change)="triggerValueChange()">
-  <label class="btn btn-secondary" [for]="id + '-sawtooth'"><img src="../../assets/img/sawtooth32x32.png" height="16"
-                                                        width="16"/><p *ngIf="value === 'sawtooth'" class="ins-button-label">Sawtooth</p></label>
+  <label class="btn btn-secondary" [for]="id + '-sawtooth'">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 7.9374998 7.9375002"
+      stroke="#ffffff"
+      fill="none"
+      id="svgSawtooth">
+      <g
+        id="layer1">
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 3.7417734,11.987038 H 4.9110776 L 5.6182722,9.3477517 7.0371376,14.643029 8.4560028,9.3477517 9.8748682,14.643029 10.586539,11.987038 h 1.089798"
+          id="path1410" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 9.9858577,10.162924 H 10.734212 V 7.5236372 h 1.800729 l -0.04677,5.2952778 h 2.876488 V 7.5236372 h 1.800728 v 2.6392868 h 0.724969"
+          id="path1432" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="m 0.02338608,3.9422254 h 0.7015825 l 1.82972662,-2.639286 -0.00769,5.295277 3.1962076,-5.295277 0.0157,5.295277 1.4834115,-2.655991 h 0.7156209"
+          id="path1410-7" />
+        <path
+          style="stroke-width:0.79375;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+          d="M 8.5593066,14.769982 H 9.214117 c 0.6692874,0 0.3910004,-2.639287 1.406862,-2.639287 1.063371,0 0.620495,5.295278 1.933359,5.295278 1.381148,0 0.776445,-5.271891 1.839815,-5.271891 1.039248,0 0.579622,2.639286 1.289932,2.639286 0.462586,0 0.896648,-0.02339 0.896648,-0.02339"
+          id="path1456" />
+      </g>
+    </svg>
+    <p *ngIf="value === 'sawtooth'" class="ins-button-label">Sawtooth</p></label>
 </div>

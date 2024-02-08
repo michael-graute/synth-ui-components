@@ -17,12 +17,22 @@
   width: fit-content;
 }
 
+.btn-check + .btn {
+  svg {
+    stroke: var(--text-color);
+  }
+}
+
  .btn-check:checked + .btn {
-  color: #00a4e1;
+  color: var(--primary-color);
   background-color: #364551;
   border-color: #808080;
   font-weight: 400;
+   svg {
+     stroke: var(--primary-color);
+   }
 }
+
 
 .ins-waveform-select-label {
   color: var(--text-color);
