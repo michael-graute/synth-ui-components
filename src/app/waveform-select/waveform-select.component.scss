@@ -23,9 +23,13 @@
   }
 }
 
+.btn-check + .btn:hover {
+  background-color: var(--button-hover-bg)
+}
+
  .btn-check:checked + .btn {
   color: var(--primary-color);
-  background-color: #364551;
+  background-color: var(--button-click-bg);
   border-color: #808080;
   font-weight: 400;
    svg {

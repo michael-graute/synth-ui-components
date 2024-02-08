@@ -85,7 +85,7 @@ export class OscillatorComponent extends AbstractSynthComponent<OscillatorConfig
   }
 
   set detune(value: number) {
-    this.synth.set({detune: value});
+    this.synth.set({detune: value * 10});
     this.config.detune = value;
   }
 

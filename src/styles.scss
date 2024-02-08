@@ -9,8 +9,10 @@
   --value-editor-text-color: #808080;
   --text-color: #808080;
   --primary-color: #00a4e1;
-  --button-hover-bg: #2b3035;
+  --button-hover-bg: #30363b;
   --button-click-bg: #3b4249;
+  --card-body-bg: #212529;
+  --card-header-bg: #282c30;
 }
 
 html {
@@ -95,8 +97,13 @@ pre {
   .card-header {
     font-size: small;
     font-weight: 300;
-    color: gray;
+    color: var(--text-color);
     text-transform: uppercase;
+    background-color: var(--card-header-bg);
+  }
+
+  .card-body {
+    background-color: var(--card-body-bg);
   }
 }
 

@@ -10,8 +10,8 @@
       <ins-divider label="Settings"></ins-divider>
       <div class="d-flex gap-1">
         <div class="ins-knob-container ins-oscillator__detune">
-          <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-100" [max]="100" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
-          <ins-midi-overlay [min]="-100" [max]="100" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
+          <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
+          <ins-midi-overlay [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
         </div>
         <div class="ins-knob-container ins-oscillator__octave">
           <ins-knob [id]="id + 'KnobOctave'" type="pan" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0" (change)="triggerUndo('octave', $event)"></ins-knob>
