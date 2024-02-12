@@ -1,6 +1,27 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {SynthService} from "../synth.service";
-import {InsControlChange} from "./midi-monitor/midi-monitor.component";
+
+export type MidiCCEvent = {
+  control: number;
+  value: number;
+  channel: number;
+};
+
+export type MidiNoteEvent = {
+  on: boolean;
+  note: string;
+  velocity: number;
+  channel: number;
+}
+
+export type MidiListener = {
+  type: 'CC' | 'Note';
+  event: MidiCCEvent | MidiNoteEvent;
+}
+
+export type MidiMap = {
+  [key: string]: MidiListener;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +31,11 @@ export class MidiManagerService {
   public midiLearn: boolean = false;
   public midiAccessGranted: boolean = false;
 
-  controlChangeEvent: EventEmitter<InsControlChange> = new EventEmitter<InsControlChange>();
-  midiLearnControlEvent: EventEmitter<InsControlChange> = new EventEmitter<InsControlChange>();
+  controlChangeEvent: EventEmitter<MidiCCEvent> = new EventEmitter<MidiCCEvent>();
+  midiLearnControlEvent: EventEmitter<MidiCCEvent> = new EventEmitter<MidiCCEvent>();
   midiLearnToggleEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  midiMapSaveEvent: EventEmitter<void> = new EventEmitter<void>();
+  midiMapLoadEvent: EventEmitter<MidiMap> = new EventEmitter<MidiMap>();
 
   constructor(private synthService: SynthService) {
     // @ts-ignore
@@ -42,11 +65,33 @@ export class MidiManagerService {
     this.midiLearnToggleEvent.emit(this.midiLearn);
   }
 
-  controlChange(payload: InsControlChange) {
+  controlChange(payload: MidiCCEvent) {
     if(this.midiLearn) {
       this.midiLearnControlEvent.emit(payload);
     } else {
       this.controlChangeEvent.emit(payload);
+    }
+  }
+
+  saveMidiMap(listener: MidiListener, componentId: string) {
+    const midiMapString = localStorage.getItem('InsMidiMap');
+    let midiMap: MidiMap = {};
+    if(midiMapString) {
+      midiMap = JSON.parse(midiMapString);
+    }
+    midiMap[componentId] = listener;
+    localStorage.setItem('InsMidiMap', JSON.stringify(midiMap));
+  }
+
+  emitMidiMapSaveEvent() {
+    this.midiMapSaveEvent.emit();
+  }
+
+  loadMidiMap() {
+    const midiMapString = localStorage.getItem('InsMidiMap');
+    if(midiMapString) {
+      const midiMap: MidiMap = JSON.parse(midiMapString);
+      this.midiMapLoadEvent.emit(midiMap);
     }
   }
 }

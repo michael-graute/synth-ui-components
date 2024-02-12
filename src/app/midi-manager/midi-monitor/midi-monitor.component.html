@@ -1,1 +1,6 @@
-<button *ngIf="midiService.midiAccessGranted" class="btn btn-primary" type="button" (click)="midiService.toggleMidiLearn()" [ngClass]="{'active': midiService.midiLearn}">Midi Learn</button>
+<div *ngIf="midiService.midiAccessGranted" class="d-flex gap-1">
+  <button class="btn btn-primary" type="button" (click)="midiService.toggleMidiLearn()" [ngClass]="{'active': midiService.midiLearn}">Midi Learn</button>
+  <button class="btn btn-primary" type="button" (click)="midiService.emitMidiMapSaveEvent()">Save MidiMap</button>
+  <button class="btn btn-primary" type="button" (click)="midiService.loadMidiMap()">Load MidiMap</button>
+</div>
+

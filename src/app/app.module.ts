@@ -27,6 +27,7 @@ import {PresetManagerComponent} from "./preset-manager/preset-manager.component"
 import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
 import {ElementsShowcaseComponent} from "./elements-showcase/elements-showcase.component";
 import {MidiOverlayComponent} from "./midi-manager/midi-overlay/midi-overlay.component";
+import {KnobMidiComponent} from "./knob-midi/knob-midi.component";
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {MidiOverlayComponent} from "./midi-manager/midi-overlay/midi-overlay.com
     PresetManagerComponent,
     UndoManagerComponent,
     ElementsShowcaseComponent,
-    MidiOverlayComponent
+    MidiOverlayComponent,
+    KnobMidiComponent
   ],
   imports: [
     BrowserModule,

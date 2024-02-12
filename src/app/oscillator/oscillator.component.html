@@ -9,21 +9,22 @@
       </div>
       <ins-divider label="Settings"></ins-divider>
       <div class="d-flex gap-1">
-        <div class="ins-knob-container ins-oscillator__detune">
+        <!--<div class="ins-knob-container ins-oscillator__detune">
           <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
-          <ins-midi-overlay [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
-        </div>
+          <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
+        </div>-->
+        <ins-knob-midi [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob-midi>
         <div class="ins-knob-container ins-oscillator__octave">
           <ins-knob [id]="id + 'KnobOctave'" type="pan" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0" (change)="triggerUndo('octave', $event)"></ins-knob>
-          <ins-midi-overlay [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
+          <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
         </div>
         <div class="ins-knob-container ins-oscillator__volume">
           <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
-          <ins-midi-overlay [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+          <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
         </div>
         <div class="ins-knob-container ins-oscillator__pan">
           <ins-knob [id]="id + 'KnobPan'" type="pan" label="pan" [(ngModel)]="pan" [min]="-10" [max]="10" [step]="1" (change)="triggerUndo('pan', $event)"></ins-knob>
-          <ins-midi-overlay [(ngModel)]="pan" [min]="-10" [max]="10"></ins-midi-overlay>
+          <ins-midi-overlay [id]="id + 'KnobPanMidiOverlay'" [(ngModel)]="pan" [min]="-10" [max]="10"></ins-midi-overlay>
         </div>
       </div>
       <ins-divider label="Amplitude Envelope"></ins-divider>

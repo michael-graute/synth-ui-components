@@ -3,19 +3,8 @@ import {MIDI_MESSAGES, toData, notes, filterByChannel} from "@ng-web-apis/midi";
 import {Observable, Subscriber} from "rxjs";
 import {map} from 'rxjs/operators';
 import * as Tone from "tone";
-import {MidiManagerService} from "../midi-manager.service";
+import {MidiCCEvent, MidiNoteEvent, MidiManagerService} from "../midi-manager.service";
 
-export type InsNote = {
-  on: boolean,
-  note: string,
-  velocity: number
-}
-
-export type InsControlChange = {
-  channel: number,
-  control: number,
-  value: number
-}
 
 @Component({
   selector: 'ins-midi-monitor',
@@ -24,8 +13,8 @@ export type InsControlChange = {
 })
 export class MidiMonitorComponent implements OnInit {
 
-  readonly notes$: Observable<InsNote>;
-  readonly controlChanges$: Observable<InsControlChange>;
+  readonly notes$: Observable<MidiNoteEvent>;
+  readonly controlChanges$: Observable<MidiCCEvent>;
 
   public midiAccessGranted: boolean = false;
 
@@ -34,39 +23,40 @@ export class MidiMonitorComponent implements OnInit {
       filterByChannel(0),
       notes(),
       toData(),
-      map((message: Uint8Array): InsNote => this.toInsNote(message))
+      map((message: Uint8Array): MidiNoteEvent => this.toInsNote(message))
     );
     this.controlChanges$ = messages$.pipe(
       filterByChannel(0),
       toData(),
       this.controlChange(),
-      map((message: Uint8Array): InsControlChange => this.toInsControlChange(message)),
+      map((message: Uint8Array): MidiCCEvent => this.toInsControlChange(message)),
     );
   }
 
   ngOnInit(): void {
 
-    this.notes$.subscribe((note: InsNote): void => {
+    this.notes$.subscribe((note: MidiNoteEvent): void => {
       if(note.on) {
         this.midiService.noteOn(note.note, note.velocity);
       } else {
         this.midiService.noteOff(note.note);
       }
     });
-    this.controlChanges$.subscribe((controlChange: InsControlChange): void => {
+    this.controlChanges$.subscribe((controlChange: MidiCCEvent): void => {
       this.midiService.controlChange(controlChange);
     });
   }
 
-  toInsNote = (message: Uint8Array): InsNote => {
+  toInsNote = (message: Uint8Array): MidiNoteEvent => {
     return {
+      channel: 1,
       on: message[2] !== 0,
       note: Tone.Frequency(message[1], "midi").toNote(),
       velocity: (1/127) * message[2]
     }
   }
 
-  toInsControlChange = (message: Uint8Array): InsControlChange => {
+  toInsControlChange = (message: Uint8Array): MidiCCEvent => {
     return {
       channel: 1,
       control: message[1],
