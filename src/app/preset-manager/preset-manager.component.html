@@ -14,8 +14,8 @@
   </div>
   <div class="card-body">
     <ul>
-      <li *ngFor="let preset of presetManagerService.availablePresets">
-        <a href="#" (click)="loadPreset(preset.id); togglePresetList();">{{preset.name}}</a>
+      <li *ngFor="let preset of presetManagerService.availablePresets" (click)="loadPreset(preset.id); togglePresetList();">
+        {{preset.name}}
       </li>
     </ul>
   </div>

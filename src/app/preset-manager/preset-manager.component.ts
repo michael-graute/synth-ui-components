@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {SynthService} from "../synth.service";
 import {PresetManagerService} from "./preset-manager.service";
 
@@ -43,6 +43,17 @@ export class PresetManagerComponent {
 
   loadPreset(presetId: string): void {
     this.currentPreset = this.presetManagerService.loadPreset(presetId);
+  }
+
+  @HostListener('document:click', ['$event'])
+  hidePresetList(event: MouseEvent): void {
+    if(!this.showPresetList) {
+      return;
+    }
+    const target: HTMLElement = event.target as HTMLElement;
+    if(!target.closest('.ins-preset-list') && !target.closest('.ins-preset-display')) {
+      this.showPresetList = false;
+    }
   }
 
   togglePresetList(): void {

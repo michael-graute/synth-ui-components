@@ -44,9 +44,12 @@
       text-transform: uppercase;
       font-size: small;
       font-weight: 300;
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 5px 10px;
 
-      a {
-        text-decoration: none;
+      &:hover {
+        background: var(--button-hover-bg);
       }
     }
   }

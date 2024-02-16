@@ -60,10 +60,28 @@ export class SynthService {
 
   noteOn(note: string, velocity: number = 1): void {
     this.noteOnEvent.next({note: note, velocity: velocity});
+    console.log('noteOn');
+    this.instruments.forEach((instrument: InsInstrument) => {
+      console.log(note);
+      if(instrument.config.active) {
+        const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
+        console.log(transposedNote);
+        instrument.instrument.triggerAttack(transposedNote, undefined, velocity);
+      }
+    });
   }
 
   noteOff(note: string): void {
     this.noteOffEvent.next(note);
+    console.log('noteOff');
+    this.instruments.forEach((instrument: InsInstrument) => {
+      console.log(note);
+      if (instrument.config.active) {
+        const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
+        console.log(transposedNote);
+        instrument.instrument.triggerRelease(transposedNote);
+      }
+    });
   }
 
   keyDown(note: string, velocity: number = 1): void {
@@ -78,6 +96,12 @@ export class SynthService {
 
   attackRelease(options: InsAttackReleasePayload): void {
     this.attackReleaseEvent.next(options);
+    this.instruments.forEach((instrument: InsInstrument) => {
+      if(instrument.config.active) {
+        const transposedNote: Tone.Unit.Note = Tone.Frequency(options.note).transpose((instrument.config.octave || 0) * 12).toNote();
+        instrument.instrument.triggerAttackRelease(transposedNote, options.duration, options.time, options.velocity);
+      }
+    });
   }
 
   addEffect(effect: InsEffect): void {
@@ -106,6 +130,7 @@ export class SynthService {
   }
 
   addInstrument(id: string, instrument: Instrument<any>, config: any) {
+    instrument.toDestination();
     this.instruments.push({id: id, instrument: instrument, config});
   }
 

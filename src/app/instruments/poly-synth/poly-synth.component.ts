@@ -1,21 +1,16 @@
 import {Component, Input} from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
-import {InsNoteOnPayload} from "../../synth.service";
+import {ADSREnvelopeConfig} from "../../types/config.types";
 
-export interface OscillatorConfig {
+export interface PolySynthConfig {
   volume: number;
   detune: number;
   active: boolean;
   octave: number;
   pan: number;
   type: string;
-  envelope: {
-    attack: number;
-    decay: number;
-    sustain: number;
-    release: number;
-  }
+  envelope: ADSREnvelopeConfig;
 }
 
 @Component({
@@ -23,12 +18,13 @@ export interface OscillatorConfig {
   templateUrl: './poly-synth.component.html',
   styleUrls: ['./poly-synth.component.scss']
 })
-export class PolySynthComponent extends AbstractSynthComponent<OscillatorConfig> {
-
-  private synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth).toDestination();
+export class PolySynthComponent extends AbstractSynthComponent<PolySynthConfig> {
   @Input() name: string = 'PolySynth'
+  protected override componentType: string = 'instrument';
+  protected override instrument: Tone.PolySynth = new Tone.PolySynth(Tone.Synth);
+
   set type(type: any) {
-    this.synth.set({oscillator: {type: type}});
+    this.instrument.set({oscillator: {type: type}});
     this.config.type = type;
   }
 
@@ -37,7 +33,7 @@ export class PolySynthComponent extends AbstractSynthComponent<OscillatorConfig>
   }
 
   set volume(value: number) {
-    this.synth.set({volume: value});
+    this.instrument.set({volume: value});
     this.config.volume = value;
   }
 
@@ -45,7 +41,7 @@ export class PolySynthComponent extends AbstractSynthComponent<OscillatorConfig>
    return this.config.volume;
   }
 
-  public override config: OscillatorConfig = {
+  public override config: PolySynthConfig = {
     volume: -15,
     detune: 0,
     active: true,
@@ -85,7 +81,7 @@ export class PolySynthComponent extends AbstractSynthComponent<OscillatorConfig>
   }
 
   set detune(value: number) {
-    this.synth.set({detune: value * 10});
+    this.instrument.set({detune: value * 10});
     this.config.detune = value;
   }
 
@@ -100,34 +96,11 @@ export class PolySynthComponent extends AbstractSynthComponent<OscillatorConfig>
       sustain: options.sustain as number / 100,
       release: options.release as number <= 0 ? 0.05 : options.release as number / 100
     }
-    this.synth.set({envelope: newOptions});
+    this.instrument.set({envelope: newOptions});
     this.config.envelope = options;
   }
 
   get envelope(): any {
     return this.config.envelope;
-  }
-
-  override ngOnInit() {
-    super.ngOnInit();
-    this.synthService.addInstrument(this.id, this.synth, this.config);
-    this.subscriptions.add(this.synthService.noteOnEvent.subscribe((event: InsNoteOnPayload) => {
-      if(this.active) {
-        const note: Tone.Unit.Note = Tone.Frequency(event.note).transpose((this.octave || 0) * 12).toNote();
-        this.synth.triggerAttack(note, undefined, event.velocity);
-      }
-    }));
-    this.subscriptions.add(this.synthService.noteOffEvent.subscribe((event: any) => {
-      if(this.active) {
-        const note: Tone.Unit.Note = Tone.Frequency(event).transpose((this.octave || 0) * 12).toNote();
-        this.synth.triggerRelease(note);
-      }
-    }));
-    this.subscriptions.add(this.synthService.attackReleaseEvent.subscribe((event: any) => {
-      if(this.active) {
-        const note: Tone.Unit.Note = Tone.Frequency(event.note).transpose((this.octave || 0) * 12).toNote();
-        this.synth.triggerAttackRelease(note, event.duration, event.time, event.velocity);
-      }
-    }));
   }
 }

@@ -13,6 +13,8 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
   @Input() id: string = uuidv4();
   public config: T | null = null;
   protected subscriptions: Subscription = new Subscription();
+  protected componentType: any = null;
+  protected instrument: any = null;
 
   constructor(protected presetManagerService: PresetManagerService, protected synthService: SynthService, protected undoManagerService: UndoManagerService) {}
 
@@ -32,6 +34,9 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
         this[undoStep.propertyName] = undoStep.oldValue;
       }
     });
+    if(this.componentType === 'instrument') {
+      this.synthService.addInstrument(this.id, this.instrument, this.config);
+    }
   }
 
   setPropertiesFromPreset(preset: any): void {
@@ -58,6 +63,9 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    if(this.componentType === 'instrument') {
+      this.synthService.removeInstrument(this.id);
+    }
   }
 
 }
