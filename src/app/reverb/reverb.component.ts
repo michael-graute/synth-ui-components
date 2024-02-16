@@ -45,7 +45,7 @@ export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
   set active(value: boolean) {
     this.config.active = value;
     if(this.config.active) {
-      this.synthService.addEffect({id: this.id, effect: this.reverb})
+      this.synthService.addEffect({id: this.id, effect: this.reverb, config: this.config})
     } else {
       this.synthService.removeEffect(this.id);
     }

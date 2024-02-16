@@ -1,9 +1,21 @@
 <div [ngStyle]="{ 'width.px': width }">
   <canvas #myCanvas [width]="width" [height]="height"></canvas>
   <div class="d-flex mb-3 justify-content-between">
-    <ins-knob [id]="id + 'KnobAttack'" [(ngModel)]="attackValue" label="Attack" [min]="0" [max]="100" [step]="1" [valueColor]="knobColor" (change)="triggerValueChange()"></ins-knob>
-    <ins-knob [id]="id + 'KnobDecay'" [(ngModel)]="decayValue" label="Decay" [min]="0" [max]="100" [valueColor]="knobColor" (change)="triggerValueChange()"></ins-knob>
-    <ins-knob [id]="id + 'KnobSustain'" [(ngModel)]="sustainValue" label="Sustain" [min]="0" [max]="100" [step]="1" [valueColor]="knobColor" (change)="triggerValueChange()"></ins-knob>
-    <ins-knob [id]="id + 'KnobRelease'" [(ngModel)]="releaseValue" label="Release" [min]="0" [max]="100" [valueColor]="knobColor" (change)="triggerValueChange()"></ins-knob>
+    <div class="ins-knob-container">
+      <ins-knob [id]="id + 'KnobAttack'" [(ngModel)]="attackValue" label="Attack" [min]="0" [max]="100" [step]="1" [valueColor]="knobColor" (change)="triggerValueChange()"></ins-knob>
+      <ins-midi-overlay [id]="id + 'KnobAttackMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="attackValue"></ins-midi-overlay>
+    </div>
+    <div class="ins-knob-container">
+      <ins-knob [id]="id + 'KnobDecay'" [(ngModel)]="decayValue" label="Decay" [min]="0" [max]="100" [valueColor]="knobColor" (change)="triggerValueChange()"></ins-knob>
+      <ins-midi-overlay [id]="id + 'KnobDecayMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="decayValue"></ins-midi-overlay>
+    </div>
+    <div class="ins-knob-container">
+      <ins-knob [id]="id + 'KnobSustain'" [(ngModel)]="sustainValue" label="Sustain" [min]="0" [max]="100" [step]="1" [valueColor]="knobColor" (change)="triggerValueChange()"></ins-knob>
+      <ins-midi-overlay [id]="id + 'KnobSustainMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="sustainValue"></ins-midi-overlay>
+    </div>
+    <div class="ins-knob-container">
+      <ins-knob [id]="id + 'KnobRelease'" [(ngModel)]="releaseValue" label="Release" [min]="0" [max]="100" [valueColor]="knobColor" (change)="triggerValueChange()"></ins-knob>
+      <ins-midi-overlay [id]="id + 'KnobReleaseMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="releaseValue"></ins-midi-overlay>
+    </div>
   </div>
 </div>

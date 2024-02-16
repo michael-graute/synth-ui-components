@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import * as Tone from "tone";
-import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
-import {InsNoteOnPayload} from "../synth.service";
+import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
+import {InsNoteOnPayload} from "../../synth.service";
 
 export interface OscillatorConfig {
   volume: number;
@@ -19,14 +19,14 @@ export interface OscillatorConfig {
 }
 
 @Component({
-  selector: 'ins-oscillator',
-  templateUrl: './oscillator.component.html',
-  styleUrls: ['./oscillator.component.scss']
+  selector: 'ins-poly-synth',
+  templateUrl: './poly-synth.component.html',
+  styleUrls: ['./poly-synth.component.scss']
 })
-export class OscillatorComponent extends AbstractSynthComponent<OscillatorConfig> {
+export class PolySynthComponent extends AbstractSynthComponent<OscillatorConfig> {
 
   private synth: Tone.PolySynth = new Tone.PolySynth(Tone.Synth).toDestination();
-  @Input() name: string = 'Oscillator'
+  @Input() name: string = 'PolySynth'
   set type(type: any) {
     this.synth.set({oscillator: {type: type}});
     this.config.type = type;
@@ -110,6 +110,7 @@ export class OscillatorComponent extends AbstractSynthComponent<OscillatorConfig
 
   override ngOnInit() {
     super.ngOnInit();
+    this.synthService.addInstrument(this.id, this.synth, this.config);
     this.subscriptions.add(this.synthService.noteOnEvent.subscribe((event: InsNoteOnPayload) => {
       if(this.active) {
         const note: Tone.Unit.Note = Tone.Frequency(event.note).transpose((this.octave || 0) * 12).toNote();

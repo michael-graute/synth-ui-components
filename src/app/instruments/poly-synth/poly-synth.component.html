@@ -1,6 +1,6 @@
 <div class="ins-oscillator card" [class]="{'inactive': !active}">
     <div class="ins-oscillator__header card-header">
-      <div class="d-flex justify-content-between align-items-center">Oscillator <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+      <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
     </div>
     <div class="ins-oscillator__body card-body">
       <ins-divider label="waveform" class="mt-0"></ins-divider>
@@ -9,11 +9,10 @@
       </div>
       <ins-divider label="Settings"></ins-divider>
       <div class="d-flex gap-1">
-        <!--<div class="ins-knob-container ins-oscillator__detune">
+        <div class="ins-knob-container ins-oscillator__detune">
           <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
           <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
-        </div>-->
-        <ins-knob-midi [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob-midi>
+        </div>
         <div class="ins-knob-container ins-oscillator__octave">
           <ins-knob [id]="id + 'KnobOctave'" type="pan" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0" (change)="triggerUndo('octave', $event)"></ins-knob>
           <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
@@ -31,6 +30,5 @@
       <div class="ins-oscillator__envelope">
         <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
       </div>
-      <!--<ins-oscilloscope [synth]="synth"></ins-oscilloscope>-->
     </div>
 </div>

@@ -37,7 +37,7 @@ export class MidiMonitorComponent implements OnInit {
 
     this.notes$.subscribe((note: MidiNoteEvent): void => {
       if(note.on) {
-        this.midiService.noteOn(note.note, note.velocity);
+        this.midiService.noteOn(note.note, 1);
       } else {
         this.midiService.noteOff(note.note);
       }
