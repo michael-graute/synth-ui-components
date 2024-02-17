@@ -29,27 +29,31 @@ export type DuoSynthConfig = {
   vibratoAmount: number;
   vibratoRate: number;
   volume: number;
+  active: boolean;
+  octave: number;
 }
 
 @Component({
   selector: 'ins-duo-synth',
-  standalone: true,
-  imports: [],
   templateUrl: './duo-synth.component.html',
   styleUrl: './duo-synth.component.scss'
 })
 export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
 
-  private synth: Tone.DuoSynth = new Tone.DuoSynth().toDestination();
-  @Input() name: string = 'DuoSynth'
+  protected override componentType: string = 'instrument';
+  protected override instrument: Tone.DuoSynth = new Tone.DuoSynth();
+  @Input() name: string = 'DuoSynth';
 
-  override ngOnInit() {
-    super.ngOnInit();
-    this.synthService.addInstrument(this.id, this.synth, this.config);
+  set active(value: boolean) {
+    this.config.active = value;
+  }
+
+  get active(): boolean {
+    return this.config.active;
   }
 
   set voice1Type(type: any) {
-    this.synth.voice0.set({oscillator: {type: type}});
+    this.instrument.voice0.set({oscillator: {type: type}});
     this.config.voice1.oscillator.type = type;
   }
 
@@ -58,7 +62,7 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
   }
 
   set voice1Volume(value: number) {
-    this.synth.voice0.oscillator.set({volume: value});
+    this.instrument.voice0.oscillator.set({volume: value});
     this.config.voice1.oscillator.volume = value;
   }
 
@@ -67,6 +71,8 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
   }
 
   public override config: DuoSynthConfig = {
+    active: true,
+    octave: 0,
     voice0: {
       oscillator: {
         type: 'sine',

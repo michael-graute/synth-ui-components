@@ -28,6 +28,7 @@ import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
 import {ElementsShowcaseComponent} from "./elements-showcase/elements-showcase.component";
 import {MidiOverlayComponent} from "./midi-manager/midi-overlay/midi-overlay.component";
 import {KnobMidiComponent} from "./knob-midi/knob-midi.component";
+import {DuoSynthComponent} from "./instruments/duo-synth/duo-synth.component";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {KnobMidiComponent} from "./knob-midi/knob-midi.component";
     UndoManagerComponent,
     ElementsShowcaseComponent,
     MidiOverlayComponent,
-    KnobMidiComponent
+    KnobMidiComponent,
+    DuoSynthComponent
   ],
   imports: [
     BrowserModule,

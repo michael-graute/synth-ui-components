@@ -1,33 +1,33 @@
-<div class="ins-oscillator card" [class]="{'inactive': !active}">
-    <div class="ins-oscillator__header card-header">
+<div class="ins-poly-synth card" [class]="{'inactive': !active}">
+    <div class="ins-poly-synth__header card-header">
       <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
     </div>
-    <div class="ins-oscillator__body card-body">
+    <div class="ins-poly-synth__body card-body">
       <ins-divider label="waveform" class="mt-0"></ins-divider>
-      <div class="ins-oscillator__waveform">
+      <div class="ins-poly-synth__waveform">
           <ins-waveform-select [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
       </div>
       <ins-divider label="Settings"></ins-divider>
       <div class="d-flex gap-1">
-        <div class="ins-knob-container ins-oscillator__detune">
+        <div class="ins-knob-container ins-poly-synth__detune">
           <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
           <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
         </div>
-        <div class="ins-knob-container ins-oscillator__octave">
+        <div class="ins-knob-container ins-poly-synth__octave">
           <ins-knob [id]="id + 'KnobOctave'" type="pan" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0" (change)="triggerUndo('octave', $event)"></ins-knob>
           <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
         </div>
-        <div class="ins-knob-container ins-oscillator__volume">
+        <div class="ins-knob-container ins-poly-synth__volume">
           <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
           <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
         </div>
-        <div class="ins-knob-container ins-oscillator__pan">
+        <div class="ins-knob-container ins-poly-synth__pan">
           <ins-knob [id]="id + 'KnobPan'" type="pan" label="pan" [(ngModel)]="pan" [min]="-10" [max]="10" [step]="1" (change)="triggerUndo('pan', $event)"></ins-knob>
           <ins-midi-overlay [id]="id + 'KnobPanMidiOverlay'" [(ngModel)]="pan" [min]="-10" [max]="10"></ins-midi-overlay>
         </div>
       </div>
       <ins-divider label="Amplitude Envelope"></ins-divider>
-      <div class="ins-oscillator__envelope">
+      <div class="ins-poly-synth__envelope">
         <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
       </div>
     </div>

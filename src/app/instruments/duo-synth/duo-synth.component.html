@@ -1,1 +1,22 @@
-<p>duo-synth works!</p>
+<div class="ins-duo-synth card" [class]="{'inactive': !active}">
+  <div class="ins-duo-synth__header card-header">
+    <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-duo-synth__body card-body">
+    <ins-divider label="waveform" class="mt-0"></ins-divider>
+    <div class="ins-duo-synth__waveform">
+      <ins-waveform-select [(ngModel)]="voice1Type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+    </div>
+    <ins-divider label="Settings"></ins-divider>
+    <div class="d-flex gap-1">
+      <div class="ins-knob-container ins-duo-synth__volume">
+        <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="voice1Volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="voice1Volume"></ins-midi-overlay>
+      </div>
+    </div>
+    <ins-divider label="Amplitude Envelope"></ins-divider>
+    <!--<div class="ins-duo-synth__envelope">
+      <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
+    </div>-->
+  </div>
+</div>

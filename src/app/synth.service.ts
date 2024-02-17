@@ -77,9 +77,13 @@ export class SynthService {
     this.instruments.forEach((instrument: InsInstrument) => {
       console.log(note);
       if (instrument.config.active) {
-        const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
-        console.log(transposedNote);
-        instrument.instrument.triggerRelease(transposedNote);
+        console.log(instrument.instrument.name);
+        if(instrument.instrument.name === 'PolySynth') {
+          const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
+          instrument.instrument.triggerRelease(transposedNote);
+        } else {
+          instrument.instrument.triggerRelease();
+        }
       }
     });
   }
