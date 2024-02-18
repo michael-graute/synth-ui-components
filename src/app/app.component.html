@@ -31,20 +31,20 @@
     <div class="container" [ngClass]="{'hidden': page !== 'main'}">
       <div class="row">
         <div class="col-xl-3 col-4">
-          <ins-poly-synth name="PolySynth I" id="oscillator1"></ins-poly-synth>
+          <!--<ins-poly-synth name="PolySynth" id="oscillator1"></ins-poly-synth>-->
+          <ins-am-synth name="AM-Synth" [polyphonic]="true" id="am-synth"></ins-am-synth>
         </div>
-        <div class="col-xl-3 col-4">
-          <ins-duo-synth name="PolySynth II" id="duo-synth"></ins-duo-synth>
+        <div class="col-xl-6 col-4">
+          <!--<ins-duo-synth name="DuoSynth" id="duo-synth"></ins-duo-synth>-->
         </div>
         <div class="col-xl-3 col-4">
           <ins-filter id="filter"></ins-filter>
         </div>
+      </div>
+      <div class="row mt-3">
         <div class="col-xl-3 col-4">
           <ins-lfo id="lfo"></ins-lfo>
         </div>
-      </div>
-      <div class="row mt-3">
-
         <div class="col-4">
           <ins-delay id="delay"></ins-delay>
         </div>

@@ -10,6 +10,10 @@
       <ins-divider label="Settings"></ins-divider>
       <div class="d-flex gap-1">
         <div class="ins-knob-container ins-poly-synth__detune">
+          <ins-knob [id]="id + 'KnobPolyphony'" type="dot" label="voices" [min]="1" [max]="6" [step]="1" [(ngModel)]="polyphony" (change)="triggerUndo('polyphony', $event)"></ins-knob>
+          <ins-midi-overlay [id]="id + 'KnobPolyphonyMidiOverlay'" [min]="1" [max]="6" [step]="1" [(ngModel)]="polyphony"></ins-midi-overlay>
+        </div>
+        <div class="ins-knob-container ins-poly-synth__detune">
           <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
           <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
         </div>

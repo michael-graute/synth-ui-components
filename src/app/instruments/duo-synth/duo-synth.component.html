@@ -3,17 +3,67 @@
     <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
   </div>
   <div class="ins-duo-synth__body card-body">
-    <ins-divider label="waveform" class="mt-0"></ins-divider>
-    <div class="ins-duo-synth__waveform">
-      <ins-waveform-select [(ngModel)]="voice1Type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
-    </div>
-    <ins-divider label="Settings"></ins-divider>
-    <div class="d-flex gap-1">
-      <div class="ins-knob-container ins-duo-synth__volume">
-        <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="voice1Volume" (change)="triggerUndo('volume', $event)"></ins-knob>
-        <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="voice1Volume"></ins-midi-overlay>
+    <div class="row">
+      <div class="col-6">
+        <ins-divider label="Settings"></ins-divider>
+        <div class="d-flex gap-1">
+          <div class="ins-knob-container ins-duo-synth__volume">
+            <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-poly-synth__detune">
+            <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-poly-synth__octave">
+            <ins-knob [id]="id + 'KnobOctave'" type="pan" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0" (change)="triggerUndo('octave', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-poly-synth__portamento">
+            <ins-knob [id]="id + 'KnobPortamento'" label="porta" [min]="0" [max]="3" [step]=".1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="0" [max]="3" [step]=".1" [(ngModel)]="portamento"></ins-midi-overlay>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <ins-divider label="Vibrato"></ins-divider>
+        <div class="d-flex gap-1">
+          <div class="ins-knob-container ins-duo-synth__vibratoAmount">
+            <ins-knob [id]="id + 'KnobVibratoAmount'" label="Amount" [min]="0" [max]="1" [step]=".1" [(ngModel)]="vibratoAmount" (change)="triggerUndo('vibratoAmount', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobVibratoAmountMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="vibratoAmount"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-duo-synth__vibratoRate">
+            <ins-knob [id]="id + 'KnobVibratoRate'" label="Rate" [min]="0" [max]="30" [step]="1" [(ngModel)]="vibratoRate" (change)="triggerUndo('vibratoRate', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobVibratoRateMidiOverlay'" [min]="0" [max]="30" [step]="1" [(ngModel)]="vibratoRate"></ins-midi-overlay>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-6">
+        <ins-divider label="Voice 1"></ins-divider>
+        <div class="ins-duo-synth__waveform">
+          <ins-waveform-select [id]="id + 'SelectVoice1Type'" [(ngModel)]="voice1Type" (waveformChange)="triggerUndo('voice1Type', $event)"></ins-waveform-select>
+        </div>
+        <div class="d-flex gap-1">
+          <div class="ins-knob-container ins-duo-synth__voice1Detune">
+            <ins-knob [id]="id + 'KnobVoice1Detune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="voice1Detune" (change)="triggerUndo('voice1Detune', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobVoice1DetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="voice1Detune"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-duo-synth__voice1Phase">
+            <ins-knob [id]="id + 'KnobVoice1Phase'" type="pan" label="phase" [min]="-3" [max]="3" [step]="1" [(ngModel)]="voice1Phase" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0" (change)="triggerUndo('voice1Phase', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobVoice1PhaseMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="voice1Phase"></ins-midi-overlay>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <ins-divider label="Voice 2"></ins-divider>
+        <div class="ins-duo-synth__waveform">
+          <ins-waveform-select [id]="id + 'SelectVoice2Type'" [(ngModel)]="voice2Type" (waveformChange)="triggerUndo('voice2Type', $event)"></ins-waveform-select>
+        </div>
+      </div>
+    </div>
+
     <ins-divider label="Amplitude Envelope"></ins-divider>
     <!--<div class="ins-duo-synth__envelope">
       <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>

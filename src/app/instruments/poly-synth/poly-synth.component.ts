@@ -4,6 +4,7 @@ import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import {ADSREnvelopeConfig} from "../../types/config.types";
 
 export interface PolySynthConfig {
+  polyphony: number;
   volume: number;
   detune: number;
   active: boolean;
@@ -22,6 +23,15 @@ export class PolySynthComponent extends AbstractSynthComponent<PolySynthConfig> 
   @Input() name: string = 'PolySynth'
   protected override componentType: string = 'instrument';
   protected override instrument: Tone.PolySynth = new Tone.PolySynth(Tone.Synth);
+
+  set polyphony(value: number) {
+    this.instrument.maxPolyphony = value;
+    this.config.polyphony = value;
+  }
+
+  get polyphony(): number {
+    return this.config.polyphony;
+  }
 
   set type(type: any) {
     this.instrument.set({oscillator: {type: type}});
@@ -42,6 +52,7 @@ export class PolySynthComponent extends AbstractSynthComponent<PolySynthConfig> 
   }
 
   public override config: PolySynthConfig = {
+    polyphony: 1,
     volume: -15,
     detune: 0,
     active: true,

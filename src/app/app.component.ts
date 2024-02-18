@@ -8,11 +8,11 @@ import {Component} from '@angular/core';
 export class AppComponent {
 
   _keyboardVisible: boolean = true;
-  _sequencerVisible: boolean = true;
+  _sequencerVisible: boolean = false;
   keyboardHeight: string = '300px';
   sequencerHeight: string = '550px';
 
-  gridTemplateRows: string[] = ['80px', '1fr', this.sequencerHeight, this.keyboardHeight];
+  gridTemplateRows: string[] = ['80px', '1fr', '30px', this.keyboardHeight];
 
   public page: string = 'main';
 

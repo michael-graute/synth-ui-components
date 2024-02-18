@@ -29,6 +29,7 @@ import {ElementsShowcaseComponent} from "./elements-showcase/elements-showcase.c
 import {MidiOverlayComponent} from "./midi-manager/midi-overlay/midi-overlay.component";
 import {KnobMidiComponent} from "./knob-midi/knob-midi.component";
 import {DuoSynthComponent} from "./instruments/duo-synth/duo-synth.component";
+import {AmSynthComponent} from "./instruments/am-synth/am-synth.component";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {DuoSynthComponent} from "./instruments/duo-synth/duo-synth.component";
     ElementsShowcaseComponent,
     MidiOverlayComponent,
     KnobMidiComponent,
-    DuoSynthComponent
+    DuoSynthComponent,
+    AmSynthComponent
   ],
   imports: [
     BrowserModule,

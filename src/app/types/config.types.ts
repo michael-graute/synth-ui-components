@@ -5,6 +5,7 @@ export type OscillatorConfig = {
   octave: number;
   type: string;
   pan?: number;
+  phase?: number;
 }
 
 export type FilterConfig = {
