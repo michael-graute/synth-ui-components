@@ -15,7 +15,8 @@ export type ReverbConfig = {
 })
 export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
 
-  reverb: Tone.Reverb = new Tone.Reverb({decay: 2.5, wet: 0.8});
+  override instrument: Tone.Reverb = new Tone.Reverb({decay: 2.5, wet: 0.8});
+  override componentType: string = 'effect';
 
   public override config: ReverbConfig = {
     active: true,
@@ -24,7 +25,7 @@ export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
   }
 
   set decay(value: number) {
-    this.reverb.decay = value;
+    this.instrument.decay = value;
     this.config.decay = value;
   }
 
@@ -34,7 +35,7 @@ export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
   }
 
   set wet(value: number) {
-    this.reverb.wet.value = value;
+    this.instrument.wet.value = value;
     this.config.wet = value;
   }
 
@@ -45,7 +46,7 @@ export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
   set active(value: boolean) {
     this.config.active = value;
     if(this.config.active) {
-      this.synthService.addEffect({id: this.id, effect: this.reverb, config: this.config})
+      this.synthService.addEffect(this.id, this.instrument, this.config)
     } else {
       this.synthService.removeEffect(this.id);
     }

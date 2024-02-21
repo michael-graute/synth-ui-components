@@ -1,14 +1,19 @@
 import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
-import {OscillatorConfig} from "../../types/config.types";
+import {ADSREnvelopeConfig, OscillatorConfig} from "../../types/config.types";
 
 export type AmSynthConfig = {
   volume: number;
   active: boolean;
   octave: number;
   harmonicity: number;
+  portamento: number;
+  detune: number;
   oscillator: OscillatorConfig;
+  envelope: ADSREnvelopeConfig;
+  modulation: OscillatorConfig;
+  modulationEnvelope: ADSREnvelopeConfig;
 }
 
 @Component({
@@ -28,12 +33,33 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
     active: true,
     octave: 0,
     harmonicity: 1,
+    portamento: 0,
+    detune: 0,
     oscillator: {
       type: 'sine',
       detune: 0,
       active: true,
       volume: -15,
       octave: 0
+    },
+    envelope: {
+      attack: 0.01,
+      decay: 0.1,
+      sustain: 0.5,
+      release: 1,
+    },
+    modulation: {
+      type: 'sine',
+      detune: 0,
+      active: true,
+      volume: -15,
+      octave: 0
+    },
+    modulationEnvelope: {
+      attack: 0.5,
+      decay: 0,
+      sustain: 1,
+      release: 0.5
     }
   }
 
@@ -62,6 +88,14 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
     return this.config.oscillator.type;
   }
 
+  set modulationType(type: any) {
+    this.instrument.set({modulation: {type: type}});
+    this.config.modulation.type = type;
+  }
+  get modulationType(): any {
+    return this.config.modulation.type;
+  }
+
   set harmonicity(value: number) {
     this.instrument.set({harmonicity: value});
     this.config.harmonicity = value;
@@ -69,6 +103,33 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
 
   get harmonicity(): number {
     return this.config.harmonicity;
+  }
+
+  set volume(value: number) {
+    this.instrument.set({volume: value});
+    this.config.volume = value;
+  }
+
+  get volume(): number {
+    return this.config.volume;
+  }
+
+  set detune(value: number) {
+    this.instrument.set({detune: value});
+    this.config.detune = value;
+  }
+
+  get detune(): number {
+    return this.config.detune;
+  }
+
+  set portamento(value: number) {
+    this.instrument.set({portamento: value});
+    this.config.portamento = value;
+  }
+
+  get portamento(): number {
+    return this.config.portamento;
   }
 
 }

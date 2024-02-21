@@ -3,6 +3,7 @@ import {Subject} from "rxjs";
 import * as Tone from "tone";
 import {Instrument} from "tone/build/esm/instrument/Instrument";
 import {LFO} from "tone";
+import {Effect} from "tone/build/esm/effect/Effect";
 
 export type InsAttackReleasePayload = {
   note: any,
@@ -51,6 +52,7 @@ export class SynthService {
   keyUpEvent: Subject<string> = new Subject<string>();
   attackReleaseEvent: Subject<InsAttackReleasePayload> = new Subject<InsAttackReleasePayload>();
   sequencerKeyboardConnected: boolean = false;
+  masterChannel: Tone.Channel = new Tone.Channel().toDestination();
 
   constructor() { }
 
@@ -108,24 +110,22 @@ export class SynthService {
     });
   }
 
-  addEffect(effect: InsEffect): void {
-    this.effects.push(effect);
-    const tmpEffects: any[] = [];
-    this.effects.forEach((effect: InsEffect) => {
-      tmpEffects.push(effect.effect);
-    });
-    Tone.Destination.chain(...tmpEffects);
+  addEffect(id: string, effect: Effect<any>, config: any): void {
+    if(!this.getEffect(id)) {
+      this.instruments.forEach((instrument: InsInstrument) => {
+        instrument.instrument.connect(effect);
+      });
+      effect.chain(this.masterChannel);
+      this.effects.push({id, effect, config});
+    }
   }
 
   removeEffect(effectId: string): void {
     const effectIndex: number = this.effects.findIndex((effect: InsEffect) => effect.id === effectId);
     if(effectIndex >= 0) {
+      const effect: Effect<any> = this.effects[effectIndex].effect;
+      effect.disconnect();
       this.effects.splice(effectIndex, 1);
-      const tmpEffects: any[] = [];
-      this.effects.forEach((effect: InsEffect) => {
-        tmpEffects.push(effect.effect);
-      });
-      Tone.Destination.chain(...tmpEffects);
     }
   }
 
@@ -134,8 +134,10 @@ export class SynthService {
   }
 
   addInstrument(id: string, instrument: Instrument<any>, config: any) {
-    instrument.toDestination();
-    this.instruments.push({id: id, instrument: instrument, config});
+    if(!this.getInstrument(id)) {
+      instrument.connect(this.masterChannel);
+      this.instruments.push({id: id, instrument: instrument, config});
+    }
   }
 
   removeInstrument(id: string): void {
@@ -150,7 +152,11 @@ export class SynthService {
   }
 
   addLFO(id: string, lfo: LFO, config: any): void {
+    console.log(lfo);
     this.lfos.push({id: id, lfo: lfo, config});
+    lfo.connect(this.masterChannel.volume);
+    if(config.active) lfo.start();
+    //lfo.start();
   }
 
   removeLFO(id: string): void {
@@ -162,5 +168,19 @@ export class SynthService {
 
   getLFO(id: string): InsLFO {
     return <InsLFO>this.lfos.find((lfo: InsLFO) => lfo.id === id);
+  }
+
+  startLFO(id: string): void {
+    const lfo: LFO = this.getLFO(id)?.lfo;
+    if(lfo) {
+      lfo.start();
+      console.log(lfo.state);
+    }
+  }
+
+  stopLFO(id: string): void {
+    const lfo: LFO = this.getLFO(id).lfo;
+    lfo.stop();
+    console.log(lfo.state);
   }
 }

@@ -16,7 +16,8 @@ export type DelayConfig = {
 })
 export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
 
-  delay: Tone.FeedbackDelay = new Tone.FeedbackDelay(.5, .5);
+  override instrument: Tone.FeedbackDelay = new Tone.FeedbackDelay(.5, .5);
+  override componentType: string = 'effect';
 
   public override config: DelayConfig = {
     active: true,
@@ -26,7 +27,7 @@ export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
   }
 
   set time(value: number) {
-    this.delay.delayTime.value = value;
+    this.instrument.delayTime.value = value;
     this.config.time = value;
   }
 
@@ -35,7 +36,7 @@ export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
   }
 
   set feedback(value: number) {
-    this.delay.feedback.value = value;
+    this.instrument.feedback.value = value;
     this.config.feedback = value;
   }
 
@@ -44,7 +45,7 @@ export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
   }
 
   set wet(value: number) {
-    this.delay.wet.value = value;
+    this.instrument.wet.value = value;
     this.config.wet = value;
   }
 
@@ -55,7 +56,7 @@ export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
   set active(value: boolean) {
     this.config.active = value;
     if(this.config.active) {
-      this.synthService.addEffect({id: this.id, effect: this.delay, config: this.config})
+      this.synthService.addEffect(this.id, this.instrument, this.config)
     } else {
       this.synthService.removeEffect(this.id);
     }

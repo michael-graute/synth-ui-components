@@ -22,19 +22,26 @@ export type LfoConfig = {
 export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
   override config: LfoConfig = {
     active: true,
-    frequency: 20,
+    frequency: 2,
     type: 'sine',
     min: -10,
     max: 10,
     phase: 0,
-    amplitude: 1,
+    amplitude: 10,
     sync: false,
-    amount: 10
+    amount: 20
   };
-  lfo: any = new Tone.LFO(this.config.frequency, this.config.min, this.config.max);
+  override instrument: any = new Tone.LFO(this.config.frequency, this.config.min, this.config.max);
+
+  protected override componentType: string = 'lfo';
 
   set active(value: boolean) {
     this.config.active = value;
+    if(value) {
+      this.synthService.startLFO(this.id);
+    } else {
+      this.synthService.stopLFO(this.id);
+    }
   }
 
   get active(): boolean {
@@ -43,7 +50,7 @@ export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
 
   set frequency(value: number) {
     this.config.frequency = value;
-    this.lfo.frequency.value = value;
+    this.instrument.frequency.value = value;
   }
 
   get frequency(): number {
@@ -52,7 +59,7 @@ export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
 
   set type(value: string) {
     this.config.type = value;
-    this.lfo.type = value;
+    this.instrument.type = value;
   }
 
   get type(): string {
@@ -61,7 +68,7 @@ export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
 
   set min(value: number) {
     this.config.min = value;
-    this.lfo.min = value;
+    this.instrument.min = value;
   }
 
   get min(): number {
@@ -70,7 +77,7 @@ export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
 
   set max(value: number) {
     this.config.max = value;
-    this.lfo.max = value;
+    this.instrument.max = value;
   }
 
   get max(): number {
@@ -79,7 +86,7 @@ export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
 
   set phase(value: number) {
     this.config.phase = value;
-    this.lfo.phase = value;
+    this.instrument.phase = value;
   }
 
   get phase(): number {
@@ -88,7 +95,7 @@ export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
 
   set amplitude(value: number) {
     this.config.amplitude = value;
-    this.lfo.amplitude.value = value / 10;
+    this.instrument.amplitude.value = value / 10;
   }
 
   get amplitude(): number {
@@ -97,7 +104,7 @@ export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
 
   set sync(value: boolean) {
     this.config.sync = value;
-    this.lfo.sync = value;
+    this.instrument.sync = value;
   }
 
   get sync(): boolean {

@@ -20,7 +20,7 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.instrument);
+    console.log(this.instrument?.get());
     this.setPropertiesFromPreset(this.config);
     this.subscriptions.add(this.presetManagerService.saveConfigEvent.subscribe((presetId: string) => {
       this.saveConfig(presetId);
@@ -38,6 +38,12 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
     });
     if(this.componentType === 'instrument') {
       this.synthService.addInstrument(this.id, this.instrument, this.config);
+    }
+    if(this.componentType === 'effect') {
+      this.synthService.addEffect(this.id, this.instrument, this.config);
+    }
+    if(this.componentType === 'lfo') {
+      this.synthService.addLFO(this.id, this.instrument, this.config);
     }
   }
 
@@ -67,6 +73,12 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
     if(this.componentType === 'instrument') {
       this.synthService.removeInstrument(this.id);
+    }
+    if(this.componentType === 'effect') {
+      this.synthService.removeEffect(this.id);
+    }
+    if(this.componentType === 'lfo') {
+      this.synthService.removeLFO(this.id);
     }
   }
 

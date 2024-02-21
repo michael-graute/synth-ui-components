@@ -30,6 +30,7 @@ import {MidiOverlayComponent} from "./midi-manager/midi-overlay/midi-overlay.com
 import {KnobMidiComponent} from "./knob-midi/knob-midi.component";
 import {DuoSynthComponent} from "./instruments/duo-synth/duo-synth.component";
 import {AmSynthComponent} from "./instruments/am-synth/am-synth.component";
+import {FmSynthComponent} from "./instruments/fm-synth/fm-synth.component";
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {AmSynthComponent} from "./instruments/am-synth/am-synth.component";
     MidiOverlayComponent,
     KnobMidiComponent,
     DuoSynthComponent,
-    AmSynthComponent
+    AmSynthComponent,
+    FmSynthComponent
   ],
   imports: [
     BrowserModule,
