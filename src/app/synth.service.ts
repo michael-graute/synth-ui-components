@@ -152,11 +152,9 @@ export class SynthService {
   }
 
   addLFO(id: string, lfo: LFO, config: any): void {
-    console.log(lfo);
     this.lfos.push({id: id, lfo: lfo, config});
     lfo.connect(this.masterChannel.volume);
     if(config.active) lfo.start();
-    //lfo.start();
   }
 
   removeLFO(id: string): void {
@@ -174,13 +172,11 @@ export class SynthService {
     const lfo: LFO = this.getLFO(id)?.lfo;
     if(lfo) {
       lfo.start();
-      console.log(lfo.state);
     }
   }
 
   stopLFO(id: string): void {
     const lfo: LFO = this.getLFO(id).lfo;
     lfo.stop();
-    console.log(lfo.state);
   }
 }

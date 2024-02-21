@@ -5,9 +5,7 @@ import {SynthService} from "../synth.service";
 import {PresetManagerService, InsPreset} from "../preset-manager/preset-manager.service";
 import {UndoManagerService} from "../undo-manager/undo-manager.service";
 
-@Component({
-  template: '',
-})
+@Component({template: ''})
 export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
 
   @Input() id: string = uuidv4();
@@ -16,11 +14,10 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
   protected componentType: any = null;
   protected instrument: any = null;
 
-  constructor(protected presetManagerService: PresetManagerService, protected synthService: SynthService, protected undoManagerService: UndoManagerService) {
-  }
+  constructor(protected presetManagerService: PresetManagerService, protected synthService: SynthService, protected undoManagerService: UndoManagerService) {}
 
   ngOnInit(): void {
-    console.log(this.instrument?.get());
+    console.log(this.instrument?.name, this.instrument?.get());
     this.setPropertiesFromPreset(this.config);
     this.subscriptions.add(this.presetManagerService.saveConfigEvent.subscribe((presetId: string) => {
       this.saveConfig(presetId);
