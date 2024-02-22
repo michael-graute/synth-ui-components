@@ -132,4 +132,12 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
     return this.config.portamento;
   }
 
+  connectLFOToVolume(lfoId: string): void {
+    this.synthService.connectLFO(lfoId, this.instrument.volume);
+  }
+
+  disconnectLFOFromVolume(lfoId: string): void {
+    this.synthService.disconnectLFO(lfoId, this.instrument.volume);
+  }
+
 }
