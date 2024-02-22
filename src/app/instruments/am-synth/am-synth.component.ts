@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
 import {ADSREnvelopeConfig, OscillatorConfig} from "../../types/config.types";
+import {AMSynth} from "tone";
 
 export type AmSynthConfig = {
   volume: number;
@@ -133,11 +134,15 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
   }
 
   connectLFOToVolume(lfoId: string): void {
-    this.synthService.connectLFO(lfoId, this.instrument.volume);
+    if (this.instrument instanceof AMSynth) {
+      this.synthService.connectLFO(lfoId, this.instrument.harmonicity);
+    }
   }
 
   disconnectLFOFromVolume(lfoId: string): void {
-    this.synthService.disconnectLFO(lfoId, this.instrument.volume);
+    if (this.instrument instanceof AMSynth) {
+      this.synthService.disconnectLFO(lfoId, this.instrument.harmonicity);
+    }
   }
 
 }

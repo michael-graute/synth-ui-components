@@ -31,6 +31,7 @@ import {KnobMidiComponent} from "./knob-midi/knob-midi.component";
 import {DuoSynthComponent} from "./instruments/duo-synth/duo-synth.component";
 import {AmSynthComponent} from "./instruments/am-synth/am-synth.component";
 import {FmSynthComponent} from "./instruments/fm-synth/fm-synth.component";
+import {MonoSynthComponent} from "./instruments/mono-synth/mono-synth.component";
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {FmSynthComponent} from "./instruments/fm-synth/fm-synth.component";
     KnobMidiComponent,
     DuoSynthComponent,
     AmSynthComponent,
-    FmSynthComponent
+    FmSynthComponent,
+    MonoSynthComponent
   ],
   imports: [
     BrowserModule,

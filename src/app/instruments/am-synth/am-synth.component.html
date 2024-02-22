@@ -39,8 +39,11 @@
         <ins-midi-overlay [id]="id + 'KnobPanMidiOverlay'" [(ngModel)]="pan" [min]="-10" [max]="10"></ins-midi-overlay>
       </div>-->
     </div>
-    <button class="btn btn-primary" (click)="connectLFOToVolume('lfo')">ConnectLFO</button>
-    <button class="btn btn-primary" (click)="disconnectLFOFromVolume('lfo')">DisconnectLFO</button>
+    <div *ngIf="!polyphonic" class="d-flex gap-1 mt-4">
+      <button class="btn btn-primary" (click)="connectLFOToVolume('lfo')">Connect LFO</button>
+      <button class="btn btn-primary" (click)="disconnectLFOFromVolume('lfo')">Disconnect LFO</button>
+    </div>
+
     <!--<ins-divider label="Amplitude Envelope"></ins-divider>
     <div class="ins-am-synth__envelope">
       <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>

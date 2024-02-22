@@ -1,0 +1,10 @@
+<div class="ins-am-synth card" [class]="{'inactive': !active}">
+  <div class="ins-am-synth__header card-header">
+    <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-am-synth__body card-body"><ins-divider label="oscillator waveform" class="mt-0"></ins-divider>
+    <div class="ins-am-synth__waveform">
+      <ins-waveform-select [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+    </div>
+  </div>
+</div>
