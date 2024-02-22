@@ -13,13 +13,29 @@ export type FilterConfig = {
   detune: number;
   frequency: number;
   gain: number;
-  input: number;
-  q: number;
+  Q: number;
+  rolloff: -12 | -24 | -48 | -96;
 }
 
 export type ADSREnvelopeConfig = {
   attack: number;
+  attackCurve?: 'linear' | 'exponential';
   decay: number;
+  decayCurve?: 'linear' | 'exponential';
   sustain: number;
   release: number;
+  releaseCurve?: 'linear' | 'exponential';
+}
+
+export type FilterEnvelopeConfig = {
+  attack: number;
+  attackCurve?: 'linear' | 'exponential';
+  decay: number;
+  decayCurve?: 'linear' | 'exponential';
+  sustain: number;
+  release: number;
+  releaseCurve?: 'linear' | 'exponential';
+  baseFrequency: number;
+  octaves: number;
+  exponent: number;
 }

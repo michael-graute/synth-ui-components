@@ -14,7 +14,7 @@
     <ins-divider label="Settings"></ins-divider>
     <div class="d-flex gap-1">
       <div class="ins-knob-container ins-am-synth__harmonicity">
-        <ins-knob [id]="id + 'KnobHarmonicity'" type="dot" label="harm" [min]="0" [max]="2" [step]=".1" [(ngModel)]="harmonicity" (change)="triggerUndo('harmonicity', $event)"></ins-knob>
+        <ins-knob [id]="id + 'KnobHarmonicity'" type="dot" label="harmon" [min]="0" [max]="2" [step]=".1" [(ngModel)]="harmonicity" (change)="triggerUndo('harmonicity', $event)"></ins-knob>
         <ins-midi-overlay [id]="id + 'KnobHarmonicityMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="harmonicity"></ins-midi-overlay>
       </div>
       <div class="ins-knob-container ins-am-synth__volume">
@@ -26,7 +26,7 @@
         <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
       </div>
       <div class="ins-knob-container ins-am-synth__portamento">
-        <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
+        <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
         <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
       </div>
       <!--<div class="ins-knob-container ins-am-synth__octave">

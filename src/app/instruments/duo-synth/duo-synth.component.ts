@@ -187,8 +187,8 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
         detune: 0,
         frequency: 0,
         gain: 0,
-        input: 0,
-        q: 0
+        Q: 0,
+        rolloff: -12
       },
       filterEnvelope: {
         attack: 1,
@@ -220,8 +220,8 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
         detune: 0,
         frequency: 0,
         gain: 0,
-        input: 0,
-        q: 0
+        Q: 0,
+        rolloff: -12
       },
       filterEnvelope: {
         attack: 1,

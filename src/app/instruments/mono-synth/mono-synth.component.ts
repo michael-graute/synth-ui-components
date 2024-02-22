@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
-import {ADSREnvelopeConfig, OscillatorConfig} from "../../types/config.types";
+import {ADSREnvelopeConfig, FilterConfig, FilterEnvelopeConfig, OscillatorConfig} from "../../types/config.types";
 
 export type MonoSynthConfig = {
   active: boolean;
@@ -10,6 +10,9 @@ export type MonoSynthConfig = {
   portamento: number;
   oscillator: OscillatorConfig;
   envelope: ADSREnvelopeConfig;
+  filter: FilterConfig;
+  filterEnvelope: FilterEnvelopeConfig;
+
 }
 
 @Component({
@@ -41,6 +44,24 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
       decay: 0.1,
       sustain: 0.5,
       release: 1,
+    },
+    filter: {
+      type: 'lowpass',
+      frequency: 350,
+      rolloff: -12,
+      Q: 1,
+      gain: 0,
+      detune: 0,
+      //active: true
+    },
+    filterEnvelope: {
+      attack: 0.01,
+      decay: 0.1,
+      sustain: 0.5,
+      release: 1,
+      baseFrequency: 200,
+      octaves: 7,
+      exponent: 2
     }
   }
 
@@ -77,5 +98,35 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
 
   get volume(): number {
     return this.config.volume;
+  }
+
+  set envelope(options: any) {
+    const newOptions = {
+      attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
+      decay: options.decay as number / 100,
+      sustain: options.sustain as number / 100,
+      release: options.release as number <= 0 ? 0.05 : options.release as number / 100
+    }
+    this.instrument.set({envelope: newOptions});
+    this.config.envelope = options;
+  }
+
+  get envelope(): any {
+    return this.config.envelope;
+  }
+
+  set filterEnvelope(options: any) {
+    const newOptions = {
+      attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
+      decay: options.decay as number / 100,
+      sustain: options.sustain as number / 100,
+      release: options.release as number <= 0 ? 0.05 : options.release as number / 100
+    }
+    this.instrument.set({filterEnvelope: newOptions});
+    this.config.filterEnvelope = options;
+  }
+
+  get filterEnvelope(): any {
+    return this.config.filterEnvelope;
   }
 }
