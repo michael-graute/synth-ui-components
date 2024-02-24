@@ -40,25 +40,25 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
       octave: 0
     },
     envelope: {
-      attack: 0.01,
-      decay: 0.1,
-      sustain: 0.5,
-      release: 1,
+      attack: 70,
+      decay: 10,
+      sustain: 70,
+      release: 10,
     },
     filter: {
       type: 'lowpass',
       frequency: 350,
       rolloff: -12,
-      Q: 1,
-      gain: 0,
+      Q: 10,
+      gain: 10,
       detune: 0,
       //active: true
     },
     filterEnvelope: {
-      attack: 0.01,
-      decay: 0.1,
-      sustain: 0.5,
-      release: 1,
+      attack: 70,
+      decay: 10,
+      sustain: 70,
+      release: 10,
       baseFrequency: 200,
       octaves: 7,
       exponent: 2
@@ -100,8 +100,26 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
     return this.config.volume;
   }
 
-  set envelope(options: any) {
-    const newOptions = {
+  set detune(value: number) {
+    this.instrument.set({detune: value});
+    this.config.detune = value;
+  }
+
+  get detune(): number {
+    return this.config.detune;
+  }
+
+  set portamento(value: number) {
+    this.instrument.set({portamento: value});
+    this.config.portamento = value;
+  }
+
+  get portamento(): number {
+    return this.config.portamento;
+  }
+
+  set envelope(options: ADSREnvelopeConfig) {
+    const newOptions: ADSREnvelopeConfig = {
       attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
       decay: options.decay as number / 100,
       sustain: options.sustain as number / 100,
@@ -115,8 +133,35 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
     return this.config.envelope;
   }
 
-  set filterEnvelope(options: any) {
-    const newOptions = {
+  set filter(options: FilterConfig) {
+    this.instrument.set({filter: options});
+    this.config.filter = options;
+  }
+
+  get filter(): any {
+    return this.config.filter;
+  }
+
+  set filterType(type: any) {
+    this.instrument.set({filter: {type: type}});
+    this.config.filter.type = type;
+  }
+
+  get filterType(): any {
+    return this.config.filter.type;
+  }
+
+  set filterFrequency(value: number) {
+    this.instrument.set({filter: {frequency: value}});
+    this.config.filter.frequency = value;
+  }
+
+  get filterFrequency(): number {
+    return this.config.filter.frequency;
+  }
+
+  set filterEnvelope(options: FilterEnvelopeConfig) {
+    const newOptions: FilterEnvelopeConfig = {
       attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
       decay: options.decay as number / 100,
       sustain: options.sustain as number / 100,

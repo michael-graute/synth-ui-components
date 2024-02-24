@@ -35,7 +35,7 @@ export type FilterEnvelopeConfig = {
   sustain: number;
   release: number;
   releaseCurve?: 'linear' | 'exponential';
-  baseFrequency: number;
-  octaves: number;
-  exponent: number;
+  baseFrequency?: number;
+  octaves?: number;
+  exponent?: number;
 }

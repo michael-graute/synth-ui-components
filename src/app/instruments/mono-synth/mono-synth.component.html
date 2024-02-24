@@ -1,10 +1,56 @@
-<div class="ins-am-synth card" [class]="{'inactive': !active}">
-  <div class="ins-am-synth__header card-header">
+<div class="ins-mono-synth card" [class]="{'inactive': !active}">
+  <div class="ins-mono-synth__header card-header">
     <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
   </div>
-  <div class="ins-am-synth__body card-body"><ins-divider label="oscillator waveform" class="mt-0"></ins-divider>
-    <div class="ins-am-synth__waveform">
-      <ins-waveform-select [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+  <div class="ins-mono-synth__body card-body">
+    <div class="row">
+      <div class="col-6">
+        <ins-divider label="oscillator waveform" class="mt-0"></ins-divider>
+        <div class="ins-mono-synth__waveform">
+          <ins-waveform-select [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+        </div>
+        <ins-divider label="Settings"></ins-divider>
+        <div class="d-flex gap-1">
+          <div class="ins-knob-container ins-mono-synth__volume">
+            <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-mono-synth__detune">
+            <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-mono-synth__portamento">
+            <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
+          </div>
+        </div>
+        <ins-divider label="Amplitude Envelope"></ins-divider>
+        <div class="ins-mono-synth__envelope">
+          <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
+        </div>
+      </div>
+      <div class="col-6">
+        <ins-divider label="Filter Type" class="mt-0"></ins-divider>
+        <div class="ins-filter__type-select">
+          <ins-button-group [id]="id + 'FilterType'" [name]="id + 'FilterType'" [(ngModel)]="filterType" [options]="[{value: 'lowpass', label: 'Low'},{value: 'highpass', label: 'High'},{value: 'bandpass', label: 'Band'}]"></ins-button-group>
+        </div>
+        <ins-divider label="Filter Settings"></ins-divider>
+        <div class="d-flex">
+          <div class="ins-filter__resonance">
+            <!--<ins-knob [id]="id + 'KnobResonance'" [(ngModel)]="resonance" name="resonance" [min]="0" [max]="1" [step]="0.01" label="res"></ins-knob>-->
+          </div>
+          <div class="ins-filter__cutoff">
+            <ins-knob [id]="id + 'FilterKnobCutOff'" [(ngModel)]="filterFrequency" name="FilterKnobCutoff" [min]="200" [max]="2000" [step]="10" label="cutoff"></ins-knob>
+          </div>
+          <div class="ins-filter__bandwidth" *ngIf="type === 'bandpass'">
+            <!--<ins-knob [id]="id + 'KnobBandwidth'" [(ngModel)]="bandwidth" name="bandwidth" [min]="200" [lfo]="false" [max]="1200" [step]="10" label="width"></ins-knob>-->
+          </div>
+        </div>
+        <ins-divider label="Filter Envelope"></ins-divider>
+        <div class="ins-filter__envelope">
+          <ins-adsr-envelope [(ngModel)]="filterEnvelope" name="envelope" [height]="50" [id]="id + 'ADSR'"></ins-adsr-envelope>
+        </div>
+      </div>
     </div>
   </div>
 </div>
