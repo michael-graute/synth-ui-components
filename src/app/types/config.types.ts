@@ -14,7 +14,7 @@ export type FilterConfig = {
   frequency: number;
   gain: number;
   Q: number;
-  rolloff: -12 | -24 | -48 | -96;
+  rolloff: number;
 }
 
 export type ADSREnvelopeConfig = {

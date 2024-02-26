@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
 import {ADSREnvelopeConfig, FilterConfig, FilterEnvelopeConfig, OscillatorConfig} from "../../types/config.types";
+import {FilterRollOff} from "tone";
 
 export type MonoSynthConfig = {
   active: boolean;
@@ -37,7 +38,8 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
       detune: 0,
       active: true,
       volume: -15,
-      octave: 0
+      octave: 0,
+      phase: 0
     },
     envelope: {
       attack: 70,
@@ -48,7 +50,7 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
     filter: {
       type: 'lowpass',
       frequency: 350,
-      rolloff: -12,
+      rolloff: 0,
       Q: 10,
       gain: 10,
       detune: 0,
@@ -64,6 +66,8 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
       exponent: 2
     }
   }
+
+  rolloffOptions: FilterRollOff[] = [-12, -24, -48, -96];
 
   override ngOnInit() {
     if(this.polyphonic) {
@@ -118,6 +122,15 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
     return this.config.portamento;
   }
 
+  set phase(value: number) {
+    this.instrument.set({oscillator: {phase: value}});
+    this.config.oscillator.phase = value;
+  }
+
+  get phase(): number {
+    return this.config.oscillator.phase || 0;
+  }
+
   set envelope(options: ADSREnvelopeConfig) {
     const newOptions: ADSREnvelopeConfig = {
       attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
@@ -134,7 +147,7 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
   }
 
   set filter(options: FilterConfig) {
-    this.instrument.set({filter: options});
+    //this.instrument.set({filter: options});
     this.config.filter = options;
   }
 
@@ -158,6 +171,33 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
 
   get filterFrequency(): number {
     return this.config.filter.frequency;
+  }
+
+  set filterQ(value: number) {
+    this.instrument.set({filter: {Q: value}});
+    this.config.filter.Q = value;
+  }
+
+  get filterQ(): number {
+    return this.config.filter.Q;
+  }
+
+  set filterGain(value: number) {
+    this.instrument.set({filter: {gain: value}});
+    this.config.filter.gain = value;
+  }
+
+  get filterGain(): number {
+    return this.config.filter.gain;
+  }
+
+  set filterRolloff(value: number) {
+    this.instrument.set({filter: {rolloff: this.rolloffOptions[value]}});
+    this.config.filter.rolloff = value;
+  }
+
+  get filterRolloff(): number {
+    return this.config.filter.rolloff;
   }
 
   set filterEnvelope(options: FilterEnvelopeConfig) {

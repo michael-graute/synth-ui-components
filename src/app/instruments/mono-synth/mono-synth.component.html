@@ -23,6 +23,10 @@
             <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
             <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
           </div>
+          <div class="ins-knob-container ins-mono-synth__phase">
+            <ins-knob [id]="id + 'KnobPhase'" type="dot" label="phase" [min]="0" [max]="360" [step]="1" [(ngModel)]="phase" (change)="triggerUndo('phase', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobPhaseMidiOverlay'" [min]="0" [max]="360" [step]="1" [(ngModel)]="phase"></ins-midi-overlay>
+          </div>
         </div>
         <ins-divider label="Amplitude Envelope"></ins-divider>
         <div class="ins-mono-synth__envelope">
@@ -36,19 +40,22 @@
         </div>
         <ins-divider label="Filter Settings"></ins-divider>
         <div class="d-flex">
-          <div class="ins-filter__resonance">
-            <!--<ins-knob [id]="id + 'KnobResonance'" [(ngModel)]="resonance" name="resonance" [min]="0" [max]="1" [step]="0.01" label="res"></ins-knob>-->
+          <div class="ins-filter__gain">
+            <ins-knob [id]="id + 'FilterKnobGain'" [(ngModel)]="filterGain" [name]="id + 'FilterKnobGain'" [min]="0" [max]="10" [step]="1" label="Gain"></ins-knob>
           </div>
           <div class="ins-filter__cutoff">
             <ins-knob [id]="id + 'FilterKnobCutOff'" [(ngModel)]="filterFrequency" name="FilterKnobCutoff" [min]="200" [max]="2000" [step]="10" label="cutoff"></ins-knob>
           </div>
-          <div class="ins-filter__bandwidth" *ngIf="type === 'bandpass'">
-            <!--<ins-knob [id]="id + 'KnobBandwidth'" [(ngModel)]="bandwidth" name="bandwidth" [min]="200" [lfo]="false" [max]="1200" [step]="10" label="width"></ins-knob>-->
+          <div class="ins-filter__q">
+            <ins-knob [id]="id + 'FilterKnobQ'" [(ngModel)]="filterQ" [name]="id + 'FilterKnobQ'" [min]="0" [max]="10" [step]="1" label="Q"></ins-knob>
+          </div>
+          <div class="ins-filter__rolloff">
+            <ins-knob [id]="id + 'FilterKnobRolloff'" [(ngModel)]="filterRolloff" [name]="id + 'FilterKnobRolloff'" type="dot" [options]="['-12', '-24', '-48', '-96']" label="Rolloff"></ins-knob>
           </div>
         </div>
         <ins-divider label="Filter Envelope"></ins-divider>
         <div class="ins-filter__envelope">
-          <ins-adsr-envelope [(ngModel)]="filterEnvelope" name="envelope" [height]="50" [id]="id + 'ADSR'"></ins-adsr-envelope>
+          <ins-adsr-envelope [(ngModel)]="filterEnvelope" name="envelope" [height]="50" [id]="id + 'FilterADSR'"></ins-adsr-envelope>
         </div>
       </div>
     </div>
