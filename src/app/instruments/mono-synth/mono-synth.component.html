@@ -43,7 +43,7 @@
           <ins-button-group [id]="id + 'FilterType'" [name]="id + 'FilterType'" [(ngModel)]="filterType" [options]="[{value: 'lowpass', label: 'Low'},{value: 'highpass', label: 'High'},{value: 'bandpass', label: 'Band'}]"></ins-button-group>
         </div>
         <ins-divider label="Filter Settings"></ins-divider>
-        <div class="d-flex">
+        <div class="d-flex gap-1">
           <div class="ins-filter__gain">
             <ins-knob [id]="id + 'FilterKnobGain'" [(ngModel)]="filterGain" [name]="id + 'FilterKnobGain'" [min]="0" [max]="10" [step]="1" label="Gain"></ins-knob>
           </div>
