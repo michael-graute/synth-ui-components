@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
-import {Effect} from "tone/build/esm/effect/Effect";
 
 export type ChorusConfig = {
   active: boolean;
