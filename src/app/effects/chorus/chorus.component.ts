@@ -99,8 +99,10 @@ export class ChorusComponent extends AbstractSynthComponent<ChorusConfig> {
   set active(value: boolean) {
     this.config.active = value;
     if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config)
+      this.synthService.addEffect(this.id, this.instrument, this.config);
+      this.instrument.start();
     } else {
+      this.instrument.stop();
       this.synthService.removeEffect(this.id);
     }
   }

@@ -33,6 +33,9 @@ import {AmSynthComponent} from "./instruments/am-synth/am-synth.component";
 import {FmSynthComponent} from "./instruments/fm-synth/fm-synth.component";
 import {MonoSynthComponent} from "./instruments/mono-synth/mono-synth.component";
 import {ChorusComponent} from "./effects/chorus/chorus.component";
+import {TremoloComponent} from "./effects/tremolo/tremolo.component";
+import {VibratoComponent} from "./effects/vibrato/vibrato.component";
+import {PhaserComponent} from "./effects/phaser/phaser.component";
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import {ChorusComponent} from "./effects/chorus/chorus.component";
     AmSynthComponent,
     FmSynthComponent,
     MonoSynthComponent,
-    ChorusComponent
+    ChorusComponent,
+    TremoloComponent,
+    VibratoComponent,
+    PhaserComponent
   ],
   imports: [
     BrowserModule,
