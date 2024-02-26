@@ -20,12 +20,16 @@
             <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
           </div>
           <div class="ins-knob-container ins-mono-synth__portamento">
-            <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
-            <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
+            <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="0" [max]="100" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
           </div>
           <div class="ins-knob-container ins-mono-synth__phase">
             <ins-knob [id]="id + 'KnobPhase'" type="dot" label="phase" [min]="0" [max]="360" [step]="1" [(ngModel)]="phase" (change)="triggerUndo('phase', $event)"></ins-knob>
             <ins-midi-overlay [id]="id + 'KnobPhaseMidiOverlay'" [min]="0" [max]="360" [step]="1" [(ngModel)]="phase"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-mono-synth__octave">
+            <ins-knob [id]="id + 'KnobOctave'" type="dot" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" (change)="triggerUndo('octave', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
           </div>
         </div>
         <ins-divider label="Amplitude Envelope"></ins-divider>

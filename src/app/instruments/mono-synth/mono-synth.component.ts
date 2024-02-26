@@ -9,6 +9,7 @@ export type MonoSynthConfig = {
   volume: number;
   detune: number;
   portamento: number;
+  octave: number;
   oscillator: OscillatorConfig;
   envelope: ADSREnvelopeConfig;
   filter: FilterConfig;
@@ -33,6 +34,7 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
     volume: -15,
     detune: 0,
     portamento: 0,
+    octave: 0,
     oscillator: {
       type: 'sine',
       detune: 0,
@@ -93,6 +95,14 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
 
   get type(): any {
     return this.config.oscillator.type;
+  }
+
+  set octave(value: number) {
+    this.config.octave = value;
+  }
+
+  get octave(): number {
+    return this.config.octave;
   }
 
   set volume(value: number) {
