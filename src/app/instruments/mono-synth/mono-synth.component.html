@@ -5,61 +5,65 @@
   <div class="ins-mono-synth__body card-body">
     <div class="row">
       <div class="col-6">
-        <ins-divider label="oscillator waveform" class="mt-0"></ins-divider>
+        <ins-divider label="Oscillator Waveform" class="mt-0"></ins-divider>
         <div class="ins-mono-synth__waveform">
           <ins-waveform-select [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
         </div>
         <ins-divider label="Settings"></ins-divider>
         <div class="d-flex gap-1">
           <div class="ins-knob-container ins-mono-synth__volume">
-            <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+            <ins-knob [id]="id + 'KnobVolume'" [name]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
             <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
           </div>
           <div class="ins-knob-container ins-mono-synth__detune">
-            <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
+            <ins-knob [id]="id + 'KnobDetune'" type="dot" label="Detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
             <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
           </div>
           <div class="ins-knob-container ins-mono-synth__portamento">
-            <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="0" [max]="100" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
+            <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="Portam" [min]="0" [max]="100" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
             <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
           </div>
           <div class="ins-knob-container ins-mono-synth__phase">
-            <ins-knob [id]="id + 'KnobPhase'" type="dot" label="phase" [min]="0" [max]="360" [step]="1" [(ngModel)]="phase" (change)="triggerUndo('phase', $event)"></ins-knob>
+            <ins-knob [id]="id + 'KnobPhase'" type="dot" label="Phase" [min]="0" [max]="360" [step]="1" [(ngModel)]="phase" (change)="triggerUndo('phase', $event)"></ins-knob>
             <ins-midi-overlay [id]="id + 'KnobPhaseMidiOverlay'" [min]="0" [max]="360" [step]="1" [(ngModel)]="phase"></ins-midi-overlay>
           </div>
           <div class="ins-knob-container ins-mono-synth__octave">
-            <ins-knob [id]="id + 'KnobOctave'" type="dot" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" (change)="triggerUndo('octave', $event)"></ins-knob>
+            <ins-knob [id]="id + 'KnobOctave'" type="dot" label="Octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" (change)="triggerUndo('octave', $event)"></ins-knob>
             <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
           </div>
         </div>
         <ins-divider label="Amplitude Envelope"></ins-divider>
         <div class="ins-mono-synth__envelope">
-          <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
+          <ins-adsr-envelope [id]="id + 'ADSR'" [name]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
         </div>
       </div>
       <div class="col-6">
         <ins-divider label="Filter Type" class="mt-0"></ins-divider>
         <div class="ins-filter__type-select">
-          <ins-button-group [id]="id + 'FilterType'" [name]="id + 'FilterType'" [(ngModel)]="filterType" [options]="[{value: 'lowpass', label: 'Low'},{value: 'highpass', label: 'High'},{value: 'bandpass', label: 'Band'}]"></ins-button-group>
+          <ins-button-group [id]="id + 'FilterType'" [name]="id + 'FilterType'" [(ngModel)]="filterType" [options]="[{value: 'lowpass', label: 'Low'},{value: 'highpass', label: 'High'},{value: 'bandpass', label: 'Band'}]" (change)="triggerUndo('filterType', $event)"></ins-button-group>
         </div>
         <ins-divider label="Filter Settings"></ins-divider>
         <div class="d-flex gap-1">
-          <div class="ins-filter__gain">
-            <ins-knob [id]="id + 'FilterKnobGain'" [(ngModel)]="filterGain" [name]="id + 'FilterKnobGain'" [min]="0" [max]="10" [step]="1" label="Gain"></ins-knob>
+          <div class="ins-knob-container ins-filter__gain">
+            <ins-knob [id]="id + 'FilterKnobGain'" [(ngModel)]="filterGain" [name]="id + 'FilterKnobGain'" [min]="0" [max]="10" [step]="1" label="Gain" (change)="triggerUndo('filterGain', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'FilterKnobGainMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="filterGain"></ins-midi-overlay>
           </div>
-          <div class="ins-filter__cutoff">
-            <ins-knob [id]="id + 'FilterKnobCutOff'" [(ngModel)]="filterFrequency" name="FilterKnobCutoff" [min]="200" [max]="2000" [step]="10" label="cutoff"></ins-knob>
+          <div class="ins-knob-container ins-filter__cutoff">
+            <ins-knob [id]="id + 'FilterKnobFrequency'" [(ngModel)]="filterFrequency" name="FilterKnobCutoff" [min]="200" [max]="2000" [step]="10" label="Cutoff" (change)="triggerUndo('filterFrequency', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'FilterKnobFrequencyMidiOverlay'" [min]="200" [max]="2000" [step]="1" [(ngModel)]="filterFrequency"></ins-midi-overlay>
           </div>
-          <div class="ins-filter__q">
-            <ins-knob [id]="id + 'FilterKnobQ'" [(ngModel)]="filterQ" [name]="id + 'FilterKnobQ'" [min]="0" [max]="10" [step]="1" label="Q"></ins-knob>
+          <div class="ins-knob-container ins-filter__q">
+            <ins-knob [id]="id + 'FilterKnobQ'" [(ngModel)]="filterQ" [name]="id + 'FilterKnobQ'" [min]="0" [max]="10" [step]="1" label="Q" (change)="triggerUndo('filterQ', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'FilterKnobQMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="filterQ"></ins-midi-overlay>
           </div>
-          <div class="ins-filter__rolloff">
-            <ins-knob [id]="id + 'FilterKnobRolloff'" [(ngModel)]="filterRolloff" [name]="id + 'FilterKnobRolloff'" type="dot" [options]="['-12', '-24', '-48', '-96']" label="Rolloff"></ins-knob>
+          <div class="ins-knob-container ins-filter__rolloff">
+            <ins-knob [id]="id + 'FilterKnobRolloff'" [(ngModel)]="filterRolloff" [name]="id + 'FilterKnobRolloff'" type="dot" [options]="['-12', '-24', '-48', '-96']" label="Rolloff" (change)="triggerUndo('filterRolloff', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'FilterKnobRolloffMidiOverlay'" [min]="0" [max]="3" [step]="1" [(ngModel)]="filterRolloff"></ins-midi-overlay>
           </div>
         </div>
         <ins-divider label="Filter Envelope"></ins-divider>
         <div class="ins-filter__envelope">
-          <ins-adsr-envelope [(ngModel)]="filterEnvelope" name="envelope" [height]="50" [id]="id + 'FilterADSR'"></ins-adsr-envelope>
+          <ins-adsr-envelope [(ngModel)]="filterEnvelope" [name]="id + 'FilterADSR'" [height]="50" [id]="id + 'FilterADSR'"></ins-adsr-envelope>
         </div>
       </div>
     </div>

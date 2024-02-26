@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
-import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
+import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 
 export type DelayConfig = {
   active: boolean;
   time: number;
   feedback: number;
   wet: number;
+  maxDelay: number;
 }
 
 @Component({
@@ -23,7 +24,8 @@ export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
     active: true,
     time: .5,
     feedback: .5,
-    wet: .5
+    wet: .5,
+    maxDelay: 5
   }
 
   set time(value: number) {
@@ -64,5 +66,14 @@ export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
 
   get active(): boolean {
     return this.config.active;
+  }
+
+  set maxDelay(value: number) {
+    this.instrument.set({maxDelay: value});
+    this.config.maxDelay = value;
+  }
+
+  get maxDelay(): number {
+    return this.config.maxDelay;
   }
 }

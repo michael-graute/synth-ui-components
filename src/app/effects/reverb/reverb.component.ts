@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
-import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
+import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 
 export type ReverbConfig = {
   active: boolean;
   decay: number;
   wet: number;
+  preDelay: number;
 }
 
 @Component({
@@ -21,7 +22,8 @@ export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
   public override config: ReverbConfig = {
     active: true,
     decay: 2.5,
-    wet: 0.8
+    wet: 0.8,
+    preDelay: 0.01
   }
 
   set decay(value: number) {
@@ -41,6 +43,15 @@ export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
 
   get wet(): number {
     return this.config.wet;
+  }
+
+  set preDelay(value: number) {
+    this.instrument.preDelay = value;
+    this.config.preDelay = value;
+  }
+
+  get preDelay(): number {
+    return this.config.preDelay;
   }
 
   set active(value: boolean) {

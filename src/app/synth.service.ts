@@ -104,7 +104,7 @@ export class SynthService {
     });
   }
 
-  addEffect(id: string, effect: Effect<any>, config: any): void {
+  addEffect(id: string, effect: any, config: any): void {
     if(!this.getEffect(id)) {
       this.instruments.forEach((instrument: InsInstrument) => {
         instrument.instrument.connect(effect);

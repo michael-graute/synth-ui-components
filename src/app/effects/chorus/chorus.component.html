@@ -1,0 +1,42 @@
+<div class="ins-chorus card" [class]="{'inactive': !active}">
+  <div class="ins-chorus__header card-header">
+    <div class="d-flex justify-content-between align-items-center">Chorus <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-chorus__body card-body">
+    <div class="ins-chorus__waveform">
+      <ins-waveform-select [id]="id + 'waveformSelect'" [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+    </div>
+    <div class="d-flex gap-1 mt-4">
+      <div class="ins-knob-container ins-chorus__time">
+        <ins-knob [id]="id + 'KnobTime'" [(ngModel)]="delayTime" [min]="0" [max]="1" [step]=".01" label="time"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobTimeMidiOverlay'" [min]="0" [max]="1" [step]=".01" [(ngModel)]="delayTime"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-chorus__feedback">
+        <ins-knob [id]="id + 'KnobFeedback'" [(ngModel)]="feedback" [min]="0" [max]="1" [step]=".01" label="feedb"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobFeedbackMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="feedback"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-chorus__wet">
+        <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".01" label="wet"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobWetMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="wet"></ins-midi-overlay>
+      </div>
+      <!--<div class="ins-knob-container ins-chorus__maxDelay">
+        <ins-knob [id]="id + 'KnobMaxDelay'" [(ngModel)]="maxDelay" [min]="0" [max]="10" [step]="1" label="Max Del"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobMaxDelayMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="maxDelay"></ins-midi-overlay>
+      </div>-->
+    </div>
+    <div class="d-flex gap-1 mt-2">
+      <div class="ins-knob-container ins-chorus__frequency">
+        <ins-knob [id]="id + 'KnobFeedback'" [(ngModel)]="frequency" [min]="0" [max]="100" [step]=".1" label="freq"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobFeedbackMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="frequency"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-chorus__depth">
+        <ins-knob [id]="id + 'KnobDepth'" [(ngModel)]="depth" [min]="0" [max]="1" [step]=".1" label="depth"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobDepthMidiOverlay'" [min]="0" [max]="1" [step]="1" [(ngModel)]="depth"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-chorus__spread">
+        <ins-knob [id]="id + 'KnobSpread'" [(ngModel)]="spread" [min]="0" [max]="180" [step]="1" label="spread"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobSpreadMidiOverlay'" [min]="0" [max]="180" [step]="1" [(ngModel)]="spread"></ins-midi-overlay>
+      </div>
+    </div>
+  </div>
+</div>

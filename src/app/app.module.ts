@@ -21,8 +21,8 @@ import { DividerComponent } from "./divider/divider.component";
 import { LfoComponent } from "./lfo/lfo.component";
 import { MidiMonitorComponent } from "./midi-manager/midi-monitor/midi-monitor.component";
 import { AbstractSynthComponent } from "./abstracts/abstract-synth.component";
-import {DelayComponent} from "./delay/delay.component";
-import {ReverbComponent} from "./reverb/reverb.component";
+import {DelayComponent} from "./effects/delay/delay.component";
+import {ReverbComponent} from "./effects/reverb/reverb.component";
 import {PresetManagerComponent} from "./preset-manager/preset-manager.component";
 import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
 import {ElementsShowcaseComponent} from "./elements-showcase/elements-showcase.component";
@@ -32,6 +32,7 @@ import {DuoSynthComponent} from "./instruments/duo-synth/duo-synth.component";
 import {AmSynthComponent} from "./instruments/am-synth/am-synth.component";
 import {FmSynthComponent} from "./instruments/fm-synth/fm-synth.component";
 import {MonoSynthComponent} from "./instruments/mono-synth/mono-synth.component";
+import {ChorusComponent} from "./effects/chorus/chorus.component";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import {MonoSynthComponent} from "./instruments/mono-synth/mono-synth.component"
     DuoSynthComponent,
     AmSynthComponent,
     FmSynthComponent,
-    MonoSynthComponent
+    MonoSynthComponent,
+    ChorusComponent
   ],
   imports: [
     BrowserModule,

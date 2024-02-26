@@ -115,7 +115,7 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
   }
 
   set detune(value: number) {
-    this.instrument.set({detune: value});
+    this.instrument.set({detune: value * 10});
     this.config.detune = value;
   }
 
