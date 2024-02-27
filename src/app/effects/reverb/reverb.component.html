@@ -3,10 +3,19 @@
     <div class="d-flex justify-content-between align-items-center">Reverb <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
   </div>
   <div class="ins-reverb__body card-body">
-    <div class="d-flex gap-1">
-      <ins-knob [id]="id + 'KnobPreDelay'" [(ngModel)]="preDelay" [min]="0" [max]="1" [step]=".01" label="Pre Del"></ins-knob>
-      <ins-knob [id]="id + 'KnobTime'" [(ngModel)]="decay" [min]="0" [max]="5" [step]=".01" label="decay"></ins-knob>
-      <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".01" label="wet"></ins-knob>
+    <div class="d-flex flex-wrap gap-1">
+      <div class="ins-knob-container ins-reverb__preDelay">
+        <ins-knob [id]="id + 'KnobPreDelay'" [(ngModel)]="preDelay" [min]="0" [max]="1" [step]=".01" label="Pre Del"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobPreDelayMidiOverlay'" [min]="0" [max]="1" [step]=".01" [(ngModel)]="preDelay"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-reverb__decay">
+        <ins-knob [id]="id + 'KnobDecay'" [(ngModel)]="decay" [min]="0" [max]="5" [step]=".01" label="decay"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobDecayMidiOverlay'" [min]="0" [max]="5" [step]=".01" [(ngModel)]="decay"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-reverb__preDelay">
+        <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".01" label="wet"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobWetMidiOverlay'" [min]="0" [max]="1" [step]=".01" [(ngModel)]="wet"></ins-midi-overlay>
+      </div>
     </div>
   </div>
 </div>
