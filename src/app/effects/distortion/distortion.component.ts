@@ -30,6 +30,11 @@ export class DistortionComponent extends AbstractSynthComponent<DistortionConfig
 
   set active(active: boolean) {
     this.config.active = active;
+    if(this.config.active) {
+      this.synthService.addEffect(this.id, this.instrument, this.config);
+    } else {
+      this.synthService.removeEffect(this.id);
+    }
   }
 
   get active(): boolean {
