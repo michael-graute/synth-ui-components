@@ -1,0 +1,47 @@
+<div class="ins-auto-filter card" [class]="{'inactive': !active}">
+  <div class="ins-auto-filter__header card-header">
+    <div class="d-flex justify-content-between align-items-center">Auto Filter <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-auto-filter__body card-body">
+    <ins-divider label="LFO" class="mt-0"></ins-divider>
+    <div class="ins-auto-filter__waveform">
+      <ins-waveform-select [id]="id + 'waveformSelect'" [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+    </div>
+    <div class="d-flex flex-wrap gap-1 mt-2">
+      <div class="ins-knob-container ins-auto-filter__frequency">
+        <ins-knob [id]="id + 'KnobFrequency'" [(ngModel)]="frequency" [min]="0" [max]="4" [step]=".1" label="Freq" (change)="triggerUndo('frequency', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobFrequencyMidiOverlay'" [min]="0" [max]="4" [step]=".1" [(ngModel)]="frequency"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-auto-filter__octaves">
+        <ins-knob [id]="id + 'KnobOctaves'" [(ngModel)]="octaves" [min]="0" [max]="4" [step]=".1" label="Octaves" (change)="triggerUndo('octaves', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobOctavesMidiOverlay'" [min]="0" [max]="4" [step]=".1" [(ngModel)]="octaves"></ins-midi-overlay>
+      </div>
+      <!--<div class="ins-knob-container ins-auto-filter__stages">
+        <ins-knob [id]="id + 'KnobStages'" [(ngModel)]="stages" [min]="2" [max]="15" [step]="1" label="Stages" (change)="triggerUndo('stages', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobStagesMidiOverlay'" [min]="2" [max]="15" [step]="1" [(ngModel)]="stages"></ins-midi-overlay>
+      </div>-->
+      <div class="ins-knob-container ins-auto-filter__wet">
+        <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".1" label="Wet" (change)="triggerUndo('wet', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobWetMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="wet"></ins-midi-overlay>
+      </div>
+    </div>
+    <ins-divider label="Filter"></ins-divider>
+    <div class="ins-auto-filter__filter-type">
+      <ins-button-group [id]="id + 'FilterType'" [name]="id + 'FilterType'" [(ngModel)]="filterType" [options]="[{value: 'lowpass', label: 'Low'},{value: 'highpass', label: 'High'},{value: 'bandpass', label: 'Band'}]" (change)="triggerUndo('filterType', $event)"></ins-button-group>
+    </div>
+    <div class="d-flex flex-wrap gap-1">
+      <div class="ins-knob-container ins-auto-filter__q">
+        <ins-knob [id]="id + 'KnobQ'" [(ngModel)]="filterQ" [min]="0" [max]="10" [step]="1" label="Q" (change)="triggerUndo('filterQ', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobQMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="filterQ"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-auto-filter__baseFrequency">
+        <ins-knob [id]="id + 'KnobBaseFrequency'" [(ngModel)]="baseFrequency" [min]="80" [max]="1000" [step]="10" label="Freq" (change)="triggerUndo('baseFrequency', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobBaseFrequencyMidiOverlay'" [min]="80" [max]="1000" [step]="10" [(ngModel)]="baseFrequency"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-auto-filter__filterRolloff">
+        <ins-knob [id]="id + 'KnobFilterRolloff'" [(ngModel)]="filterRolloff" [options]="rollOffOptions" label="Rolloff" (change)="triggerUndo('filterRolloff', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobFilterRolloffMidiOverlay'" [min]="0" [max]="rollOffOptions.length - 1" [step]="1" [(ngModel)]="filterRolloff"></ins-midi-overlay>
+      </div>
+    </div>
+  </div>
+</div>

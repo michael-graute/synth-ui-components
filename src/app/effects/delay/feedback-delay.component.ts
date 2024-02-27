@@ -12,10 +12,10 @@ export type DelayConfig = {
 
 @Component({
   selector: 'ins-delay',
-  templateUrl: './delay.component.html',
-  styleUrl: './delay.component.scss'
+  templateUrl: './feedback-delay.component.html',
+  styleUrl: './feedback-delay.component.scss'
 })
-export class DelayComponent extends AbstractSynthComponent<DelayConfig> {
+export class FeedbackDelayComponent extends AbstractSynthComponent<DelayConfig> {
 
   override instrument: Tone.FeedbackDelay = new Tone.FeedbackDelay(.5, .5);
   override componentType: string = 'effect';

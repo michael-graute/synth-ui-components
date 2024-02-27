@@ -21,7 +21,7 @@ import { DividerComponent } from "./divider/divider.component";
 import { LfoComponent } from "./lfo/lfo.component";
 import { MidiMonitorComponent } from "./midi-manager/midi-monitor/midi-monitor.component";
 import { AbstractSynthComponent } from "./abstracts/abstract-synth.component";
-import {DelayComponent} from "./effects/delay/delay.component";
+import {FeedbackDelayComponent} from "./effects/delay/feedback-delay.component";
 import {ReverbComponent} from "./effects/reverb/reverb.component";
 import {PresetManagerComponent} from "./preset-manager/preset-manager.component";
 import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
@@ -40,6 +40,7 @@ import {DistortionComponent} from "./effects/distortion/distortion.component";
 import {AutoWahComponent} from "./effects/auto-wah/auto-wah.component";
 import {BitCrusherComponent} from "./effects/bit-crusher/bit-crusher.component";
 import {ChebyshevComponent} from "./effects/chebyshev/chebyshev.component";
+import {AutoFilterComponent} from "./effects/auto-filter/auto-filter.component";
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import {ChebyshevComponent} from "./effects/chebyshev/chebyshev.component";
     DividerComponent,
     LfoComponent,
     MidiMonitorComponent,
-    DelayComponent,
+    FeedbackDelayComponent,
     ReverbComponent,
     PresetManagerComponent,
     UndoManagerComponent,
@@ -80,7 +81,8 @@ import {ChebyshevComponent} from "./effects/chebyshev/chebyshev.component";
     DistortionComponent,
     AutoWahComponent,
     BitCrusherComponent,
-    ChebyshevComponent
+    ChebyshevComponent,
+    AutoFilterComponent
   ],
   imports: [
     BrowserModule,

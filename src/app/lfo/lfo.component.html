@@ -3,11 +3,8 @@
     <div class="d-flex justify-content-between align-items-center">LFO <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
   </div>
   <div class="ins-filter__body card-body">
-    <div class="d-flex gap-1">
       <ins-waveform-select [(ngModel)]="type"></ins-waveform-select>
-      <ins-switch [(ngModel)]="sync" label="sync" offLabel="" onLabel=""></ins-switch>
-    </div>
-    <div class="d-flex gap-1 mt-3">
+    <div class="d-flex flex-wrap gap-1 mt-3">
       <ins-knob [(ngModel)]="frequency" [min]="0" [max]="30" [step]="1" label="freq"></ins-knob>
       <ins-knob [(ngModel)]="phase" [min]="0" [max]="360" [step]="1" label="phase"></ins-knob>
       <ins-knob [(ngModel)]="amount" [min]="0" [max]="20" [step]="1" label="amount"></ins-knob>
