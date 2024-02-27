@@ -1,0 +1,18 @@
+<div class="ins-bit-crusher card" [class]="{'inactive': !active}">
+  <div class="ins-bit-crusher__header card-header">
+    <div class="d-flex justify-content-between align-items-center">Bit Crusher <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-bit-crusher__body card-body">
+    <div class="d-flex flex-wrap gap-1">
+      <div class="ins-knob-container ins-bit-crusher__bits">
+        <ins-knob [id]="id + 'KnobBits'" [(ngModel)]="bits" [min]="0" [max]="16" [step]="1" label="Bits" (change)="triggerUndo('bits', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobBitsMidiOverlay'" [min]="0" [max]="16" [step]="1" [(ngModel)]="bits"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-bit-crusher__wet">
+        <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".1" label="Wet" (change)="triggerUndo('wet', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobWetMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="wet"></ins-midi-overlay>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,8 +1,8 @@
-<div class="ins-tremolo card" [class]="{'inactive': !active}">
-  <div class="ins-tremolo__header card-header">
+<div class="ins-phaser card" [class]="{'inactive': !active}">
+  <div class="ins-phaser__header card-header">
     <div class="d-flex justify-content-between align-items-center">Phaser <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
   </div>
-  <div class="ins-tremolo__body card-body">
+  <div class="ins-phaser__body card-body">
     <div class="d-flex flex-wrap gap-1">
       <div class="ins-knob-container ins-phaser__frequency">
         <ins-knob [id]="id + 'KnobFrequency'" [(ngModel)]="frequency" [min]="0" [max]="4" [step]=".1" label="Freq" (change)="triggerUndo('frequency', $event)"></ins-knob>

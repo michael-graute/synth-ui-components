@@ -37,6 +37,9 @@ import {TremoloComponent} from "./effects/tremolo/tremolo.component";
 import {VibratoComponent} from "./effects/vibrato/vibrato.component";
 import {PhaserComponent} from "./effects/phaser/phaser.component";
 import {DistortionComponent} from "./effects/distortion/distortion.component";
+import {AutoWahComponent} from "./effects/auto-wah/auto-wah.component";
+import {BitCrusherComponent} from "./effects/bit-crusher/bit-crusher.component";
+import {ChebyshevComponent} from "./effects/chebyshev/chebyshev.component";
 
 @NgModule({
   declarations: [
@@ -74,7 +77,10 @@ import {DistortionComponent} from "./effects/distortion/distortion.component";
     TremoloComponent,
     VibratoComponent,
     PhaserComponent,
-    DistortionComponent
+    DistortionComponent,
+    AutoWahComponent,
+    BitCrusherComponent,
+    ChebyshevComponent
   ],
   imports: [
     BrowserModule,

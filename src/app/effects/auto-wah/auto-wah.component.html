@@ -1,0 +1,38 @@
+<div class="ins-phaser card" [class]="{'inactive': !active}">
+  <div class="ins-phaser__header card-header">
+    <div class="d-flex justify-content-between align-items-center">Auto Wah <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-phaser__body card-body">
+    <div class="d-flex flex-wrap gap-1">
+      <div class="ins-knob-container ins-phaser__gain">
+        <ins-knob [id]="id + 'KnobGain'" [(ngModel)]="gain" [min]="0" [max]="10" [step]="1" label="Gain" (change)="triggerUndo('gain', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobGainMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="gain"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-phaser__sensitivity">
+        <ins-knob [id]="id + 'KnobSensitivity'" [(ngModel)]="sensitivity" [min]="0" [max]="10" [step]="1" label="Sens" (change)="triggerUndo('sensitivity', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobSensitivityMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="sensitivity"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-phaser__baseFrequency">
+        <ins-knob [id]="id + 'KnobBaseFrequency'" [(ngModel)]="baseFrequency" [min]="80" [max]="1000" [step]="10" label="Base Fre" (change)="triggerUndo('baseFrequency', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobBaseFrequencyMidiOverlay'" [min]="80" [max]="1000" [step]="10" [(ngModel)]="baseFrequency"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-phaser__octaves">
+        <ins-knob [id]="id + 'KnobOctaves'" [(ngModel)]="octaves" [min]="0" [max]="10" [step]="1" label="Octaves" (change)="triggerUndo('octaves', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobOctavesMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="octaves"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-phaser__follower">
+        <ins-knob [id]="id + 'KnobFollower'" [(ngModel)]="follower" [min]="0" [max]="1" [step]=".1" label="Follow" (change)="triggerUndo('follower', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobFollowerMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="follower"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-phaser__q">
+        <ins-knob [id]="id + 'KnobQ'" [(ngModel)]="Q" [min]="0" [max]="10" [step]="1" label="Q" (change)="triggerUndo('Q', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobQMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="Q"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-phaser__wet">
+        <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".1" label="Wet" (change)="triggerUndo('wet', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobWetMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="wet"></ins-midi-overlay>
+      </div>
+    </div>
+
+  </div>
+</div>

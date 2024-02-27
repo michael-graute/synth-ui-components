@@ -1,0 +1,22 @@
+<div class="ins-chebyshev card" [class]="{'inactive': !active}">
+  <div class="ins-chebyshev__header card-header">
+    <div class="d-flex justify-content-between align-items-center">Chebyshev <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-chebyshev__body card-body">
+    <div class="d-flex flex-wrap gap-1">
+      <div class="ins-knob-container ins-chebyshev__order">
+        <ins-knob [id]="id + 'KnobOrder'" [(ngModel)]="order" [min]="0" [max]="100" [step]="1" label="Order" (change)="triggerUndo('order', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobOrderMidiOverlay'" [min]="0" [max]="100" [step]="1" [(ngModel)]="order"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-chebyshev__oversample">
+        <ins-knob [id]="id + 'KnobOversample'" [(ngModel)]="oversample" [options]="oversampleOptions" label="Oversam" (change)="triggerUndo('oversample', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobOversampleMidiOverlay'" [min]="80" [max]="1000" [step]="10" [(ngModel)]="oversample"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-chebyshev__wet">
+        <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".1" label="Wet" (change)="triggerUndo('wet', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobWetMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="wet"></ins-midi-overlay>
+      </div>
+    </div>
+
+  </div>
+</div>
