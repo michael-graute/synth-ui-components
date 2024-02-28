@@ -1,12 +1,13 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SynthService} from "./synth.service";
+import * as Tone from 'tone';
 
 @Component({
   selector: 'ins-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   _keyboardVisible: boolean = true;
   //_sequencerVisible: boolean = false;
@@ -16,8 +17,18 @@ export class AppComponent {
   gridTemplateRows: string[] = ['80px', '1fr', this.keyboardHeight];
 
   public page: string = 'main';
+  public audioContextReady: boolean = false;
 
   constructor(private synthService: SynthService) {
+  }
+
+  ngOnInit() {
+  }
+
+  startAudioContext() {
+    Tone.start().then(() => {
+      this.audioContextReady = true;
+    })
   }
 
   set keyboardVisible(value: boolean) {
