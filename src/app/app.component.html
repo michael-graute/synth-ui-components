@@ -50,12 +50,15 @@
           <ins-duo-synth name="DuoSynth" id="duo-synth"></ins-duo-synth>
         </div>
         <div class="col-6">
-          <ins-fm-synth name="FM-Synth" id="fm-synth"></ins-fm-synth>
+          <ins-fm-synth name="FM-Synth" id="fm-synth" [polyphonic]="true"></ins-fm-synth>
         </div>
       </div>
       <div class="row mt-4">
         <div class="col-3">
           <ins-simple-synth name="simple synth" id="simple-synth" [polyphonic]="true"></ins-simple-synth>
+        </div>
+        <div class="col-3">
+          <ins-metal-synth name="metal synth" id="metal-synth" [polyphonic]="true"></ins-metal-synth>
         </div>
       </div>
     </div>

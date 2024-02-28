@@ -1,1 +1,54 @@
-<p>fm-synth works!</p>
+<div class="ins-am-synth card" [class]="{'inactive': !active}">
+  <div class="ins-am-synth__header card-header">
+    <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-am-synth__body card-body">
+    <div class="row">
+      <div class="col-6">
+        <ins-divider label="Oscillator" class="mt-0"></ins-divider>
+        <div class="ins-am-synth__waveform">
+          <ins-waveform-select [id]="id + 'Type'" [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+        </div>
+        <div class="ins-am-synth__envelope">
+          <ins-adsr-envelope [id]="id + 'Envelope'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
+        </div>
+      </div>
+      <div class="col-6">
+        <ins-divider label="Modulator" class="mt-0"></ins-divider>
+        <div class="ins-am-synth__waveform">
+          <ins-waveform-select [id]="id + 'ModulationType'" [(ngModel)]="modulationType" (waveformChange)="triggerUndo('modulationType', $event)"></ins-waveform-select>
+        </div>
+        <div class="ins-am-synth__modulationEnvelope">
+          <ins-adsr-envelope [id]="id + 'ModulationEnvelope'" [(ngModel)]="modulationEnvelope" [width]="210" [height]="50" (change)="triggerUndo('modulationEnvelope', $event)"></ins-adsr-envelope>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-6">
+        <ins-divider label="Settings" class="mt-0"></ins-divider>
+        <div class="d-flex gap-1">
+          <div class="ins-knob-container ins-am-synth__harmonicity">
+            <ins-knob [id]="id + 'KnobHarmonicity'" type="dot" label="harmon" [min]="0" [max]="2" [step]=".1" [(ngModel)]="harmonicity" (change)="triggerUndo('harmonicity', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobHarmonicityMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="harmonicity"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-am-synth__volume">
+            <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-am-synth__detune">
+            <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-am-synth__portamento">
+            <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-am-synth__modulationIndex">
+            <ins-knob [id]="id + 'KnobModulationIndex'" type="dot" label="Mod Ind" [min]="0" [max]="100" [step]="1" [(ngModel)]="modulationIndex" (change)="triggerUndo('modulationIndex', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobModulationIndexMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="modulationIndex"></ins-midi-overlay>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

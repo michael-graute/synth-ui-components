@@ -44,12 +44,83 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
   protected override instrument: Tone.DuoSynth = new Tone.DuoSynth();
   @Input() name: string = 'DuoSynth';
 
-
-  /*set polyphony(value: number) {
-    if(value > 1) {
-      this.instrument = new Tone.PolySynth(Tone.DuoSynth, value);
+  public override config: DuoSynthConfig = {
+    active: false,
+    octave: 0,
+    detune: 0,
+    frequency: 0,
+    harmonicity: 1.5,
+    portamento: 0,
+    vibratoAmount: 0.5,
+    vibratoRate: 5,
+    volume: -15,
+    voice0: {
+      oscillator: {
+        type: 'sine',
+        volume: -15,
+        detune: 0,
+        active: true,
+        octave: 0,
+        pan: 0,
+      },
+      envelope: {
+        attack: 1,
+        decay: 10,
+        sustain: 30,
+        release: 100
+      },
+      filter: {
+        type: 'lowpass',
+        detune: 0,
+        frequency: 0,
+        gain: 0,
+        Q: 0,
+        rolloff: -12
+      },
+      filterEnvelope: {
+        attack: 1,
+        decay: 10,
+        sustain: 30,
+        release: 100
+      },
+      frequency: 0,
+      portamento: 0,
+      detune: 0
+    },
+    voice1: {
+      oscillator: {
+        type: 'sine',
+        volume: -15,
+        detune: 0,
+        active: true,
+        octave: 0,
+        pan: 0
+      },
+      envelope: {
+        attack: 1,
+        decay: 10,
+        sustain: 30,
+        release: 100
+      },
+      filter: {
+        type: 'lowpass',
+        detune: 0,
+        frequency: 0,
+        gain: 0,
+        Q: 0,
+        rolloff: -12
+      },
+      filterEnvelope: {
+        attack: 1,
+        decay: 10,
+        sustain: 30,
+        release: 100
+      },
+      frequency: 0,
+      portamento: 0,
+      detune: 0
     }
-  }*/
+  };
 
   set active(value: boolean) {
     this.config.active = value;
@@ -156,83 +227,5 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
   get harmonicity(): number {
     return this.config.harmonicity;
   }
-
-  public override config: DuoSynthConfig = {
-    active: true,
-    octave: 0,
-    detune: 0,
-    frequency: 0,
-    harmonicity: 1.5,
-    portamento: 0,
-    vibratoAmount: 0.5,
-    vibratoRate: 5,
-    volume: -15,
-    voice0: {
-      oscillator: {
-        type: 'sine',
-        volume: -15,
-        detune: 0,
-        active: true,
-        octave: 0,
-        pan: 0,
-      },
-      envelope: {
-        attack: 1,
-        decay: 10,
-        sustain: 30,
-        release: 100
-      },
-      filter: {
-        type: 'lowpass',
-        detune: 0,
-        frequency: 0,
-        gain: 0,
-        Q: 0,
-        rolloff: -12
-      },
-      filterEnvelope: {
-        attack: 1,
-        decay: 10,
-        sustain: 30,
-        release: 100
-      },
-      frequency: 0,
-      portamento: 0,
-      detune: 0
-    },
-    voice1: {
-      oscillator: {
-        type: 'sine',
-        volume: -15,
-        detune: 0,
-        active: true,
-        octave: 0,
-        pan: 0
-      },
-      envelope: {
-        attack: 1,
-        decay: 10,
-        sustain: 30,
-        release: 100
-      },
-      filter: {
-        type: 'lowpass',
-        detune: 0,
-        frequency: 0,
-        gain: 0,
-        Q: 0,
-        rolloff: -12
-      },
-      filterEnvelope: {
-        attack: 1,
-        decay: 10,
-        sustain: 30,
-        release: 100
-      },
-      frequency: 0,
-      portamento: 0,
-      detune: 0
-    }
-  };
 
 }

@@ -26,7 +26,7 @@ export class SimpleSynthComponent extends AbstractSynthComponent<PolySynthConfig
   public override config: PolySynthConfig = {
     volume: -15,
     detune: 0,
-    active: true,
+    active: false,
     octave: 0,
     type: 'sine',
     pan: 0,

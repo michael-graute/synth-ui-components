@@ -30,7 +30,7 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
   protected override componentType: string = 'instrument';
   protected override instrument: Tone.MonoSynth | Tone.PolySynth = new Tone.MonoSynth();
   public override config: MonoSynthConfig = {
-    active: true,
+    active: false,
     volume: -15,
     detune: 0,
     portamento: 0,

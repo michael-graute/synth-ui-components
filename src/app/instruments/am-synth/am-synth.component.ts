@@ -31,7 +31,7 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
   protected override instrument: Tone.PolySynth | Tone.AMSynth = new Tone.PolySynth(Tone.AMSynth);
   override config: AmSynthConfig = {
     volume: -15,
-    active: true,
+    active: false,
     octave: 0,
     harmonicity: 1,
     portamento: 0,
