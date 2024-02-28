@@ -20,7 +20,7 @@ export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
   override componentType: string = 'effect';
 
   public override config: ReverbConfig = {
-    active: true,
+    active: false,
     decay: 2.5,
     wet: 0.8,
     preDelay: 0.01

@@ -20,7 +20,7 @@ export class VibratoComponent extends AbstractSynthComponent<VibratoConfig> {
   protected override instrument: Tone.Vibrato = new Tone.Vibrato();
   protected override componentType = 'effect';
   public override config: VibratoConfig = {
-    active: true,
+    active: false,
     depth: 0.1,
     frequency: 5,
     type: 'sine',

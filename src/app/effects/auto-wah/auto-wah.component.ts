@@ -23,7 +23,7 @@ export class AutoWahComponent extends AbstractSynthComponent<AutoWahConfig> {
   protected override instrument: Tone.AutoWah = new Tone.AutoWah();
   protected override componentType: string = 'effect';
   public override config: AutoWahConfig = {
-    active: true,
+    active: false,
     baseFrequency: 100,
     octaves: 6,
     Q: 2,

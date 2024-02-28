@@ -3,50 +3,54 @@
     <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
   </div>
   <div class="ins-am-synth__body card-body">
-    <ins-divider label="oscillator waveform" class="mt-0"></ins-divider>
-    <div class="ins-am-synth__waveform">
-      <ins-waveform-select [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+    <div class="row">
+      <div class="col-6">
+        <ins-divider label="Oscillator" class="mt-0"></ins-divider>
+        <div class="ins-am-synth__waveform">
+          <ins-waveform-select [id]="id + 'Type'" [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+        </div>
+        <div class="ins-am-synth__envelope">
+          <ins-adsr-envelope [id]="id + 'Envelope'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
+        </div>
+      </div>
+      <div class="col-6">
+        <ins-divider label="Modulator" class="mt-0"></ins-divider>
+        <div class="ins-am-synth__waveform">
+          <ins-waveform-select [id]="id + 'ModulationType'" [(ngModel)]="modulationType" (waveformChange)="triggerUndo('modulationType', $event)"></ins-waveform-select>
+        </div>
+        <div class="ins-am-synth__modulationEnvelope">
+          <ins-adsr-envelope [id]="id + 'ModulationEnvelope'" [(ngModel)]="modulationEnvelope" [width]="210" [height]="50" (change)="triggerUndo('modulationEnvelope', $event)"></ins-adsr-envelope>
+        </div>
+      </div>
     </div>
-    <ins-divider label="modulator waveform"></ins-divider>
-    <div class="ins-am-synth__waveform">
-      <ins-waveform-select [(ngModel)]="modulationType" (waveformChange)="triggerUndo('modulationType', $event)"></ins-waveform-select>
+    <div class="row mt-2">
+      <div class="col-6">
+        <ins-divider label="Settings" class="mt-0"></ins-divider>
+        <div class="d-flex gap-1">
+          <div class="ins-knob-container ins-am-synth__harmonicity">
+            <ins-knob [id]="id + 'KnobHarmonicity'" type="dot" label="harmon" [min]="0" [max]="2" [step]=".1" [(ngModel)]="harmonicity" (change)="triggerUndo('harmonicity', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobHarmonicityMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="harmonicity"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-am-synth__volume">
+            <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-am-synth__detune">
+            <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
+          </div>
+          <div class="ins-knob-container ins-am-synth__portamento">
+            <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
+            <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div *ngIf="!polyphonic" class="d-flex gap-1">
+          <button class="btn btn-primary" (click)="connectLFOToVolume('lfo')">Connect LFO</button>
+          <button class="btn btn-primary" (click)="disconnectLFOFromVolume('lfo')">Disconnect LFO</button>
+        </div>
+      </div>
     </div>
-    <ins-divider label="Settings"></ins-divider>
-    <div class="d-flex gap-1">
-      <div class="ins-knob-container ins-am-synth__harmonicity">
-        <ins-knob [id]="id + 'KnobHarmonicity'" type="dot" label="harmon" [min]="0" [max]="2" [step]=".1" [(ngModel)]="harmonicity" (change)="triggerUndo('harmonicity', $event)"></ins-knob>
-        <ins-midi-overlay [id]="id + 'KnobHarmonicityMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="harmonicity"></ins-midi-overlay>
-      </div>
-      <div class="ins-knob-container ins-am-synth__volume">
-        <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
-        <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
-      </div>
-      <div class="ins-knob-container ins-am-synth__detune">
-        <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
-        <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
-      </div>
-      <div class="ins-knob-container ins-am-synth__portamento">
-        <ins-knob [id]="id + 'KnobPortamento'" type="dot" label="portam" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento" (change)="triggerUndo('portamento', $event)"></ins-knob>
-        <ins-midi-overlay [id]="id + 'KnobPortamentoMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="portamento"></ins-midi-overlay>
-      </div>
-      <!--<div class="ins-knob-container ins-am-synth__octave">
-        <ins-knob [id]="id + 'KnobOctave'" type="pan" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0" (change)="triggerUndo('octave', $event)"></ins-knob>
-        <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
-      </div>
-
-      <div class="ins-knob-container ins-am-synth__pan">
-        <ins-knob [id]="id + 'KnobPan'" type="pan" label="pan" [(ngModel)]="pan" [min]="-10" [max]="10" [step]="1" (change)="triggerUndo('pan', $event)"></ins-knob>
-        <ins-midi-overlay [id]="id + 'KnobPanMidiOverlay'" [(ngModel)]="pan" [min]="-10" [max]="10"></ins-midi-overlay>
-      </div>-->
-    </div>
-    <div *ngIf="!polyphonic" class="d-flex gap-1 mt-4">
-      <button class="btn btn-primary" (click)="connectLFOToVolume('lfo')">Connect LFO</button>
-      <button class="btn btn-primary" (click)="disconnectLFOFromVolume('lfo')">Disconnect LFO</button>
-    </div>
-
-    <!--<ins-divider label="Amplitude Envelope"></ins-divider>
-    <div class="ins-am-synth__envelope">
-      <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
-    </div>-->
   </div>
 </div>

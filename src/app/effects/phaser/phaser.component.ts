@@ -22,7 +22,7 @@ export class PhaserComponent extends AbstractSynthComponent<PhaserConfig> {
   public override instrument: Tone.Phaser = new Tone.Phaser();
   public override componentType: string = 'effect';
   public override config: PhaserConfig = {
-    active: true,
+    active: false,
     wet: 1,
     frequency: 0.5,
     octaves: 3,

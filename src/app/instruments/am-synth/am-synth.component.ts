@@ -133,6 +133,36 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
     return this.config.portamento;
   }
 
+  set envelope(options: ADSREnvelopeConfig) {
+    const newOptions: ADSREnvelopeConfig = {
+      attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
+      decay: options.decay as number / 100,
+      sustain: options.sustain as number / 100,
+      release: options.release as number <= 0 ? 0.05 : options.release as number / 100
+    }
+    this.instrument.set({envelope: newOptions});
+    this.config.envelope = options;
+  }
+
+  get envelope(): any {
+    return this.config.envelope;
+  }
+
+  set modulationEnvelope(options: ADSREnvelopeConfig) {
+    const newOptions: ADSREnvelopeConfig = {
+      attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
+      decay: options.decay as number / 100,
+      sustain: options.sustain as number / 100,
+      release: options.release as number <= 0 ? 0.05 : options.release as number / 100
+    }
+    this.instrument.set({modulationEnvelope: newOptions});
+    this.config.modulationEnvelope = options;
+  }
+
+  get modulationEnvelope(): any {
+    return this.config.modulationEnvelope;
+  }
+
   connectLFOToVolume(lfoId: string): void {
     if (this.instrument instanceof AMSynth) {
       this.synthService.connectLFO(lfoId, this.instrument.harmonicity);

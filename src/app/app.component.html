@@ -16,6 +16,9 @@
         <li class="nav-item">
           <a class="nav-link" [ngClass]="{'active': page === 'elements'}" (click)="page = 'elements'" href="#">Elements</a>
         </li>
+        <li>
+          <a class="nav-link" (click)="debug()" href="#">debug</a>
+        </li>
       </ul>
     </div>
     <div class="m-auto">
@@ -30,19 +33,28 @@
   <div style="overflow: auto">
     <div class="container" [ngClass]="{'hidden': page !== 'main'}">
       <div class="row">
-        <div class="col-xl-3 col-4">
+        <div class="col-6">
           <!--<ins-poly-synth name="PolySynth" id="oscillator1"></ins-poly-synth>-->
           <ins-am-synth name="AM-Synth" [polyphonic]="false" id="am-synth"></ins-am-synth>
         </div>
-        <div class="col-xl-6 col-4">
+        <div class="col-6">
           <!--<ins-duo-synth name="DuoSynth" id="duo-synth"></ins-duo-synth>-->
           <ins-mono-synth name="MonoSynth" id="mono-synth"></ins-mono-synth>
         </div>
-        <div class="col-xl-3 col-4">
-          <ins-filter id="filter"></ins-filter>
+      </div>
+      <div class="row mt-4">
+        <div class="col-6">
+          <ins-duo-synth name="DuoSynth" id="duo-synth"></ins-duo-synth>
+        </div>
+        <div class="col-6">
+          <ins-fm-synth name="FM-Synth" id="fm-synth"></ins-fm-synth>
         </div>
       </div>
-
+      <div class="row mt-4">
+        <div class="col-3">
+          <ins-simple-synth name="simple synth" id="simple-synth" [polyphonic]="true"></ins-simple-synth>
+        </div>
+      </div>
     </div>
     <div class="container" [ngClass]="{'hidden': page !== 'sequencer'}">
       <div class="row mt-4">
@@ -58,11 +70,11 @@
         </div>
         <div class="col-2">
           <ins-delay id="delay"></ins-delay>
-          <ins-reverb id="reverb"></ins-reverb>
+          <ins-reverb id="reverb" class="mt-2"></ins-reverb>
         </div>
         <div class="col-2">
           <ins-distortion id="distortion"></ins-distortion>
-          <ins-bit-crusher id="bit-crusher"></ins-bit-crusher>
+          <ins-bit-crusher id="bit-crusher" class="mt-2"></ins-bit-crusher>
         </div>
         <div class="col-2">
           <ins-chorus id="chorus"></ins-chorus>
@@ -80,7 +92,7 @@
         </div>
         <div class="col-2">
           <ins-phaser id="phaser"></ins-phaser>
-          <ins-chebyshev id="chebyshev"></ins-chebyshev>
+          <ins-chebyshev id="chebyshev" class="mt-2"></ins-chebyshev>
         </div>
         <div class="col-2">
           <ins-vibrato id="vibrato"></ins-vibrato>

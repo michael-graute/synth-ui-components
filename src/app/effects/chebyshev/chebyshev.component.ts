@@ -19,7 +19,7 @@ export class ChebyshevComponent extends AbstractSynthComponent<ChebyshevConfig> 
   protected override instrument: Tone.Chebyshev = new Tone.Chebyshev();
   protected override componentType = 'effect';
   public override config: ChebyshevConfig = {
-    active: true,
+    active: false,
     order: 1,
     oversample: 0,
     wet: 1,

@@ -20,7 +20,7 @@ export class DistortionComponent extends AbstractSynthComponent<DistortionConfig
   protected override componentType = 'effect';
 
   public override config: DistortionConfig = {
-    active: true,
+    active: false,
     distortion: .4,
     oversample: 0,
     wet: 1,

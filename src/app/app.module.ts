@@ -9,7 +9,7 @@ import { AdsrEnvelopeComponent } from './adsr-envelope/adsr-envelope.component';
 import { PanningKnobComponent } from './panning-knob/panning-knob.component';
 import { OscilloscopeComponent } from './oscilloscope/oscilloscope.component';
 import { WaveformSelectComponent } from './waveform-select/waveform-select.component';
-import { PolySynthComponent } from './instruments/poly-synth/poly-synth.component';
+import { SimpleSynthComponent } from './instruments/simple-synth/simple-synth.component';
 import { KeyboardComponent} from "./keyboard/keyboard.component";
 import { FilterComponent } from "./filter/filter.component";
 import { ButtonGroupComponent } from "./button-group/button-group.component";
@@ -54,7 +54,7 @@ import {AutoFilterComponent} from "./effects/auto-filter/auto-filter.component";
     PanningKnobComponent,
     OscilloscopeComponent,
     WaveformSelectComponent,
-    PolySynthComponent,
+    SimpleSynthComponent,
     KeyboardComponent,
     FilterComponent,
     SequencerComponent,

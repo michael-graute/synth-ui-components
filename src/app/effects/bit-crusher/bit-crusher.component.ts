@@ -18,7 +18,7 @@ export class BitCrusherComponent extends AbstractSynthComponent<BitCrusherConfig
   protected override instrument: Tone.BitCrusher = new Tone.BitCrusher();
   protected override componentType = 'effect';
   public override config: BitCrusherConfig = {
-    active: true,
+    active: false,
     bits: 4,
     wet: 1,
   };

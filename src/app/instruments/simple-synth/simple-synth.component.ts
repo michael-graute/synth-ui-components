@@ -4,7 +4,6 @@ import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import {ADSREnvelopeConfig} from "../../types/config.types";
 
 export interface PolySynthConfig {
-  polyphony: number;
   volume: number;
   detune: number;
   active: boolean;
@@ -15,22 +14,37 @@ export interface PolySynthConfig {
 }
 
 @Component({
-  selector: 'ins-poly-synth',
-  templateUrl: './poly-synth.component.html',
-  styleUrls: ['./poly-synth.component.scss']
+  selector: 'ins-simple-synth',
+  templateUrl: './simple-synth.component.html',
+  styleUrls: ['./simple-synth.component.scss']
 })
-export class PolySynthComponent extends AbstractSynthComponent<PolySynthConfig> {
+export class SimpleSynthComponent extends AbstractSynthComponent<PolySynthConfig> {
   @Input() name: string = 'PolySynth'
+  @Input() polyphonic: boolean = true;
   protected override componentType: string = 'instrument';
-  protected override instrument: Tone.PolySynth = new Tone.PolySynth(Tone.Synth);
+  protected override instrument: Tone.Synth | Tone.PolySynth = new Tone.PolySynth(Tone.Synth);
+  public override config: PolySynthConfig = {
+    volume: -15,
+    detune: 0,
+    active: true,
+    octave: 0,
+    type: 'sine',
+    pan: 0,
+    envelope: {
+      attack: 1,
+      decay: 10,
+      sustain: 30,
+      release: 100
+    }
+  };
 
-  set polyphony(value: number) {
-    this.instrument.maxPolyphony = value;
-    this.config.polyphony = value;
-  }
-
-  get polyphony(): number {
-    return this.config.polyphony;
+  override ngOnInit() {
+    if(this.polyphonic) {
+      this.instrument = new Tone.PolySynth(Tone.Synth);
+    } else {
+      this.instrument = new Tone.Synth();
+    }
+    super.ngOnInit();
   }
 
   set type(type: any) {
@@ -50,22 +64,6 @@ export class PolySynthComponent extends AbstractSynthComponent<PolySynthConfig> 
   get volume(): number {
    return this.config.volume;
   }
-
-  public override config: PolySynthConfig = {
-    polyphony: 1,
-    volume: -15,
-    detune: 0,
-    active: true,
-    octave: 0,
-    type: 'sine',
-    pan: 0,
-    envelope: {
-      attack: 1,
-      decay: 10,
-      sustain: 30,
-      release: 100
-    }
-  };
 
   set pan(value: number) {
     this.config.pan = value;

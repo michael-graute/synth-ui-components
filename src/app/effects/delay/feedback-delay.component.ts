@@ -21,7 +21,7 @@ export class FeedbackDelayComponent extends AbstractSynthComponent<DelayConfig> 
   override componentType: string = 'effect';
 
   public override config: DelayConfig = {
-    active: true,
+    active: false,
     time: .5,
     feedback: .5,
     wet: .5,

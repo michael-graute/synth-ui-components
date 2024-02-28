@@ -27,7 +27,7 @@ export class AutoFilterComponent extends AbstractSynthComponent<AutoFilterConfig
     protected override instrument: Tone.AutoFilter = new Tone.AutoFilter();
     protected override componentType = 'effect';
     public override config: AutoFilterConfig = {
-      active: true,
+      active: false,
       baseFrequency: 200,
       frequency: 1,
       depth: 0.5,

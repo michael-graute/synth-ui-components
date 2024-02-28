@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {SynthService} from "./synth.service";
 
 @Component({
   selector: 'ins-root',
@@ -15,6 +16,9 @@ export class AppComponent {
   gridTemplateRows: string[] = ['80px', '1fr', '30px', this.keyboardHeight];
 
   public page: string = 'main';
+
+  constructor(private synthService: SynthService) {
+  }
 
   set keyboardVisible(value: boolean) {
     this._keyboardVisible = value;
@@ -37,5 +41,9 @@ export class AppComponent {
 
   get sequencerVisible(): boolean {
     return this._sequencerVisible;
+  }
+
+  debug() {
+    console.log(this.synthService.effects);
   }
 }

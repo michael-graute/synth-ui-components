@@ -23,7 +23,7 @@ export class ChorusComponent extends AbstractSynthComponent<ChorusConfig> {
   override componentType: string = 'effect';
 
   public override config: ChorusConfig = {
-    active: true,
+    active: false,
     delayTime: .5,
     depth: .7,
     feedback: .5,
