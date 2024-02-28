@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
 
@@ -12,7 +12,7 @@ export type FmSynthConfig = {
   styleUrl: './fm-synth.component.scss'
 })
 export class FmSynthComponent extends AbstractSynthComponent<FmSynthConfig> {
-
+  @Input() name: string = 'fm-synth'
   protected override instrument: Tone.FMSynth = new Tone.FMSynth();
   protected override componentType: string = 'instrument';
   public override config: FmSynthConfig = {

@@ -9,11 +9,11 @@ import {SynthService} from "./synth.service";
 export class AppComponent {
 
   _keyboardVisible: boolean = true;
-  _sequencerVisible: boolean = false;
+  //_sequencerVisible: boolean = false;
   keyboardHeight: string = '300px';
-  sequencerHeight: string = '550px';
+  //sequencerHeight: string = '550px';
 
-  gridTemplateRows: string[] = ['80px', '1fr', '30px', this.keyboardHeight];
+  gridTemplateRows: string[] = ['80px', '1fr', this.keyboardHeight];
 
   public page: string = 'main';
 
@@ -22,7 +22,7 @@ export class AppComponent {
 
   set keyboardVisible(value: boolean) {
     this._keyboardVisible = value;
-    this.gridTemplateRows[3] = this._keyboardVisible ? this.keyboardHeight : '30px';
+    this.gridTemplateRows[2] = this._keyboardVisible ? this.keyboardHeight : '30px';
     this.gridTemplateRows = JSON.parse(JSON.stringify(this.gridTemplateRows));
   }
 
@@ -34,14 +34,14 @@ export class AppComponent {
     return this._keyboardVisible;
   }
 
-  set sequencerVisible(value: boolean) {
+  /*set sequencerVisible(value: boolean) {
     this._sequencerVisible = value;
     this.gridTemplateRows[2] = this._sequencerVisible ? this.sequencerHeight : '30px';
   }
 
   get sequencerVisible(): boolean {
     return this._sequencerVisible;
-  }
+  }*/
 
   debug() {
     console.log(this.synthService.effects);
