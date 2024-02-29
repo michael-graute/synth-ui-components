@@ -46,11 +46,9 @@ export class MetalSynthComponent extends AbstractSynthComponent<MetalSynthConfig
     resonance: 4000
   }
 
-  override ngOnInit() {
+  override ngOnInit(): void {
     if(this.polyphonic) {
       this.instrument = new Tone.PolySynth(Tone.MetalSynth);
-    } else {
-      this.instrument = new Tone.MetalSynth();
     }
     super.ngOnInit();
   }
