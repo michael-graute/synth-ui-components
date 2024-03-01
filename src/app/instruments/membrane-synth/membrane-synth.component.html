@@ -1,0 +1,38 @@
+<div class="ins-membrane-synth card" [class]="{'inactive': !active}">
+  <div class="ins-membrane-synth__header card-header">
+    <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-membrane-synth__body card-body">
+    <ins-divider label="waveform" class="mt-0"></ins-divider>
+    <div class="ins-membrane-synth__waveform">
+      <ins-waveform-select [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
+    </div>
+    <ins-divider label="Settings"></ins-divider>
+    <div class="d-flex gap-1">
+      <div class="ins-knob-container ins-membrane-synth__detune">
+        <ins-knob [id]="id + 'KnobDetune'" type="dot" label="detune" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune" (change)="triggerUndo('detune', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobDetuneMidiOverlay'" [min]="-10" [max]="10" [step]="1" [(ngModel)]="detune"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-membrane-synth__octave">
+        <ins-knob [id]="id + 'KnobOctave'" type="pan" label="octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" negativeValuePrefix="-" positiveValuePrefix="+" zeroValueReplacement="0" (change)="triggerUndo('octave', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-membrane-synth__volume">
+        <ins-knob [id]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-metal-synth__octaves">
+        <ins-knob [id]="id + 'KnobOctaves'" type="dot" label="Octaves" [min]="0" [max]="10" [step]="1" [(ngModel)]="octaves" (change)="triggerUndo('octaves', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobOctavesIndexMidiOverlay'" [min]="0" [max]="10" [step]="1" [(ngModel)]="octaves"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-metal-synth__pitchDecay">
+        <ins-knob [id]="id + 'KnobPitchDecay'" type="dot" label="Pit Dec" [min]="0" [max]=".5" [step]=".01" [(ngModel)]="pitchDecay" (change)="triggerUndo('pitchDecay', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobPitchDecayMidiOverlay'" [min]="0" [max]=".5" [step]=".01" [(ngModel)]="pitchDecay"></ins-midi-overlay>
+      </div>
+    </div>
+    <ins-divider label="Amplitude Envelope"></ins-divider>
+    <div class="ins-membrane-synth__envelope">
+      <ins-adsr-envelope [id]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
+    </div>
+  </div>
+</div>

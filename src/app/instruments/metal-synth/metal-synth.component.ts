@@ -27,7 +27,7 @@ export class MetalSynthComponent extends AbstractSynthComponent<MetalSynthConfig
   protected override instrument: Tone.MetalSynth | Tone.PolySynth<Tone.MetalSynth> = new Tone.MetalSynth();
 
   public override config: MetalSynthConfig = {
-    active: true,
+    active: false,
     volume: 0,
     detune: 0,
     portamento: 0,

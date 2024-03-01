@@ -1,8 +1,8 @@
 export type OscillatorConfig = {
   volume: number;
-  detune: number;
-  active: boolean;
-  octave: number;
+  detune?: number;
+  active?: boolean;
+  octave?: number;
   type: string;
   pan?: number;
   phase?: number;

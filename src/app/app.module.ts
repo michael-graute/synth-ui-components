@@ -42,6 +42,7 @@ import {BitCrusherComponent} from "./effects/bit-crusher/bit-crusher.component";
 import {ChebyshevComponent} from "./effects/chebyshev/chebyshev.component";
 import {AutoFilterComponent} from "./effects/auto-filter/auto-filter.component";
 import {MetalSynthComponent} from "./instruments/metal-synth/metal-synth.component";
+import {MembraneSynthComponent} from "./instruments/membrane-synth/membrane-synth.component";
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import {MetalSynthComponent} from "./instruments/metal-synth/metal-synth.compone
     BitCrusherComponent,
     ChebyshevComponent,
     AutoFilterComponent,
-    MetalSynthComponent
+    MetalSynthComponent,
+    MembraneSynthComponent
   ],
   imports: [
     BrowserModule,
