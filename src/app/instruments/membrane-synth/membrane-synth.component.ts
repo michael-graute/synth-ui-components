@@ -26,7 +26,7 @@ export class MembraneSynthComponent extends AbstractSynthComponent<MembraneSynth
   protected override instrument: Tone.MembraneSynth | Tone.PolySynth<Tone.MembraneSynth> = new Tone.MembraneSynth();
   public override config: MembraneSynthConfig = {
     volume: -15,
-    active: true,
+    active: false,
     pitchDecay: 0.05,
     octaves: 10,
     octave: 0,

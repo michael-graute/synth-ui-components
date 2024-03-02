@@ -65,7 +65,12 @@ export class SynthService {
     this.instruments.forEach((instrument: InsInstrument) => {
       if(instrument.config.active) {
         const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
-        instrument.instrument.triggerAttack(transposedNote, undefined, velocity);
+        if(instrument.config.triggerWithoutNote) {
+          // @ts-ignore
+          instrument.instrument.triggerAttack(undefined, velocity);
+        } else {
+          instrument.instrument.triggerAttack(transposedNote, undefined, velocity);
+        }
       }
     });
   }

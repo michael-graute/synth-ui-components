@@ -43,6 +43,8 @@ import {ChebyshevComponent} from "./effects/chebyshev/chebyshev.component";
 import {AutoFilterComponent} from "./effects/auto-filter/auto-filter.component";
 import {MetalSynthComponent} from "./instruments/metal-synth/metal-synth.component";
 import {MembraneSynthComponent} from "./instruments/membrane-synth/membrane-synth.component";
+import {PluckSynthComponent} from "./instruments/pluck-synth/pluck-synth.component";
+import {NoiseSynthComponent} from "./instruments/noise-synth/noise-synth.component";
 
 @NgModule({
   declarations: [
@@ -86,7 +88,9 @@ import {MembraneSynthComponent} from "./instruments/membrane-synth/membrane-synt
     ChebyshevComponent,
     AutoFilterComponent,
     MetalSynthComponent,
-    MembraneSynthComponent
+    MembraneSynthComponent,
+    PluckSynthComponent,
+    NoiseSynthComponent
   ],
   imports: [
     BrowserModule,
