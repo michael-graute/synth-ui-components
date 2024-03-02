@@ -103,8 +103,13 @@ export class SynthService {
     this.attackReleaseEvent.next(options);
     this.instruments.forEach((instrument: InsInstrument) => {
       if(instrument.config.active) {
-        const transposedNote: Tone.Unit.Note = Tone.Frequency(options.note).transpose((instrument.config.octave || 0) * 12).toNote();
-        instrument.instrument.triggerAttackRelease(transposedNote, options.duration, options.time, options.velocity);
+        if(instrument.config.triggerWithoutNote) {
+          //@ts-ignore
+          instrument.instrument.triggerAttackRelease(options.duration, options.time, options.velocity);
+        } else {
+          const transposedNote: Tone.Unit.Note = Tone.Frequency(options.note).transpose((instrument.config.octave || 0) * 12).toNote();
+          instrument.instrument.triggerAttackRelease(transposedNote, options.duration, options.time, options.velocity);
+        }
       }
     });
   }
