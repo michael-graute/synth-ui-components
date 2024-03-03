@@ -174,6 +174,24 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
     return this.config.voice0.detune;
   }
 
+  set voice2Phase(phase: number) {
+    this.instrument.voice1.set({oscillator: {phase: phase}});
+    this.config.voice1.oscillator.phase = phase;
+  }
+
+  get voice2Phase(): number {
+    return this.config.voice1.oscillator.phase || 0;
+  }
+
+  set voice2Detune(detune: number) {
+    this.instrument.voice1.oscillator.set({detune: detune});
+    this.config.voice0.detune = detune;
+  }
+
+  get voice2Detune(): number {
+    return this.config.voice1.detune;
+  }
+
   set voice2Type(type: any) {
     this.instrument.voice1.set({oscillator: {type: type}});
     this.config.voice1.oscillator.type = type;
@@ -226,6 +244,78 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
 
   get harmonicity(): number {
     return this.config.harmonicity;
+  }
+
+  set voice1Envelope(options: ADSREnvelopeConfig) {
+    const newOptions: ADSREnvelopeConfig = {
+      attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
+      attackCurve: options.attackCurve || "linear",
+      decay: options.decay as number / 100,
+      decayCurve: options.decayCurve || "exponential",
+      sustain: options.sustain as number / 100,
+      release: options.release as number <= 0 ? 0.05 : options.release as number / 100,
+      releaseCurve: options.releaseCurve || "exponential"
+    }
+    this.instrument.set({voice0: {envelope: newOptions}});
+    this.config.voice0.envelope = options;
+  }
+
+  get voice1Envelope(): any {
+    return this.config.voice0.envelope;
+  }
+
+  set voice1FilterEnvelope(options: ADSREnvelopeConfig) {
+    const newOptions: ADSREnvelopeConfig = {
+      attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
+      attackCurve: options.attackCurve || "linear",
+      decay: options.decay as number / 100,
+      decayCurve: options.decayCurve || "exponential",
+      sustain: options.sustain as number / 100,
+      release: options.release as number <= 0 ? 0.05 : options.release as number / 100,
+      releaseCurve: options.releaseCurve || "exponential"
+    }
+    this.instrument.set({voice0: {filterEnvelope: newOptions}});
+    this.config.voice0.filterEnvelope = options;
+  }
+
+  get voice1FilterEnvelope(): any {
+    return this.config.voice0.filterEnvelope;
+  }
+
+  set voice2Envelope(options: ADSREnvelopeConfig) {
+    const newOptions: ADSREnvelopeConfig = {
+      attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
+      attackCurve: options.attackCurve || "linear",
+      decay: options.decay as number / 100,
+      decayCurve: options.decayCurve || "exponential",
+      sustain: options.sustain as number / 100,
+      release: options.release as number <= 0 ? 0.05 : options.release as number / 100,
+      releaseCurve: options.releaseCurve || "exponential"
+    }
+    this.instrument.set({voice1: {envelope: newOptions}});
+    this.config.voice1.envelope = options;
+  }
+
+  get voice2Envelope(): any {
+    return this.config.voice1.envelope;
+  }
+
+  set voice2FilterEnvelope(options: ADSREnvelopeConfig) {
+    const newOptions: ADSREnvelopeConfig = {
+      attack: options.attack as number <= 0 ? 0.05 : options.attack as number / 100,
+      attackCurve: options.attackCurve || "linear",
+      decay: options.decay as number / 100,
+      decayCurve: options.decayCurve || "exponential",
+      sustain: options.sustain as number / 100,
+      release: options.release as number <= 0 ? 0.05 : options.release as number / 100,
+      releaseCurve: options.releaseCurve || "exponential"
+    }
+    this.instrument.set({voice1: {filterEnvelope: newOptions}});
+    this.config.voice1.filterEnvelope = options;
+  }
+
+  get voice2FilterEnvelope(): any {
+    return this.config.voice1.filterEnvelope;
   }
 
 }

@@ -31,7 +31,6 @@ export class TremoloComponent extends AbstractSynthComponent<TremoloConfig> {
 
 
   set active(value: boolean) {
-    console.log(this.config.active, value);
     this.config.active = value;
     if(this.config.active) {
       this.synthService.addEffect(this.id, this.instrument, this.config);

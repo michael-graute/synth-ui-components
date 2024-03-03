@@ -17,7 +17,7 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
   constructor(protected presetManagerService: PresetManagerService, protected synthService: SynthService, protected undoManagerService: UndoManagerService) {}
 
   ngOnInit(): void {
-    console.log(this.instrument?.name, this.instrument?.get());
+    //console.log(this.instrument?.name, this.instrument?.get());
 
     this.setPropertiesFromPreset(this.config);
     this.subscriptions.add(this.presetManagerService.saveConfigEvent.subscribe((presetId: string) => {
