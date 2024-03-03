@@ -62,10 +62,7 @@ export class SamplerComponent extends AbstractSynthComponent<SamplerConfig>{
   protected override componentType: string = 'instrument';
   protected override instrument: Tone.Sampler = new Tone.Sampler(this.config.urls, this.loaded.bind(this), this.config.baseUrl);
 
-  loaded(): void {
-    console.log('Sampler loaded');
-    console.log(this.instrument.get());
-  }
+  loaded(): void {}
 
   set volume(value: number) {
     this.instrument.volume.value = value;
