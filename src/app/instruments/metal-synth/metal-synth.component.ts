@@ -89,13 +89,7 @@ export class MetalSynthComponent extends AbstractSynthComponent<MetalSynthConfig
     return this.config.resonance;
   }
 
-  set active(value: boolean) {
-    this.config.active = value;
-  }
 
-  get active(): boolean {
-    return this.config.active;
-  }
 
   set volume(value: number) {
     this.instrument.set({volume: value});

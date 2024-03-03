@@ -31,13 +31,7 @@ export class PluckSynthComponent extends AbstractSynthComponent<PluckSynthConfig
     release: 1,
   };
 
-  set active(value: boolean) {
-    this.config.active = value;
-  }
 
-  get active(): boolean {
-    return this.config.active;
-  }
 
   set resonance(value: number) {
     this.instrument.set({resonance: value});

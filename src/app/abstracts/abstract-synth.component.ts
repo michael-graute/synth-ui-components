@@ -9,10 +9,11 @@ import {UndoManagerService} from "../undo-manager/undo-manager.service";
 export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
 
   @Input() id: string = uuidv4();
-  public config: T | null = null;
+  public config: T | { active: boolean }  = { active: true }
   protected subscriptions: Subscription = new Subscription();
   protected componentType: any = null;
   protected instrument: any = null;
+  protected startEffektLFOAtActivation: boolean = false;
 
   constructor(protected presetManagerService: PresetManagerService, protected synthService: SynthService, protected undoManagerService: UndoManagerService) {}
 
@@ -46,6 +47,30 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
     if(this.componentType === 'lfo') {
       this.synthService.addLFO(this.id, this.instrument, this.config);
     }
+  }
+
+  set active(value: boolean) {
+    // @ts-ignore
+    this.config.active = value;
+    if(this.componentType === 'effect') {
+      // @ts-ignore
+      if(this.config.active) {
+        this.synthService.addEffect(this.id, this.instrument, this.config);
+        if(this.startEffektLFOAtActivation) {
+          this.instrument.start();
+        }
+      } else {
+        if(this.startEffektLFOAtActivation) {
+          this.instrument.stop();
+          }
+        this.synthService.removeEffect(this.id);
+      }
+    }
+  }
+
+  get active(): boolean {
+    // @ts-ignore
+    return this.config.active;
   }
 
   setPropertiesFromPreset(preset: any): void {

@@ -28,7 +28,7 @@ export class NoiseSynthComponent extends AbstractSynthComponent<NoiseSynthConfig
   protected override instrument: Tone.NoiseSynth = new Tone.NoiseSynth();
   public override config: NoiseSynthConfig = {
     triggerWithoutNote: true,
-    active: true,
+    active: false,
     volume: -15,
     octave: 0,
     noise: {
@@ -41,17 +41,9 @@ export class NoiseSynthComponent extends AbstractSynthComponent<NoiseSynthConfig
       attack: 1,
       decay: 10,
       sustain: 0,
-      release: 100
+      release: 0
     }
   };
-
-  set active(value: boolean) {
-    this.config.active = value;
-  }
-
-  get active(): boolean {
-    return this.config.active;
-  }
 
   set volume(value: number) {
     this.instrument.volume.value = value;

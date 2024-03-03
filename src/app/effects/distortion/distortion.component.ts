@@ -28,19 +28,6 @@ export class DistortionComponent extends AbstractSynthComponent<DistortionConfig
 
   public oversampleOptions = ['none', '2x', '4x'];
 
-  set active(active: boolean) {
-    this.config.active = active;
-    if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config);
-    } else {
-      this.synthService.removeEffect(this.id);
-    }
-  }
-
-  get active(): boolean {
-    return this.config.active;
-  }
-
   set distortion(distortion: number) {
     this.instrument.set({distortion: distortion});
     this.config.distortion = distortion;

@@ -122,13 +122,7 @@ export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
     }
   };
 
-  set active(value: boolean) {
-    this.config.active = value;
-  }
 
-  get active(): boolean {
-    return this.config.active;
-  }
 
   set detune(value: number) {
     this.instrument.set({detune: value});

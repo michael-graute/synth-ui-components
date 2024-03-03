@@ -16,7 +16,6 @@ export type DelayConfig = {
   styleUrl: './feedback-delay.component.scss'
 })
 export class FeedbackDelayComponent extends AbstractSynthComponent<DelayConfig> {
-
   override instrument: Tone.FeedbackDelay = new Tone.FeedbackDelay(.5, .5);
   override componentType: string = 'effect';
 
@@ -53,27 +52,5 @@ export class FeedbackDelayComponent extends AbstractSynthComponent<DelayConfig> 
 
   get wet(): number {
     return this.config.wet;
-  }
-
-  set active(value: boolean) {
-    this.config.active = value;
-    if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config)
-    } else {
-      this.synthService.removeEffect(this.id);
-    }
-  }
-
-  get active(): boolean {
-    return this.config.active;
-  }
-
-  set maxDelay(value: number) {
-    this.instrument.set({maxDelay: value});
-    this.config.maxDelay = value;
-  }
-
-  get maxDelay(): number {
-    return this.config.maxDelay;
   }
 }

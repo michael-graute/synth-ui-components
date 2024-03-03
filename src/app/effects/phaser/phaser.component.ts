@@ -31,19 +31,6 @@ export class PhaserComponent extends AbstractSynthComponent<PhaserConfig> {
     baseFrequency: 350
   }
 
-  set active(value: boolean) {
-    this.config.active = value;
-    if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config);
-    } else {
-      this.synthService.removeEffect(this.id);
-    }
-  }
-
-  get active(): boolean {
-    return this.config.active;
-  }
-
   set baseFrequency(value: number) {
     this.instrument.set({baseFrequency: value});
     this.config.baseFrequency = value;

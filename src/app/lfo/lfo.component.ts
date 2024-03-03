@@ -35,17 +35,13 @@ export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
 
   protected override componentType: string = 'lfo';
 
-  set active(value: boolean) {
+  override set active(value: boolean) {
     this.config.active = value;
     if(value) {
       this.synthService.startLFO(this.id);
     } else {
       this.synthService.stopLFO(this.id);
     }
-  }
-
-  get active(): boolean {
-    return this.config.active;
   }
 
   set frequency(value: number) {

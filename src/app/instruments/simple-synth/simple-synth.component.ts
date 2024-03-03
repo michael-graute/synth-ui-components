@@ -73,13 +73,7 @@ export class SimpleSynthComponent extends AbstractSynthComponent<PolySynthConfig
     return this.config.pan;
   }
 
-  set active(value: boolean) {
-    this.config.active = value;
-  }
 
-  get active(): boolean {
-    return this.config.active;
-  }
 
   set octave(value: number) {
     this.config.octave = value;

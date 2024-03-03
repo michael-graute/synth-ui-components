@@ -53,17 +53,4 @@ export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
   get preDelay(): number {
     return this.config.preDelay;
   }
-
-  set active(value: boolean) {
-    this.config.active = value;
-    if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config)
-    } else {
-      this.synthService.removeEffect(this.id);
-    }
-  }
-
-  get active(): boolean {
-    return this.config.active;
-  }
 }

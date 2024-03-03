@@ -17,7 +17,7 @@ export type TremoloConfig = {
   styleUrl: './tremolo.component.scss'
 })
 export class TremoloComponent extends AbstractSynthComponent<TremoloConfig> {
-
+  protected override startEffektLFOAtActivation: boolean = true;
   public override config: TremoloConfig = {
     active: false,
     wet: 1,
@@ -28,22 +28,6 @@ export class TremoloComponent extends AbstractSynthComponent<TremoloConfig> {
   }
   protected override instrument: Tone.Tremolo = new Tone.Tremolo(5, 0.5);
   protected override componentType: string = 'effect';
-
-
-  set active(value: boolean) {
-    this.config.active = value;
-    if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config);
-      this.instrument.start();
-    } else {
-      this.instrument.stop();
-      this.synthService.removeEffect(this.id);
-    }
-  }
-
-  get active(): boolean {
-    return this.config.active;
-  }
 
   set depth(value: number) {
     this.instrument.set({depth: value});

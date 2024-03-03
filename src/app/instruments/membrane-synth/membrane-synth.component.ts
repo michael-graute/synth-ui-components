@@ -94,13 +94,7 @@ export class MembraneSynthComponent extends AbstractSynthComponent<MembraneSynth
     return this.config.volume;
   }
 
-  set active(value: boolean) {
-    this.config.active = value;
-  }
 
-  get active(): boolean {
-    return this.config.active;
-  }
 
   set envelope(options: ADSREnvelopeConfig) {
     const newOptions: ADSREnvelopeConfig = {

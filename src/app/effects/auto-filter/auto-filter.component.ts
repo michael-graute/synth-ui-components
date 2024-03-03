@@ -23,7 +23,7 @@ export type AutoFilterConfig = {
   styleUrl: './auto-filter.component.scss'
 })
 export class AutoFilterComponent extends AbstractSynthComponent<AutoFilterConfig> {
-
+    protected override startEffektLFOAtActivation = true;
     protected override instrument: Tone.AutoFilter = new Tone.AutoFilter();
     protected override componentType = 'effect';
     public override config: AutoFilterConfig = {
@@ -42,21 +42,6 @@ export class AutoFilterComponent extends AbstractSynthComponent<AutoFilterConfig
     };
 
     public rollOffOptions: any = [-12, -24, -48, -96];
-
-    set active(active: boolean) {
-      this.config.active = active;
-      if(this.config.active) {
-        this.synthService.addEffect(this.id, this.instrument, this.config);
-        this.instrument.start();
-      } else {
-        this.instrument.stop();
-        this.synthService.removeEffect(this.id);
-      }
-    }
-
-    get active(): boolean {
-      return this.config.active;
-    }
 
     set baseFrequency(baseFrequency: number) {
       this.instrument.set({baseFrequency: baseFrequency});

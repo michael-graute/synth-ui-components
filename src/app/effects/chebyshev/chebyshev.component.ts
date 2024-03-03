@@ -27,19 +27,6 @@ export class ChebyshevComponent extends AbstractSynthComponent<ChebyshevConfig> 
 
   public oversampleOptions = ['none', '2x', '4x'];
 
-  set active(active: boolean) {
-    this.config.active = active;
-    if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config);
-    } else {
-      this.synthService.removeEffect(this.id);
-    }
-  }
-
-  get active(): boolean {
-    return this.config.active;
-  }
-
   set order(order: number) {
     this.instrument.set({order: order});
     this.config.order = order;

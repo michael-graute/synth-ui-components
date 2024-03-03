@@ -1,1 +1,32 @@
-<p>noise-synth works!</p>
+<div class="ins-noise-synth card" [class]="{'inactive': !active}">
+  <div class="ins-noise-synth__header card-header">
+    <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-noise-synth__body card-body">
+    <ins-divider class="mt-0" label="Noise Type"></ins-divider>
+    <ins-button-group [id]="id + 'NoiseType'" [name]="id + 'NoiseType'" [(ngModel)]="noiseType" [options]="[{value: 'white', label: 'White'},{value: 'brown', label: 'Brown'},{value: 'pink', label: 'Pink'}]" (change)="triggerUndo('noiseType', $event)"></ins-button-group>
+    <ins-divider label="Settings"></ins-divider>
+    <div class="d-flex flex-wrap gap-1">
+      <div class="ins-knob-container ins-noise-synth__volume">
+        <ins-knob [id]="id + 'KnobVolume'" [name]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-noise-synth__fadeIn">
+        <ins-knob [id]="id + 'KnobFadeIn'" [name]="id + 'KnobVolume'" label="Fade In" [min]="0" [max]="1" [step]=".01" [(ngModel)]="fadeIn" (change)="triggerUndo('fadeIn', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobFadeInMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="fadeIn"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-noise-synth__fadeOut">
+        <ins-knob [id]="id + 'KnobFadeOut'" [name]="id + 'KnobVolume'" label="Fade Out" [min]="0" [max]="1" [step]=".01" [(ngModel)]="fadeOut" (change)="triggerUndo('fadeOut', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobFadeOutMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="fadeOut"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-noise-synth__playbackRate">
+        <ins-knob [id]="id + 'KnobPlaybackRate'" [name]="id + 'KnobVolume'" label="Playb" [min]="0" [max]="1" [step]=".1" [(ngModel)]="playbackRate" (change)="triggerUndo('playbackRate', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobPlaybackRateMidiOverlay'" [min]="0" [max]="10" [(ngModel)]="playbackRate"></ins-midi-overlay>
+      </div>
+    </div>
+    <ins-divider label="Amplitude Envelope"></ins-divider>
+    <div class="ins-envelope ins-noise-synth__envelope">
+      <ins-adsr-envelope [id]="id + 'ADSR'" [name]="id + 'ADSR'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
+    </div>
+  </div>
+</div>

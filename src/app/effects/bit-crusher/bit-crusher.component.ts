@@ -23,19 +23,6 @@ export class BitCrusherComponent extends AbstractSynthComponent<BitCrusherConfig
     wet: 1,
   };
 
-  set active(active: boolean) {
-    this.config.active = active;
-    if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config);
-    } else {
-      this.synthService.removeEffect(this.id);
-    }
-  }
-
-  get active(): boolean {
-    return this.config.active;
-  }
-
   set bits(bits: number) {
     this.instrument.set({bits: bits});
     this.config.bits = bits;

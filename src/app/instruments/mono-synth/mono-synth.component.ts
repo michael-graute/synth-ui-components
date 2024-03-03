@@ -80,13 +80,7 @@ export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> 
     super.ngOnInit();
   }
 
-  set active(value: boolean) {
-    this.config.active = value;
-  }
 
-  get active(): boolean {
-    return this.config.active;
-  }
 
   set type(type: any) {
     this.instrument.set({oscillator: {type: type}});

@@ -21,7 +21,7 @@ import { DividerComponent } from "./divider/divider.component";
 import { LfoComponent } from "./lfo/lfo.component";
 import { MidiMonitorComponent } from "./midi-manager/midi-monitor/midi-monitor.component";
 import { AbstractSynthComponent } from "./abstracts/abstract-synth.component";
-import {FeedbackDelayComponent} from "./effects/delay/feedback-delay.component";
+import {FeedbackDelayComponent} from "./effects/feedback-delay/feedback-delay.component";
 import {ReverbComponent} from "./effects/reverb/reverb.component";
 import {PresetManagerComponent} from "./preset-manager/preset-manager.component";
 import {UndoManagerComponent} from "./undo-manager/undo-manager.component";
@@ -45,6 +45,7 @@ import {MetalSynthComponent} from "./instruments/metal-synth/metal-synth.compone
 import {MembraneSynthComponent} from "./instruments/membrane-synth/membrane-synth.component";
 import {PluckSynthComponent} from "./instruments/pluck-synth/pluck-synth.component";
 import {NoiseSynthComponent} from "./instruments/noise-synth/noise-synth.component";
+import {SamplerComponent} from "./instruments/sampler/sampler.component";
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import {NoiseSynthComponent} from "./instruments/noise-synth/noise-synth.compone
     MetalSynthComponent,
     MembraneSynthComponent,
     PluckSynthComponent,
-    NoiseSynthComponent
+    NoiseSynthComponent,
+    SamplerComponent
   ],
   imports: [
     BrowserModule,

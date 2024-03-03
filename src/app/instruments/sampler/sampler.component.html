@@ -1,0 +1,21 @@
+<div class="ins-sampler card" [class]="{'inactive': !active}">
+  <div class="ins-sampler__header card-header">
+    <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-sampler__body card-body">
+    <div class="d-flex flex-wrap gap-1">
+      <div class="ins-knob-container ins-sampler__volume">
+        <ins-knob [id]="id + 'KnobVolume'" [name]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-sampler__attack">
+        <ins-knob [id]="id + 'KnobAttack'" [name]="id + 'KnobVolume'" label="Attack" [min]="0" [max]="1" [step]=".01" [(ngModel)]="attack" (change)="triggerUndo('attack', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobAttackMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="attack"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-sampler__release">
+        <ins-knob [id]="id + 'KnobRelease'" [name]="id + 'KnobVolume'" label="Release" [min]="0" [max]="1" [step]=".01" [(ngModel)]="release" (change)="triggerUndo('fadeOut', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobReleaseMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="release"></ins-midi-overlay>
+      </div>
+    </div>
+  </div>
+</div>

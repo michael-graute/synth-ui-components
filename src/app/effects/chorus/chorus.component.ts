@@ -19,6 +19,7 @@ export type ChorusConfig = {
   styleUrl: './chorus.component.scss'
 })
 export class ChorusComponent extends AbstractSynthComponent<ChorusConfig> {
+  protected override startEffektLFOAtActivation: boolean  = true;
   override instrument: Tone.Chorus = new Tone.Chorus();
   override componentType: string = 'effect';
 
@@ -94,20 +95,5 @@ export class ChorusComponent extends AbstractSynthComponent<ChorusConfig> {
 
   get wet(): number {
     return this.config.wet;
-  }
-
-  set active(value: boolean) {
-    this.config.active = value;
-    if(this.config.active) {
-      this.synthService.addEffect(this.id, this.instrument, this.config);
-      this.instrument.start();
-    } else {
-      this.instrument.stop();
-      this.synthService.removeEffect(this.id);
-    }
-  }
-
-  get active(): boolean {
-    return this.config.active;
   }
 }

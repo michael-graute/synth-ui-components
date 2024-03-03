@@ -16,10 +16,10 @@
         <ins-knob [id]="id + 'KnobOctaves'" [(ngModel)]="octaves" [min]="0" [max]="4" [step]=".1" label="Octaves" (change)="triggerUndo('octaves', $event)"></ins-knob>
         <ins-midi-overlay [id]="id + 'KnobOctavesMidiOverlay'" [min]="0" [max]="4" [step]=".1" [(ngModel)]="octaves"></ins-midi-overlay>
       </div>
-      <!--<div class="ins-knob-container ins-auto-filter__stages">
-        <ins-knob [id]="id + 'KnobStages'" [(ngModel)]="stages" [min]="2" [max]="15" [step]="1" label="Stages" (change)="triggerUndo('stages', $event)"></ins-knob>
-        <ins-midi-overlay [id]="id + 'KnobStagesMidiOverlay'" [min]="2" [max]="15" [step]="1" [(ngModel)]="stages"></ins-midi-overlay>
-      </div>-->
+      <div class="ins-knob-container ins-auto-filter__depth">
+        <ins-knob [id]="id + 'KnobDepth'" [(ngModel)]="depth" [min]="0" [max]="1" [step]=".1" label="Depth" (change)="triggerUndo('depth', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobDepthMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="depth"></ins-midi-overlay>
+      </div>
       <div class="ins-knob-container ins-auto-filter__wet">
         <ins-knob [id]="id + 'KnobWet'" [(ngModel)]="wet" [min]="0" [max]="1" [step]=".1" label="Wet" (change)="triggerUndo('wet', $event)"></ins-knob>
         <ins-midi-overlay [id]="id + 'KnobWetMidiOverlay'" [min]="0" [max]="1" [step]=".1" [(ngModel)]="wet"></ins-midi-overlay>
