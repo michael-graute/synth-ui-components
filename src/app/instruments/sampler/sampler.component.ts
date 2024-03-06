@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from 'tone';
+import {OneShotSourceCurve} from "tone/build/esm/source/OneShotSource";
 
 export type SamplerConfig = {
   active: boolean;
@@ -8,19 +9,21 @@ export type SamplerConfig = {
   release: number;
   attack: number;
   curve: string;
+  samplePack: SamplePack;
+};
+
+export type SamplePack = {
   urls: any;
   baseUrl: string;
-};
+}
 
 @Component({
   selector: 'ins-sampler',
   templateUrl: './sampler.component.html',
   styleUrl: './sampler.component.scss'
 })
-export class SamplerComponent extends AbstractSynthComponent<SamplerConfig>{
-
-
-  samplePacks= {
+export class SamplerComponent extends AbstractSynthComponent<SamplerConfig> {
+  samplePacks: {[key:string]: SamplePack} = {
     'flute-clean': {
       urls: {
         A2: "FluteClean_A2.wav",
@@ -73,11 +76,10 @@ export class SamplerComponent extends AbstractSynthComponent<SamplerConfig>{
     release: 1,
     attack: 0,
     curve: 'linear',
-    urls: this.samplePacks.salamander.urls,
-    baseUrl: this.samplePacks.salamander.baseUrl
+    samplePack: this.samplePacks['salamander']
   };
   protected override componentType: string = 'instrument';
-  protected override instrument: Tone.Sampler = new Tone.Sampler(this.config.urls, this.loaded.bind(this), this.config.baseUrl);
+  protected override instrument: Tone.Sampler = new Tone.Sampler(this.config.samplePack.urls, this.loaded.bind(this), this.config.samplePack.baseUrl);
 
   loaded(): void {}
 
@@ -108,35 +110,19 @@ export class SamplerComponent extends AbstractSynthComponent<SamplerConfig>{
     return this.config.attack;
   }
 
-  set curve(value: any) {
+  set curve(value: OneShotSourceCurve) {
     this.instrument.curve = value;
     this.config.curve = value;
   }
 
   get curve(): string {
-    return this.config.curve;
+    return this.config.curve.toString();
   }
 
-  set urls(value: any) {
-    this.instrument.set({urls: value});
-    this.config.urls = value;
-  }
-
-  get urls(): any {
-    return this.config.urls;
-  }
-
-  set baseUrl(value: string) {
-    this.instrument.set({baseUrl: value});
-    this.config.baseUrl = value;
-  }
-
-  get baseUrl(): string {
-    return this.config.baseUrl;
-  }
-
-  loadSamplePack(name: string) {
-    // @ts-ignore
+  loadSamplePack(name: string): void {
     this.instrument = new Tone.Sampler(this.samplePacks[name].urls, this.loaded.bind(this), this.samplePacks[name].baseUrl);
+    this.synthService.removeInstrument(this.id);
+    this.synthService.addInstrument(this.id, this.instrument, this.config);
+    console.log(this.instrument);
   }
 }
