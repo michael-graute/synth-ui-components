@@ -121,8 +121,6 @@ export class SamplerComponent extends AbstractSynthComponent<SamplerConfig> {
 
   loadSamplePack(name: string): void {
     this.instrument = new Tone.Sampler(this.samplePacks[name].urls, this.loaded.bind(this), this.samplePacks[name].baseUrl);
-    this.synthService.removeInstrument(this.id);
-    this.synthService.addInstrument(this.id, this.instrument, this.config);
-    console.log(this.instrument);
+    this.synthService.replaceInstrument(this.id, this.instrument, this.config);
   }
 }

@@ -141,7 +141,7 @@ export class SynthService {
     return this.effects;
   }
 
-  addInstrument(id: string, instrument: Instrument<any>, config: any) {
+  addInstrument(id: string, instrument: Instrument<any>, config: any): void {
     if(!this.getInstrument(id)) {
       instrument.connect(this.masterChannel);
       this.instruments.push({id: id, instrument: instrument, config});
@@ -153,6 +153,11 @@ export class SynthService {
     if(instrumentIndex >= 0) {
       this.instruments.splice(instrumentIndex, 1);
     }
+  }
+
+  replaceInstrument(id: string, instrument: Instrument<any>, config: any): void {
+    this.removeInstrument(id);
+    this.addInstrument(id, instrument, config);
   }
 
   getInstrument(id: string): InsInstrument {
