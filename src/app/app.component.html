@@ -17,6 +17,9 @@
           <a class="nav-link" [ngClass]="{'active': page === 'sequencer'}" (click)="page = 'sequencer'" href="#">Sequencer</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" [ngClass]="{'active': page === 'piano-roll'}" (click)="page = 'piano-roll'" href="#">Piano Roll</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" [ngClass]="{'active': page === 'elements'}" (click)="page = 'elements'" href="#">Elements</a>
         </li>
         <li>
@@ -76,6 +79,13 @@
       <div class="row mt-4">
         <div class="col-12">
           <ins-sequencer id="sequencer"></ins-sequencer>
+        </div>
+      </div>
+    </div>
+    <div class="container" [ngClass]="{'hidden': page !== 'piano-roll'}">
+      <div class="row mt-4">
+        <div class="col-12">
+          <ins-piano-roll></ins-piano-roll>
         </div>
       </div>
     </div>

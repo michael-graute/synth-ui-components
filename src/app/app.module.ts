@@ -46,6 +46,7 @@ import {MembraneSynthComponent} from "./instruments/membrane-synth/membrane-synt
 import {PluckSynthComponent} from "./instruments/pluck-synth/pluck-synth.component";
 import {NoiseSynthComponent} from "./instruments/noise-synth/noise-synth.component";
 import {SamplerComponent} from "./instruments/sampler/sampler.component";
+import {PianoRollComponent} from "./piano-roll/piano-roll.component";
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import {SamplerComponent} from "./instruments/sampler/sampler.component";
     MembraneSynthComponent,
     PluckSynthComponent,
     NoiseSynthComponent,
-    SamplerComponent
+    SamplerComponent,
+    PianoRollComponent
   ],
   imports: [
     BrowserModule,
