@@ -22,6 +22,9 @@
         <li class="nav-item">
           <a class="nav-link" [ngClass]="{'active': page === 'elements'}" (click)="page = 'elements'" href="#">Elements</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{'active': page === 'playground'}" (click)="page = 'playground'" href="#">Playground</a>
+        </li>
         <li>
           <a class="nav-link" (click)="debug()" href="#">debug</a>
         </li>
@@ -136,6 +139,9 @@
     </div>
     <div class="container" style="overflow: auto" [ngClass]="{'hidden': page !== 'elements'}">
       <ins-elements-showcase></ins-elements-showcase>
+    </div>
+    <div class="container" style="overflow: auto" [ngClass]="{'hidden': page !== 'playground'}">
+      <ins-waveform-plotter></ins-waveform-plotter>
     </div>
   </div>
   <!--<div class="card">

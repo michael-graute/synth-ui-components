@@ -36,19 +36,19 @@ export class WaveformPlotterComponent implements AfterViewInit {
 
       let x = 0;
       let y = 0;
-      const attack = 30;
-      let amplitude = 30;
-      const frequency = 5;
+      const attack = 70;
+      const attackWidth = width/100 * attack;
+      let amplitude = height/2;
+      const amplitudeRamp = amplitude/attackWidth;
+      const sustain = 30;
+      const frequency = 10;
       //ctx.moveTo(x, y);
       while (x < width) {
-        if(x < (attack*frequency)) {
-         amplitude = x + frequency;
+        if(x < attackWidth && x > 0) {
+         amplitude = amplitude + amplitudeRamp;
         } else {
-          amplitude = 30;
+          amplitude = sustain;
         }
-        /*console.log('if', width - attack);
-        console.log('x', x);
-        console.log('amplitude', amplitude);*/
         y = height / 2 + amplitude * Math.sin(x / frequency);
         ctx.lineTo(x, y);
         x = x + 1;

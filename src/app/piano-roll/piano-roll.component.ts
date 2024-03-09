@@ -18,8 +18,9 @@ export interface PianoRollStep {
 export class PianoRollComponent {
 
   public notes : string[] = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
-  public octaves : number[] = [1,2,3,4,5,6];
+  public octaves : number[] = [1,2,3];
   public steps : {[key: string]: PianoRollStep[]} = {};
+  public stepCount: number = 64;
 
   constructor() {
     this.buildSteps();
@@ -29,7 +30,7 @@ export class PianoRollComponent {
     for(let i = 0; i < this.octaves.length; i++) {
       for(let j = 0; j < this.notes.length; j++) {
         let stepArray = [];
-        for(let k = 0; k < 16; k++) {
+        for(let k = 0; k < this.stepCount; k++) {
           stepArray.push({
             id: 'step' + i + '_' + j + '_' + k,
             velocity: 100,

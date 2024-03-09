@@ -1,8 +1,8 @@
-<ul *ngFor="let octave of octaves; let o = index">
+<ul *ngFor="let octave of octaves; let o = index" style="width: fit-content; margin-bottom: 5px;">
   <li *ngFor="let note of notes; let n = index">
     <div class="d-flex gap-1">
-      <div style="width: 80px">{{note}} {{octave}} row_{{o}}_{{n}}</div>
-      <div *ngFor="let step of steps['row_' + o + '_' + n]" class="d-flex gap-1">
+      <div style="width: 80px">{{note}}{{octave}}</div>
+      <div *ngFor="let step of steps['row_' + o + '_' + n]">
         <div (click)="toggleStep(step)" [ngClass]="{'bg-primary': !step.armed, 'bg-warning': step.armed}" style="width: 20px; height: 20px;"></div>
       </div>
     </div>
