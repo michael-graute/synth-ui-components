@@ -1,10 +1,23 @@
-<ul *ngFor="let octave of octaves; let o = index" style="width: fit-content; margin-bottom: 5px;">
-  <li *ngFor="let note of notes; let n = index">
-    <div class="d-flex gap-1">
-      <div style="width: 80px">{{note}}{{octave}}</div>
-      <div *ngFor="let step of steps['row_' + o + '_' + n]">
-        <div (click)="toggleStep(step)" [ngClass]="{'bg-primary': !step.armed, 'bg-warning': step.armed}" style="width: 20px; height: 20px;"></div>
-      </div>
+<div class="ins-piano-roll__container">
+  <div class="ins-piano-roll__header d-flex gap-1"></div>
+  <div class="ins-piano-roll-__body">
+    <ul *ngFor="let octave of octaves; let o = index">
+      <li *ngFor="let note of notes; let n = index">
+        <div class="ins-piano-roll__row d-flex gap-1">
+          <div class="ins-piano-roll__row__label">{{note}}{{octave}}</div>
+          <div *ngFor="let step of availableSteps['row_' + o + '_' + n]">
+            <div (click)="toggleStep(step)" class="ins-piano-roll__row__step" [ngClass]="{'bg-primary': !step.armed, 'bg-warning': step.armed}"></div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="ins-piano-roll__footer">
+    <div class="ins-piano-roll__controls d-flex justify-content-end gap-1">
+      <button (click)="play()">Play</button>
+      <button (click)="stop()">Stop</button>
+      <button (click)="pause()">Pause</button>
     </div>
-  </li>
-</ul>
+  </div>
+</div>
+

@@ -107,8 +107,19 @@ export class SynthService {
           //@ts-ignore
           instrument.instrument.triggerAttackRelease(options.duration, options.time, options.velocity);
         } else {
-          const transposedNote: Tone.Unit.Note = Tone.Frequency(options.note).transpose((instrument.config.octave || 0) * 12).toNote();
-          instrument.instrument.triggerAttackRelease(transposedNote, options.duration, options.time, options.velocity);
+          if(Array.isArray(options.note)) {
+            let notes: Tone.Unit.Note[] = [];
+            options.note.forEach((note: string) => {
+              const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
+              notes.push(transposedNote);
+            });
+            //@ts-ignore
+            instrument.instrument.triggerAttackRelease(notes, options.duration, options.time, options.velocity);
+          } else {
+            const transposedNote: Tone.Unit.Note = Tone.Frequency(options.note).transpose((instrument.config.octave || 0) * 12).toNote();
+            instrument.instrument.triggerAttackRelease(transposedNote, options.duration, options.time, options.velocity);
+          }
+
         }
       }
     });
