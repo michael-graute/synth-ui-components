@@ -107,7 +107,7 @@ export class SynthService {
           //@ts-ignore
           instrument.instrument.triggerAttackRelease(options.duration, options.time, options.velocity);
         } else {
-          if(Array.isArray(options.note)) {
+          if(Array.isArray(options.note)) { //TODO: Make monophonic instruments work with attackRelease as well
             let notes: Tone.Unit.Note[] = [];
             options.note.forEach((note: string) => {
               const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
