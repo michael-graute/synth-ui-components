@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
-import {InsAttackReleasePayload, SynthService} from "../synth.service";
+import {SynthService} from "../synth.service";
 
 export interface PianoRollStep {
   id: string;
