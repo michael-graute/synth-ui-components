@@ -9,6 +9,7 @@
         <div class="ins-am-synth__waveform">
           <ins-waveform-select [id]="id + 'Type'" [(ngModel)]="type" (waveformChange)="triggerUndo('type', $event)"></ins-waveform-select>
         </div>
+        <ins-divider label="Oscillator Envelope"></ins-divider>
         <div class="ins-am-synth__envelope">
           <ins-adsr-envelope [id]="id + 'Envelope'" [(ngModel)]="envelope" [width]="210" [height]="50" (change)="triggerUndo('envelope', $event)"></ins-adsr-envelope>
         </div>
@@ -18,6 +19,7 @@
         <div class="ins-am-synth__waveform">
           <ins-waveform-select [id]="id + 'ModulationType'" [(ngModel)]="modulationType" (waveformChange)="triggerUndo('modulationType', $event)"></ins-waveform-select>
         </div>
+        <ins-divider label="Modulator Envelope"></ins-divider>
         <div class="ins-am-synth__modulationEnvelope">
           <ins-adsr-envelope [id]="id + 'ModulationEnvelope'" [(ngModel)]="modulationEnvelope" [width]="210" [height]="50" (change)="triggerUndo('modulationEnvelope', $event)"></ins-adsr-envelope>
         </div>
@@ -46,6 +48,7 @@
         </div>
       </div>
       <div class="col-6">
+        <ins-divider label="LFO" class="mt-0"></ins-divider>
         <div *ngIf="!polyphonic" class="d-flex gap-1">
           <button class="btn btn-primary" (click)="connectLFOToVolume('lfo')">Connect LFO</button>
           <button class="btn btn-primary" (click)="disconnectLFOFromVolume('lfo')">Disconnect LFO</button>

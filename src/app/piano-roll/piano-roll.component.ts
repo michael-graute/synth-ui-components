@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import * as Tone from "tone";
 import {SynthService} from "../synth.service";
+import {Subject} from "rxjs";
 
 export interface PianoRollStep {
   id: string;
@@ -22,14 +23,16 @@ export class PianoRollComponent {
   public tempo: number = 120;
   public interval: any = "4n";
   public playing: boolean = false;
-  public currentStep: number = 0;
+  public currentStep: number = -1;
   public loop: Tone.Loop | undefined;
   public notes : string[] = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
   public octaves : number[] = [1,2,3];
   public availableSteps : {[key: string]: PianoRollStep[]} = {};
   public stepCount: number = 16;
 
-  constructor(public synthService: SynthService) {
+  stepPlaying: Subject<number> = new Subject<number>();
+
+  constructor(public synthService: SynthService, public changeDetectorRef: ChangeDetectorRef) {
     this.buildSteps();
   }
 
@@ -60,27 +63,30 @@ export class PianoRollComponent {
 
   play(): void {
     this.playing = true;
-    this.currentStep = 0;
+    let index = 0;
     this.loop = new Tone.Loop((time: number): void => {
-      let notes: string[] = [];
       for (let availableStepsKey in this.availableSteps) {
         if (this.availableSteps.hasOwnProperty(availableStepsKey)) {
-          const step: PianoRollStep[] = this.availableSteps[availableStepsKey];
-          if (step[this.currentStep].armed) {
-            notes.push(step[this.currentStep].note);
+          const step: PianoRollStep = this.availableSteps[availableStepsKey][this.currentStep];
+          if (step.armed) {
+            this.synthService.attackRelease({note: step.note, duration: step.duration, velocity: step.velocity, time: time});
           }
         }
       }
-      if(notes.length > 0) {
-        this.synthService.attackRelease({note: notes, duration: "4n", velocity: .8, time: time});
-      }
-      this.currentStep = (this.currentStep + 1) % this.stepCount;
+      Tone.Draw.schedule((): void => {
+        this.currentStep = index;
+        this.stepPlaying.next(index);
+        index = (index + 1) % this.stepCount;
+        this.changeDetectorRef.detectChanges();
+      }, time);
+
     }, this.interval).start(0);
     Tone.Transport.bpm.value = this.tempo;
     Tone.Transport.start();
   }
 
   stop(): void {
+    this.currentStep = 0;
     this.playing = false;
     this.loop?.stop();
     Tone.Transport.stop();

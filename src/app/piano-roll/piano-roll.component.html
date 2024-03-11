@@ -5,8 +5,8 @@
       <li *ngFor="let note of notes; let n = index">
         <div class="ins-piano-roll__row d-flex gap-1">
           <div class="ins-piano-roll__row__label">{{note}}{{octave}}</div>
-          <div *ngFor="let step of availableSteps['row_' + o + '_' + n]">
-            <div (click)="toggleStep(step)" class="ins-piano-roll__row__step" [ngClass]="{'bg-primary': !step.armed, 'bg-warning': step.armed}"></div>
+          <div *ngFor="let step of availableSteps['row_' + o + '_' + n]; let s = index">
+            <div (click)="toggleStep(step)" class="ins-piano-roll__row__step" [ngClass]="{'bg-primary': !step.armed, 'bg-warning': step.armed, 'bg-success': (playing && currentStep === s)}"></div>
           </div>
         </div>
       </li>
