@@ -20,7 +20,7 @@ export interface PianoRollStep {
 export class PianoRollComponent {
 
   public tempo: number = 120;
-  public interval: number = 0;
+  public interval: any = "4n";
   public playing: boolean = false;
   public currentStep: number = 0;
   public loop: Tone.Loop | undefined;
@@ -40,7 +40,7 @@ export class PianoRollComponent {
         for(let k = 0; k < this.stepCount; k++) {
           stepArray.push({
             id: 'step' + i + '_' + j + '_' + k,
-            velocity: .01,
+            velocity: .7,
             duration: '4n',
             playing: false,
             armed: false,
@@ -60,23 +60,22 @@ export class PianoRollComponent {
 
   play(): void {
     this.playing = true;
-    let index: number = 0;
+    this.currentStep = 0;
     this.loop = new Tone.Loop((time: number): void => {
       let notes: string[] = [];
       for (let availableStepsKey in this.availableSteps) {
         if (this.availableSteps.hasOwnProperty(availableStepsKey)) {
           const step: PianoRollStep[] = this.availableSteps[availableStepsKey];
-          if (step[index].armed) {
-            notes.push(step[index].note);
+          if (step[this.currentStep].armed) {
+            notes.push(step[this.currentStep].note);
           }
         }
       }
       if(notes.length > 0) {
         this.synthService.attackRelease({note: notes, duration: "4n", velocity: .8, time: time});
-        console.log(notes);
       }
-      index = (index + 1) % this.stepCount;
-    }, "4n").start(0);
+      this.currentStep = (this.currentStep + 1) % this.stepCount;
+    }, this.interval).start(0);
     Tone.Transport.bpm.value = this.tempo;
     Tone.Transport.start();
   }

@@ -107,14 +107,20 @@ export class SynthService {
           //@ts-ignore
           instrument.instrument.triggerAttackRelease(options.duration, options.time, options.velocity);
         } else {
-          if(Array.isArray(options.note)) { //TODO: Make monophonic instruments work with attackRelease as well
-            let notes: Tone.Unit.Note[] = [];
-            options.note.forEach((note: string) => {
-              const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
-              notes.push(transposedNote);
-            });
-            //@ts-ignore
-            instrument.instrument.triggerAttackRelease(notes, options.duration, options.time, options.velocity);
+          if(Array.isArray(options.note)) {
+            if(options.note.length > 0) {
+              let notes: Tone.Unit.Note[] = [];
+              options.note.forEach((note: string) => {
+                const transposedNote: Tone.Unit.Note = Tone.Frequency(note).transpose((instrument.config.octave || 0) * 12).toNote();
+                notes.push(transposedNote);
+              });
+              if(instrument.instrument.name === 'PolySynth') {
+                //@ts-ignore
+                instrument.instrument.triggerAttackRelease(notes, options.duration, options.time, options.velocity);
+              } else {
+                instrument.instrument.triggerAttackRelease(notes[0], options.duration, options.time, options.velocity);
+              }
+            }
           } else {
             const transposedNote: Tone.Unit.Note = Tone.Frequency(options.note).transpose((instrument.config.octave || 0) * 12).toNote();
             instrument.instrument.triggerAttackRelease(transposedNote, options.duration, options.time, options.velocity);
