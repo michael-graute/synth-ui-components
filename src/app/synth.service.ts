@@ -151,7 +151,7 @@ export class SynthService {
   }
 
   getEffect(id: string): InsEffect {
-    return <InsEffect>this.effects.find((effect: InsEffect) => effect.id === id);
+    return <InsEffect>this.getEffects().find((effect: InsEffect) => effect.id === id);
   }
 
   getEffects(): InsEffect[] {
@@ -178,7 +178,7 @@ export class SynthService {
   }
 
   getInstrument(id: string): InsInstrument {
-    return <InsInstrument>this.instruments.find((instrument: InsInstrument) => instrument.id === id);
+    return <InsInstrument>this.getInstruments().find((instrument: InsInstrument) => instrument.id === id);
   }
 
   getInstruments(): InsInstrument[] {
@@ -214,18 +214,16 @@ export class SynthService {
   }
 
   getLFO(id: string): InsLFO {
-    return <InsLFO>this.lfos.find((lfo: InsLFO) => lfo.id === id);
+    return <InsLFO>this.getLFOs().find((lfo: InsLFO) => lfo.id === id);
   }
 
   startLFO(id: string): void {
     const lfo: LFO = this.getLFO(id)?.lfo;
-    if(lfo) {
-      lfo.start();
-    }
+    lfo.start();
   }
 
   stopLFO(id: string): void {
-    const lfo: LFO = this.getLFO(id).lfo;
+    const lfo: LFO = this.getLFO(id)?.lfo;
     lfo.stop();
   }
 }
