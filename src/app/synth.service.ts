@@ -219,11 +219,11 @@ export class SynthService {
 
   startLFO(id: string): void {
     const lfo: LFO = this.getLFO(id)?.lfo;
-    lfo.start();
+    if(lfo) lfo.start();
   }
 
   stopLFO(id: string): void {
     const lfo: LFO = this.getLFO(id)?.lfo;
-    lfo.stop();
+    if(lfo) lfo.stop();
   }
 }

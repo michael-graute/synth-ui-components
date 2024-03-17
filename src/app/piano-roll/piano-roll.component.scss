@@ -26,6 +26,18 @@
           height: 20px;
           border-radius: 3px;
           cursor: pointer;
+          background: #00a4e1;
+
+          &.armed {
+            background: darkorange;
+          }
+           &.playing {
+             background: #3a620d;
+
+             &.armed {
+               background: #2e393e;
+             }
+           }
         }
       }
     }

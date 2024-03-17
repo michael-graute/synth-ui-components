@@ -23,7 +23,7 @@ export class PianoRollComponent {
   public tempo: number = 120;
   public interval: any = "4n";
   public playing: boolean = false;
-  public currentStep: number = -1;
+  public currentStep: number = 0;
   public loop: Tone.Loop | undefined;
   public notes : string[] = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
   public octaves : number[] = [1,2,3];
@@ -54,7 +54,6 @@ export class PianoRollComponent {
         this.availableSteps['row_' + i + '_' + j] = stepArray;
       }
     }
-    console.log(this.availableSteps);
   }
 
   toggleStep(step: PianoRollStep): void {
@@ -65,9 +64,10 @@ export class PianoRollComponent {
     this.playing = true;
     let index = 0;
     this.loop = new Tone.Loop((time: number): void => {
+      console.log(index);
       for (let availableStepsKey in this.availableSteps) {
         if (this.availableSteps.hasOwnProperty(availableStepsKey)) {
-          const step: PianoRollStep = this.availableSteps[availableStepsKey][this.currentStep];
+          const step: PianoRollStep = this.availableSteps[availableStepsKey][index];
           if (step.armed) {
             this.synthService.attackRelease({note: step.note, duration: step.duration, velocity: step.velocity, time: time});
           }
@@ -76,6 +76,7 @@ export class PianoRollComponent {
       Tone.Draw.schedule((): void => {
         this.currentStep = index;
         this.stepPlaying.next(index);
+        console.log(this.currentStep);
         index = (index + 1) % this.stepCount;
         this.changeDetectorRef.detectChanges();
       }, time);
