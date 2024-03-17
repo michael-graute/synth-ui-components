@@ -15,6 +15,8 @@
     ul {
       width: fit-content;
       margin-bottom: 5px;
+      list-style: none;
+      padding: 0;
 
       .ins-piano-roll__row{
         .ins-piano-roll__row__label {
@@ -28,14 +30,28 @@
           cursor: pointer;
           background: #00a4e1;
 
+          &.inactive {
+            background: #497385;
+          }
+
           &.armed {
-            background: darkorange;
+            background: #4f8051;
+            &.inactive {
+              background: #4b694d;
+            }
           }
            &.playing {
-             background: #3a620d;
+             background: #03bee8;
+             &.inactive {
+               background: #313b29;
+             }
 
              &.armed {
-               background: #2e393e;
+               background: #7ecb81;
+               &.inactive {
+                 background: #313b29;
+               }
+
              }
            }
         }
