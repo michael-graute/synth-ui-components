@@ -23,6 +23,7 @@ export class PianoRollComponent {
   public tempo: number = 120;
   public interval: any = "4n";
   public playing: boolean = false;
+  public paused: boolean = false;
   public currentStep: number = 0;
   public loop: Tone.Loop | undefined;
   public notes : string[] = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
@@ -62,7 +63,8 @@ export class PianoRollComponent {
 
   play(): void {
     this.playing = true;
-    let index = 0;
+    this.paused = false;
+    let index = this.currentStep;
     this.loop = new Tone.Loop((time: number): void => {
       console.log(index);
       for (let availableStepsKey in this.availableSteps) {
@@ -89,12 +91,14 @@ export class PianoRollComponent {
   stop(): void {
     this.currentStep = 0;
     this.playing = false;
+    this.paused = false;
     this.loop?.stop();
     Tone.Transport.stop();
   }
 
   pause(): void {
     this.playing = false;
+    this.paused = true;
     this.loop?.stop();
     Tone.Transport.pause();
   }
