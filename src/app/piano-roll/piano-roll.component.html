@@ -3,10 +3,10 @@
     <div class="d-flex mb-3 gap-3 align-items-end">
       <ins-knob [id]="id + 'KnobBPM'" [(ngModel)]="tempo" [min]="20" [max]="300" [step]="1" [label]="'BPM'"></ins-knob>
       <ins-knob [id]="id + 'KnobInterval'" [(ngModel)]="interval" type="dot" [options]="gateOptions" [min]="0" [max]="1" [step]="0.01" [label]="'Interval'"></ins-knob>
-      <ins-knob [id]="id + 'KnobSteps'" [(ngModel)]="stepCount" (ngModelChange)="addOrRemoveStep()" [min]="0" [max]="128" [step]="1" [label]="'Steps'"></ins-knob>
+      <ins-knob [id]="id + 'KnobSteps'" [(ngModel)]="stepCount" (ngModelChange)="addOrRemoveStep()" [min]="1" [max]="128" [step]="1" [label]="'Steps'"></ins-knob>
     </div>
   </div>
-  <div class="ins-piano-roll-__body">
+  <div class="ins-piano-roll__body">
     <div style="display: grid; grid-template-columns: 60px 1fr;">
       <div></div>
       <input type="range" class="ins-active-steps-slider mb-3" min="0" [max]="stepCount" step="1" [(ngModel)]="activeStepCount" />
@@ -16,15 +16,16 @@
         <div class="ins-piano-roll__col__label" *ngFor="let note of availableSteps[0].notes">{{note.note}}</div>
       </div>
       <div *ngFor="let step of availableSteps; let s = index;" class="ins-piano-roll__col">
-        <div (click)="toggleNote(note)" class="ins-piano-roll__row__step" [ngClass]="{'inactive': s >= activeStepCount,'armed': note.armed, 'playing': ((playing || paused)  && currentStep === s)}" *ngFor="let note of step.notes"></div>
+        <div (click)="toggleNote(note)" class="ins-piano-roll__col__note" [ngClass]="{'inactive': s >= activeStepCount,'armed': note.armed, 'playing': ((playing || paused)  && currentStep === s)}" *ngFor="let note of step.notes"></div>
       </div>
     </div>
   </div>
   <div class="ins-piano-roll__footer">
     <div class="ins-piano-roll__controls d-flex justify-content-end gap-1">
-      <button (click)="play()">Play</button>
-      <button (click)="stop()">Stop</button>
-      <button (click)="pause()">Pause</button>
+      <button class="btn btn-success ins-piano-roll__button_play" [ngClass]="{'active': playing}" (click)="play()">Play</button>
+      <button class="btn btn-warning ins-piano-roll__button_stop" (click)="stop()">Stop</button>
+      <button class="btn btn-dark ins-piano-roll__button_pause" [ngClass]="{'active': paused}" (click)="pause()">Pause</button>
+      <button class="btn btn-danger ins-piano-roll__button_record" [ngClass]="{'active': recordMode}" (click)="toggleRecordMode()">Rec</button>
     </div>
   </div>
 </div>

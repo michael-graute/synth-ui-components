@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import * as Tone from "tone";
 import {SynthService} from "../synth.service";
-import {Subject} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from "uuid";
 import {InsPreset, PresetManagerService} from "../preset-manager/preset-manager.service";
 
@@ -32,7 +32,7 @@ export type PianoRollConfig = {
   templateUrl: './piano-roll.component.html',
   styleUrl: './piano-roll.component.scss'
 })
-export class PianoRollComponent implements OnInit {
+export class PianoRollComponent implements OnInit, OnDestroy {
 
   private config: PianoRollConfig = {
     availableSteps: [],
@@ -44,6 +44,7 @@ export class PianoRollComponent implements OnInit {
 
   @Input() id: string = uuidv4();
 
+  public recordMode = false;
   public playing: boolean = false;
   public paused: boolean = false;
   public currentStep: number = 0;
@@ -51,6 +52,8 @@ export class PianoRollComponent implements OnInit {
   public notes : string[] = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
   public octaves : number[] = [1,2,3];
   public gateOptions: string[] = ['1n', '2n', '4n', '8n', '16n', '32n', '64n'];
+
+  private subscriptions: Subscription = new Subscription();
 
   stepPlaying: Subject<number> = new Subject<number>();
 
@@ -95,6 +98,12 @@ export class PianoRollComponent implements OnInit {
 
   constructor(public synthService: SynthService, public changeDetectorRef: ChangeDetectorRef, private presetManagerService: PresetManagerService) {
     this.buildSteps();
+    this.subscriptions.add(this.synthService.keyDownEvent.subscribe((event: any): void => {
+      if(this.recordMode) {
+        let note: PianoRollNote | undefined = this.availableSteps[this.currentStep].notes.find((note: PianoRollNote) => note.note === event);
+        if (note) note.armed = true;
+      }
+    }));
   }
 
   ngOnInit(): void {
@@ -122,13 +131,15 @@ export class PianoRollComponent implements OnInit {
   }
 
   addOrRemoveStep() {
-    const delta = this.stepCount - this.availableSteps.length;
-    if(delta > 0) {
-      for(let i = 0; i < delta; i++)
-      this.addStep((this.availableSteps.length + 1).toString());
-    } else if (delta < 0) {
-      for(let i = 0; i > delta; i--) {
-        this.removeStep();
+    if(this.availableSteps.length > 0) {
+      const delta = this.stepCount - this.availableSteps.length;
+      if (delta > 0) {
+        for (let i = 0; i < delta; i++)
+          this.addStep((this.availableSteps.length + 1).toString());
+      } else if (delta < 0) {
+        for (let i = 0; i > delta; i--) {
+          this.removeStep();
+        }
       }
     }
   }
@@ -195,6 +206,14 @@ export class PianoRollComponent implements OnInit {
     this.loop?.stop();
     Tone.Transport.stop();
     this.changeDetectorRef.detectChanges();
+  }
+
+  toggleRecordMode() {
+    this.recordMode = !this.recordMode;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }

@@ -43,17 +43,20 @@
   }
 
 
-  .ins-piano-roll-__body {
+  .ins-piano-roll__body {
     width: 100%;
     height: 320px;
     overflow: auto;
 
     .ins-piano-roll__col {
       .ins-piano-roll__col__label {
-        width: 80px;
+        width: 78px;
+        height: 18px;
+        margin: 1px;
+        font-size: small;
       }
 
-      .ins-piano-roll__row__step {
+      .ins-piano-roll__col__note {
         width: 18px;
         height: 18px;
         border-radius: 3px;
