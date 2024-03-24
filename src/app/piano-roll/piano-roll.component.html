@@ -19,16 +19,6 @@
         <div (click)="toggleNote(note)" class="ins-piano-roll__row__step" [ngClass]="{'inactive': s >= activeStepCount,'armed': note.armed, 'playing': ((playing || paused)  && currentStep === s)}" *ngFor="let note of step.notes"></div>
       </div>
     </div>
-    <!--<ul *ngFor="let octave of octaves; let o = index">
-      <li *ngFor="let note of notes; let n = index">
-        <div class="ins-piano-roll__row d-flex gap-1">
-          <div class="ins-piano-roll__row__label">{{note}}{{octave}}</div>
-          <div *ngFor="let step of availableSteps['row_' + o + '_' + n]; let s = index">
-            <div (contextmenu)="handleLongPress(step, $event)" (click)="toggleStep(step)" class="ins-piano-roll__row__step" [ngClass]="{'inactive': s >= activeStepCount,'armed': step.armed, 'playing': ((playing || paused)  && currentStep === s)}"></div>
-          </div>
-        </div>
-      </li>
-    </ul>-->
   </div>
   <div class="ins-piano-roll__footer">
     <div class="ins-piano-roll__controls d-flex justify-content-end gap-1">

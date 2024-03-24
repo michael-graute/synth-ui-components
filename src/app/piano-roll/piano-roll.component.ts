@@ -4,7 +4,6 @@ import {SynthService} from "../synth.service";
 import {Subject} from "rxjs";
 import {v4 as uuidv4} from "uuid";
 import {InsPreset, PresetManagerService} from "../preset-manager/preset-manager.service";
-import {noteOnEvent} from "../types/event.types";
 
 export type PianoRollStep = {
   id: string;
@@ -27,8 +26,6 @@ export type PianoRollConfig = {
   interval: number;
   tempo: number;
 }
-
-
 
 @Component({
   selector: 'ins-piano-roll',
@@ -57,9 +54,9 @@ export class PianoRollComponent implements OnInit {
 
   stepPlaying: Subject<number> = new Subject<number>();
 
-  set availableSteps(value: PianoRollStep[]) {
+  /*set availableSteps(value: PianoRollStep[]) {
     this.config.availableSteps = value;
-  }
+  }*/
 
   get availableSteps(): PianoRollStep[] {
     return this.config.availableSteps;
@@ -198,11 +195,6 @@ export class PianoRollComponent implements OnInit {
     this.loop?.stop();
     Tone.Transport.stop();
     this.changeDetectorRef.detectChanges();
-  }
-
-  handleLongPress(step: PianoRollStep, evt: MouseEvent) {
-    evt.preventDefault();
-    console.log('longPress', step);
   }
 
 }
