@@ -4,24 +4,31 @@ import {SynthService} from "../synth.service";
 import {Subject} from "rxjs";
 import {v4 as uuidv4} from "uuid";
 import {InsPreset, PresetManagerService} from "../preset-manager/preset-manager.service";
+import {noteOnEvent} from "../types/event.types";
 
 export type PianoRollStep = {
   id: string;
+  playing?: boolean;
+  gate?: number;
+  notes: PianoRollNote[];
+}
+
+export type PianoRollNote = {
+  armed: boolean;
+  note: string;
   velocity: number;
   duration: string;
-  playing?: boolean;
-  armed: boolean;
-  gate?: number;
-  note: string;
 }
 
 export type PianoRollConfig = {
-  availableSteps: {[key: string]: PianoRollStep[]};
+  availableSteps: PianoRollStep[];
   stepCount: number;
   activeStepCount: number;
   interval: number;
   tempo: number;
 }
+
+
 
 @Component({
   selector: 'ins-piano-roll',
@@ -31,7 +38,7 @@ export type PianoRollConfig = {
 export class PianoRollComponent implements OnInit {
 
   private config: PianoRollConfig = {
-    availableSteps: {},
+    availableSteps: [],
     stepCount: 16,
     activeStepCount: 8,
     interval: 2,
@@ -50,11 +57,11 @@ export class PianoRollComponent implements OnInit {
 
   stepPlaying: Subject<number> = new Subject<number>();
 
-  set availableSteps(value: {[key: string]: PianoRollStep[]}) {
+  set availableSteps(value: PianoRollStep[]) {
     this.config.availableSteps = value;
   }
 
-  get availableSteps(): {[key: string]: PianoRollStep[]} {
+  get availableSteps(): PianoRollStep[] {
     return this.config.availableSteps;
   }
 
@@ -109,43 +116,61 @@ export class PianoRollComponent implements OnInit {
     });
   }
 
-  buildSteps(): void {
-    for(let i = 0; i < this.octaves.length; i++) {
-      for(let j = 0; j < this.notes.length; j++) {
-        let stepArray = [];
-        for(let k = 0; k < this.stepCount; k++) {
-          stepArray.push({
-            id: 'step' + i + '_' + j + '_' + k,
-            velocity: .7,
-            duration: '4n',
-            playing: false,
-            armed: false,
-            gate: 0,
-            note: this.notes[j] + this.octaves[i]
-          });
-        }
-        this.availableSteps['row_' + i + '_' + j] = stepArray;
+  addStep(index: string) {
+    this.availableSteps.push(this.buildStep(index));
+  }
+
+  removeStep() {
+    this.availableSteps.pop();
+  }
+
+  addOrRemoveStep() {
+    const delta = this.stepCount - this.availableSteps.length;
+    if(delta > 0) {
+      for(let i = 0; i < delta; i++)
+      this.addStep((this.availableSteps.length + 1).toString());
+    } else if (delta < 0) {
+      for(let i = 0; i > delta; i--) {
+        this.removeStep();
       }
     }
   }
 
-  toggleStep(step: PianoRollStep): void {
-    step.armed = !step.armed;
+  buildStep(id: string): PianoRollStep {
+    let notes: PianoRollNote[] = [];
+    this.octaves.forEach((octave: number) => {
+      this.notes.forEach((note: string) => {
+        notes.push({note: note + octave, armed: false, velocity: 1, duration: this.gateOptions[this.config.interval]});
+      })
+    });
+    return {
+      id: id,
+      gate: this.config.interval,
+      playing: false,
+      notes: notes
+    }
+  }
+
+  buildSteps(): void {
+    for(let i = 0; i < this.stepCount; i++) {
+      this.availableSteps.push(this.buildStep(i.toString()));
+    }
+  }
+
+  toggleNote(note: PianoRollNote): void {
+    note.armed = !note.armed;
   }
 
   play(): void {
+    let index = this.paused ? (this.currentStep + 1) % this.activeStepCount : this.currentStep;
     this.playing = true;
     this.paused = false;
-    let index = this.currentStep;
     this.loop = new Tone.Loop((time: number): void => {
-      for (let availableStepsKey in this.availableSteps) {
-        if (this.availableSteps.hasOwnProperty(availableStepsKey)) {
-          const step: PianoRollStep = this.availableSteps[availableStepsKey][index];
-          if (step.armed) {
-            this.synthService.attackRelease({note: step.note, duration: step.duration, velocity: step.velocity, time: time});
-          }
-        }
-      }
+      const step: PianoRollStep = this.availableSteps[index];
+      const notes: PianoRollNote[] = step.notes.filter( note => note.armed);
+      notes.forEach((note: PianoRollNote) => {
+        this.synthService.attackRelease({note: note.note, duration: note.duration, velocity: note.velocity, time: time});
+      })
       Tone.Draw.schedule((): void => {
         this.currentStep = index;
         this.stepPlaying.next(index);
@@ -173,6 +198,11 @@ export class PianoRollComponent implements OnInit {
     this.loop?.stop();
     Tone.Transport.stop();
     this.changeDetectorRef.detectChanges();
+  }
+
+  handleLongPress(step: PianoRollStep, evt: MouseEvent) {
+    evt.preventDefault();
+    console.log('longPress', step);
   }
 
 }
