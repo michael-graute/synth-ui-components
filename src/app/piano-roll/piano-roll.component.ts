@@ -170,25 +170,32 @@ export class PianoRollComponent implements OnInit, OnDestroy {
   }
 
   play(): void {
-    let index = this.paused ? (this.currentStep + 1) % this.activeStepCount : this.currentStep;
-    this.playing = true;
-    this.paused = false;
-    this.loop = new Tone.Loop((time: number): void => {
-      const step: PianoRollStep = this.availableSteps[index];
-      const notes: PianoRollNote[] = step.notes.filter( note => note.armed);
-      notes.forEach((note: PianoRollNote) => {
-        this.synthService.attackRelease({note: note.note, duration: note.duration, velocity: note.velocity, time: time});
-      })
-      Tone.Draw.schedule((): void => {
-        this.currentStep = index;
-        this.stepPlaying.next(index);
-        index = (index + 1) % this.activeStepCount;
-        this.changeDetectorRef.detectChanges();
-      }, time);
+    if(!this.playing) {
+      let index = this.paused ? (this.currentStep + 1) % this.activeStepCount : this.currentStep;
+      this.playing = true;
+      this.paused = false;
+      this.loop = new Tone.Loop((time: number): void => {
+        const step: PianoRollStep = this.availableSteps[index];
+        const notes: PianoRollNote[] = step.notes.filter(note => note.armed);
+        notes.forEach((note: PianoRollNote) => {
+          this.synthService.attackRelease({
+            note: note.note,
+            duration: note.duration,
+            velocity: note.velocity,
+            time: time
+          });
+        })
+        Tone.Draw.schedule((): void => {
+          this.currentStep = index;
+          this.stepPlaying.next(index);
+          index = (index + 1) % this.activeStepCount;
+          this.changeDetectorRef.detectChanges();
+        }, time);
 
-    }, this.gateOptions[this.interval]).start(0);
-    Tone.Transport.bpm.value = this.tempo;
-    Tone.Transport.start();
+      }, this.gateOptions[this.interval]).start(0);
+      Tone.Transport.bpm.value = this.tempo;
+      Tone.Transport.start();
+    }
   }
 
   stop(): void {
@@ -201,11 +208,13 @@ export class PianoRollComponent implements OnInit, OnDestroy {
   }
 
   pause(): void {
-    this.playing = false;
-    this.paused = true;
-    this.loop?.stop();
-    Tone.Transport.stop();
-    this.changeDetectorRef.detectChanges();
+    if(this.playing) {
+      this.playing = false;
+      this.paused = true;
+      this.loop?.stop();
+      Tone.Transport.stop();
+      this.changeDetectorRef.detectChanges();
+    }
   }
 
   toggleRecordMode() {
