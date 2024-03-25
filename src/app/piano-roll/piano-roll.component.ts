@@ -4,6 +4,7 @@ import {SynthService} from "../synth.service";
 import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from "uuid";
 import {InsPreset, PresetManagerService} from "../preset-manager/preset-manager.service";
+import {UndoManagerService} from "../undo-manager/undo-manager.service";
 
 export type PianoRollStep = {
   id: string;
@@ -67,6 +68,7 @@ export class PianoRollComponent implements OnInit, OnDestroy {
 
   set stepCount(value: number) {
     this.config.stepCount = value;
+    this.addOrRemoveStep();
   }
 
   get stepCount(): number {
@@ -96,12 +98,19 @@ export class PianoRollComponent implements OnInit, OnDestroy {
     return this.config.interval;
   }
 
-  constructor(public synthService: SynthService, public changeDetectorRef: ChangeDetectorRef, private presetManagerService: PresetManagerService) {
+  constructor(public synthService: SynthService, public changeDetectorRef: ChangeDetectorRef, private presetManagerService: PresetManagerService, private undoManagerService: UndoManagerService) {
     this.buildSteps();
     this.subscriptions.add(this.synthService.keyDownEvent.subscribe((event: any): void => {
       if(this.recordMode) {
         let note: PianoRollNote | undefined = this.availableSteps[this.currentStep].notes.find((note: PianoRollNote) => note.note === event);
         if (note) note.armed = true;
+      }
+    }));
+    this.subscriptions.add(this.undoManagerService.undoEvent.subscribe((undoStep) => {
+      if(undoStep.componentId === this.id && undoStep.action === 'valueChange') {
+        // @ts-ignore
+        this[undoStep.propertyName] = undoStep.oldValue;
+        console.log(undoStep);
       }
     }));
   }
@@ -142,6 +151,8 @@ export class PianoRollComponent implements OnInit, OnDestroy {
         }
       }
     }
+    if(this.stepCount > this.availableSteps.length) this.stepCount = this.availableSteps.length;
+    if(this.activeStepCount > this.stepCount) this.activeStepCount = this.stepCount;
   }
 
   buildStep(id: string): PianoRollStep {
@@ -219,6 +230,10 @@ export class PianoRollComponent implements OnInit, OnDestroy {
 
   toggleRecordMode() {
     this.recordMode = !this.recordMode;
+  }
+
+  triggerUndo(propertyName: string, value: any): void {
+    this.undoManagerService.addUndoStep('valueChange', this.id, propertyName, value.old , value.new);
   }
 
   ngOnDestroy() {
