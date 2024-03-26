@@ -47,7 +47,7 @@ import {PluckSynthComponent} from "./instruments/pluck-synth/pluck-synth.compone
 import {NoiseSynthComponent} from "./instruments/noise-synth/noise-synth.component";
 import {SamplerComponent} from "./instruments/sampler/sampler.component";
 import {PianoRollComponent} from "./piano-roll/piano-roll.component";
-import {LongPressDirective} from "./long-press.directive";
+// import {LongPressDirective} from "./long-press.directive";
 import {HorizontalRangeSliderComponent} from "./ui-elements/horizontal-range-slider/horizontal-range-slider.component";
 
 @NgModule({
