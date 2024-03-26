@@ -94,6 +94,7 @@ export class PianoRollComponent implements OnInit, OnDestroy {
   set interval(value: number) {
     this.config.interval = value;
   }
+
   get interval(): number {
     return this.config.interval;
   }

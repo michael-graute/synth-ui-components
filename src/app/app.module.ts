@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
-import { KnobComponent } from './knob/knob.component';
-import { SliderComponent } from './slider/slider.component';
+import { KnobComponent } from './ui-elements/knob/knob.component';
+import { SliderComponent } from './ui-elements/slider/slider.component';
 import { SwitchComponent } from './switch/switch.component';
 import { AdsrEnvelopeComponent } from './adsr-envelope/adsr-envelope.component';
 import { PanningKnobComponent } from './panning-knob/panning-knob.component';
@@ -48,6 +48,7 @@ import {NoiseSynthComponent} from "./instruments/noise-synth/noise-synth.compone
 import {SamplerComponent} from "./instruments/sampler/sampler.component";
 import {PianoRollComponent} from "./piano-roll/piano-roll.component";
 import {LongPressDirective} from "./long-press.directive";
+import {HorizontalRangeSliderComponent} from "./ui-elements/horizontal-range-slider/horizontal-range-slider.component";
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import {LongPressDirective} from "./long-press.directive";
     NoiseSynthComponent,
     SamplerComponent,
     PianoRollComponent,
-    LongPressDirective
+    //LongPressDirective,
+    HorizontalRangeSliderComponent
   ],
   imports: [
     BrowserModule,

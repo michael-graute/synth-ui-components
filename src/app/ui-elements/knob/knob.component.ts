@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
-import {convertRange} from "../utils";
+import {convertRange} from "../../utils";
 
 export type changeEventPayload = {
   old: number;
