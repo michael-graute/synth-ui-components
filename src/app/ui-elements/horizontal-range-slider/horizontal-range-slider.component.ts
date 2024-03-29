@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from "uuid";
+import {SliderHandle} from "./SliderHandle";
 
 export type ChangeEventPayload = {
   old: number[];
@@ -59,11 +60,14 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   private oldValue: number[] = [this.min, this.max];
   private mouseDownStartX: number = 0;
   private mouseOver: boolean = false;
+  private startHandle: SliderHandle = new SliderHandle(0,0, this.height, this.height, this.valueColor);
+  private stopHandle: SliderHandle = new SliderHandle(this.width - this.height,0, this.height, this.height, this.valueColor);
 
 
   set value(value: number[])
   {
-    this.internalValue = value;
+    this.start = value[0];
+    this.stop = value[1];
   }
 
   get value(): number []{
@@ -73,6 +77,8 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   @Input()
   set start(value: number) {
     this.internalValue[0] = value;
+    this.startHandle.x = value;
+    this.draw();
   }
 
   get start(): number {
@@ -82,6 +88,8 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   @Input()
   set stop(value: number) {
     this.internalValue[1] = value;
+    this.stopHandle.x = value;
+    this.draw();
   }
 
   get stop(): number {
@@ -143,14 +151,13 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
     this.mouseDown = true;
     this.mouseDownStartX = event.clientX;
     this.oldValue = this.value;
-    this.draw();
   }
 
-  @HostListener('mouseup')
-  handleMouseUp(): void {
+  @HostListener('mouseup', ['$event'])
+  handleMouseUp(event: MouseEvent): void {
     this.mouseDown = false;
+    this.start = event.offsetX;
     this.triggerValueChange();
-    this.draw();
   }
 
   triggerValueChange(): void {
@@ -161,22 +168,20 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
 
   draw(): void {
     if(!this.rangeSliderCanvas) return;
-    const canvas = this.rangeSliderCanvas?.nativeElement;
-    const ctx = canvas.getContext('2d');
+    const canvas: HTMLCanvasElement = this.rangeSliderCanvas?.nativeElement;
+    const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
     if (ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = this.baseColor;
       ctx.fillRect(0, 0, this.width, this.height);
       ctx.fillStyle = this.valueColor;
-      //ctx.fillRect(0, this.width - (this.internalValue[0] - this.min) / (this.max - this.min) * this.width, this.height, (this.internalValue[0] - this.min) / (this.max - this.min) * this.width);
-      ctx.fillRect(this.min, 0, 20, 20);
-      ctx.fillRect(this.max - this.height, 0, 20, 20);
 
       ctx.strokeStyle = this.valueColor;
       ctx.lineWidth = 16;
       ctx.beginPath();
       ctx.setLineDash([5, 4]);
-      ctx.moveTo(22, 10);
+      this.startHandle.draw(ctx);
+      this.stopHandle.draw(ctx);
       ctx.lineTo(228, 10);
       ctx.stroke();
     }
