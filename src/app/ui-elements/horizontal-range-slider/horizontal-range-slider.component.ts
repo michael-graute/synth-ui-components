@@ -59,7 +59,7 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   private internalValue: number[] = [this.min, this.max];
   private oldValue: number[] = [this.min, this.max];
   private mouseDownStartX: number = 0;
-  private mouseOver: boolean = false;
+  // private mouseOver: boolean = false;
   private startHandle: SliderHandle = new SliderHandle(0,0, this.height, this.height);
   private stopHandle: SliderHandle = new SliderHandle(this.width - this.height,0, this.height, this.height);
 
@@ -156,9 +156,9 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
     this.start = Math.min(Math.max(this.start + this.calculateDelta(event), this.min), this.max);
   }
 
-  @HostListener('mouseup', ['$event'])
-  @HostListener('mouseout', ['$event'])
-  handleMouseUpOrOut(event: MouseEvent): void {
+  @HostListener('mouseup')
+  @HostListener('mouseout')
+  handleMouseUpOrOut(): void {
     this.mouseDown = false;
     this.triggerValueChange();
     this.startHandle.hover = false;
@@ -173,8 +173,6 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
       console.log('startValue', startValue);
       console.log('startPosition', this.calculateHandlePositionForValue(startValue));
       this.startHandle.x = this.calculateHandlePositionForValue(startValue);
-      //this.start += event.offsetX - this.mouseDownStartX;
-      //console.log(this.start);
   }
 
   calculateDelta(event: MouseEvent): number {
@@ -197,19 +195,23 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
     const canvas: HTMLCanvasElement = this.rangeSliderCanvas?.nativeElement;
     const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
     if (ctx) {
+      //background
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = this.baseColor;
       ctx.fillRect(0, 0, this.width, this.height);
-      ctx.fillStyle = this.valueColor;
 
+      //range indicator
       ctx.strokeStyle = this.valueColor;
       ctx.lineWidth = 16;
       ctx.beginPath();
       ctx.setLineDash([5, 4]);
+      ctx.moveTo(this.startHandle.x, this.height / 2)
+      ctx.lineTo(this.stopHandle.x, this.height / 2);
+      ctx.stroke();
+
+      //handles
       this.startHandle.draw(ctx);
       this.stopHandle.draw(ctx);
-      ctx.lineTo(228, 10);
-      ctx.stroke();
     }
   }
 
