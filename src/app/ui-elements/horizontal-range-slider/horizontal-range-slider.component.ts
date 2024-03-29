@@ -42,7 +42,7 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   @Input() min: number = 0;
   @Input() max: number = 250;
   @Input() step: number = 1;
-  @Input() width: number = 250;
+  @Input() width: number = 800;
   @Input() height: number = 20;
   @Input() labelTextSize: string = 'x-small';
   @Input() labelTextWeight: number = 300;
@@ -60,8 +60,8 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   private oldValue: number[] = [this.min, this.max];
   private mouseDownStartX: number = 0;
   private mouseOver: boolean = false;
-  private startHandle: SliderHandle = new SliderHandle(0,0, this.height, this.height, this.valueColor);
-  private stopHandle: SliderHandle = new SliderHandle(this.width - this.height,0, this.height, this.height, this.valueColor);
+  private startHandle: SliderHandle = new SliderHandle(0,0, this.height, this.height);
+  private stopHandle: SliderHandle = new SliderHandle(this.width - this.height,0, this.height, this.height);
 
 
   set value(value: number[])
@@ -151,13 +151,39 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
     this.mouseDown = true;
     this.mouseDownStartX = event.clientX;
     this.oldValue = this.value;
+    console.log(this.startHandle.hitTest([event.offsetX, event.offsetY]));
+    console.log(this.stopHandle.hitTest([event.offsetX, event.offsetY]));
+    this.start = Math.min(Math.max(this.start + this.calculateDelta(event), this.min), this.max);
   }
 
   @HostListener('mouseup', ['$event'])
-  handleMouseUp(event: MouseEvent): void {
+  @HostListener('mouseout', ['$event'])
+  handleMouseUpOrOut(event: MouseEvent): void {
     this.mouseDown = false;
-    this.start = event.offsetX;
     this.triggerValueChange();
+    this.startHandle.hover = false;
+  }
+
+  @HostListener('mousemove', ['$event'])
+  handleMouseMove(event: MouseEvent): void {
+    if(this.startHandle.hitTest([event.offsetX, event.offsetY])) this.startHandle.hover = true;
+    this.draw();
+    if (!this.mouseDown) return;
+      const startValue = Math.floor(Math.min(Math.max(this.start + this.calculateDelta(event), this.min), this.max));
+      console.log('startValue', startValue);
+      console.log('startPosition', this.calculateHandlePositionForValue(startValue));
+      this.startHandle.x = this.calculateHandlePositionForValue(startValue);
+      //this.start += event.offsetX - this.mouseDownStartX;
+      //console.log(this.start);
+  }
+
+  calculateDelta(event: MouseEvent): number {
+    const delta: number = event.clientX - this.mouseDownStartX;
+    return delta / this.width * (this.max - this.min);
+  }
+
+  calculateHandlePositionForValue(value: number) {
+    return (value - this.min) / (this.max - this.min) * this.width
   }
 
   triggerValueChange(): void {
