@@ -125,7 +125,6 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   }
 
   ngAfterViewInit(): void {
-    console.log(this.stopHandleWidth);
     this.stopHandle.height = this.stopHandleHeight;
     this.stopHandle.width = this.stopHandleWidth;
     this.stopHandle.x = this.width - this.stopHandleWidth;
