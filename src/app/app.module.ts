@@ -6,7 +6,6 @@ import { KnobComponent } from './ui-elements/knob/knob.component';
 import { SliderComponent } from './ui-elements/slider/slider.component';
 import { SwitchComponent } from './switch/switch.component';
 import { AdsrEnvelopeComponent } from './ui-elements/adsr-envelope/adsr-envelope.component';
-import { PanningKnobComponent } from './panning-knob/panning-knob.component';
 import { OscilloscopeComponent } from './components/oscilloscope/oscilloscope.component';
 import { WaveformSelectComponent } from './waveform-select/waveform-select.component';
 import { SimpleSynthComponent } from './instruments/simple-synth/simple-synth.component';
@@ -57,7 +56,6 @@ import {HorizontalRangeSliderComponent} from "./ui-elements/horizontal-range-sli
     SliderComponent,
     SwitchComponent,
     AdsrEnvelopeComponent,
-    PanningKnobComponent,
     OscilloscopeComponent,
     WaveformSelectComponent,
     SimpleSynthComponent,
