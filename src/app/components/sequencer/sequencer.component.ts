@@ -1,9 +1,9 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import * as Tone from "tone";
-import {InsAttackReleasePayload, SynthService} from "../synth.service";
+import {InsAttackReleasePayload, SynthService} from "../../synth.service";
 import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
-import {PresetManagerService, InsPreset} from "../preset-manager/preset-manager.service";
+import {PresetManagerService, InsPreset} from "../../managers/preset-manager/preset-manager.service";
 
 export interface SequencerStep {
   id: number;

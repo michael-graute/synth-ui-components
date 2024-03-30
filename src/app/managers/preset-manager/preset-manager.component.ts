@@ -1,5 +1,5 @@
 import {Component, HostListener} from '@angular/core';
-import {SynthService} from "../synth.service";
+import {SynthService} from "../../synth.service";
 import {PresetManagerService} from "./preset-manager.service";
 
 export type InsPreset = {

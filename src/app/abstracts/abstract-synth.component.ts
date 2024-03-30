@@ -2,8 +2,8 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {v4 as uuidv4} from 'uuid';
 import {Subscription} from "rxjs";
 import {SynthService} from "../synth.service";
-import {PresetManagerService, InsPreset} from "../preset-manager/preset-manager.service";
-import {UndoManagerService} from "../undo-manager/undo-manager.service";
+import {PresetManagerService, InsPreset} from "../managers/preset-manager/preset-manager.service";
+import {UndoManagerService} from "../managers/undo-manager/undo-manager.service";
 
 @Component({template: ''})
 export class AbstractSynthComponent<T> implements OnInit, OnDestroy {

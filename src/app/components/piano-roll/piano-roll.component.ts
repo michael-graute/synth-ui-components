@@ -1,10 +1,10 @@
 import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import * as Tone from "tone";
-import {SynthService} from "../synth.service";
+import {SynthService} from "../../synth.service";
 import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from "uuid";
-import {InsPreset, PresetManagerService} from "../preset-manager/preset-manager.service";
-import {UndoManagerService} from "../undo-manager/undo-manager.service";
+import {InsPreset, PresetManagerService} from "../../managers/preset-manager/preset-manager.service";
+import {UndoManagerService} from "../../managers/undo-manager/undo-manager.service";
 
 export type PianoRollStep = {
   id: string;

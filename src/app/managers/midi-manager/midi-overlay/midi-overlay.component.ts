@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {MidiCCEvent, MidiManagerService, MidiMap} from "../midi-manager.service";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {convertRange} from "../../utils";
+import {convertRange} from "../../../utils";
 import {v4 as uuidv4} from 'uuid';
 
 

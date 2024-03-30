@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {SynthService} from "../synth.service";
+import {SynthService} from "../../synth.service";
 
 export type MidiCCEvent = {
   control: number;

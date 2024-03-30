@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
-import {InsAttackReleasePayload, InsNoteOnPayload, SynthService} from "../synth.service";
+import {InsAttackReleasePayload, InsNoteOnPayload, SynthService} from "../../synth.service";
 import * as Tone from "tone";
 
 
