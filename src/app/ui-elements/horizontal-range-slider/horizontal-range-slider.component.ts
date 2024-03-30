@@ -48,6 +48,10 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   @Input() labelTextWeight: number = 300;
   @Input() valueTextSize: string = 'small';
   @Input() valueTextWeight: number = 300;
+  @Input() startHandleWidth: number = 20;
+  @Input() startHandleHeight: number = this.height;
+  @Input() stopHandleWidth: number = 20;
+  @Input() stopHandleHeight: number = this.height;
 
   @Output() change: EventEmitter<ChangeEventPayload> = new EventEmitter<ChangeEventPayload>();
   @Output() contextClick: EventEmitter<any> = new EventEmitter<any>();
@@ -60,8 +64,10 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   private oldValue: number[] = [this.min, this.max];
   private mouseDownStartX: number = 0;
   // private mouseOver: boolean = false;
-  private startHandle: SliderHandle = new SliderHandle(0,0, this.height, this.height);
-  private stopHandle: SliderHandle = new SliderHandle(this.width - this.height,0, this.height, this.height);
+  private startHandle: SliderHandle = new SliderHandle(0,0, this.startHandleWidth, this.startHandleHeight);
+  private stopHandle: SliderHandle = new SliderHandle(this.width - this.stopHandleWidth,0, this.stopHandleWidth, this.stopHandleHeight);
+  private dragObject: SliderHandle | undefined;
+  private dragValue: number = this.start;
 
 
   set value(value: number[])
@@ -119,6 +125,12 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   }
 
   ngAfterViewInit(): void {
+    console.log(this.stopHandleWidth);
+    this.stopHandle.height = this.stopHandleHeight;
+    this.stopHandle.width = this.stopHandleWidth;
+    this.stopHandle.x = this.width - this.stopHandleWidth;
+    this.startHandle.height = this.startHandleHeight;
+    this.startHandle.width = this.startHandleWidth;
     this.draw();
   }
 
@@ -151,28 +163,27 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
     this.mouseDown = true;
     this.mouseDownStartX = event.clientX;
     this.oldValue = this.value;
-    console.log(this.startHandle.hitTest([event.offsetX, event.offsetY]));
-    console.log(this.stopHandle.hitTest([event.offsetX, event.offsetY]));
-    this.start = Math.min(Math.max(this.start + this.calculateDelta(event), this.min), this.max);
+    this.checkIfHandleIsHit(event);
+    this.dragValue = Math.min(Math.max(this.dragValue + this.calculateDelta(event), this.min), this.max);
   }
 
   @HostListener('mouseup')
   @HostListener('mouseout')
   handleMouseUpOrOut(): void {
     this.mouseDown = false;
+    this.dragObject = undefined;
     this.triggerValueChange();
-    this.startHandle.hover = false;
   }
 
   @HostListener('mousemove', ['$event'])
   handleMouseMove(event: MouseEvent): void {
     if(this.startHandle.hitTest([event.offsetX, event.offsetY])) this.startHandle.hover = true;
     this.draw();
-    if (!this.mouseDown) return;
-      const startValue = Math.floor(Math.min(Math.max(this.start + this.calculateDelta(event), this.min), this.max));
-      console.log('startValue', startValue);
-      console.log('startPosition', this.calculateHandlePositionForValue(startValue));
-      this.startHandle.x = this.calculateHandlePositionForValue(startValue);
+    if (!this.mouseDown || ! this.dragObject) return;
+    const dragValue = Math.floor(Math.min(Math.max(this.dragValue + this.calculateDelta(event), this.min), this.max));
+    console.log('dragValue', dragValue);
+    console.log('dragPosition', this.calculateHandlePositionForValue(dragValue));
+    this.dragObject.x = this.calculateHandlePositionForValue(dragValue);
   }
 
   calculateDelta(event: MouseEvent): number {
@@ -182,6 +193,18 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
 
   calculateHandlePositionForValue(value: number) {
     return (value - this.min) / (this.max - this.min) * this.width
+  }
+
+  checkIfHandleIsHit(event: MouseEvent)
+  {
+    if(this.startHandle.hitTest([event.offsetX, event.offsetY])) {
+      this.dragObject = this.startHandle;
+      this.dragValue = this.start;
+    }
+    if(this.stopHandle.hitTest([event.offsetX, event.offsetY])) {
+      this.dragObject = this.stopHandle;
+      this.dragValue = this.stop;
+    }
   }
 
   triggerValueChange(): void {

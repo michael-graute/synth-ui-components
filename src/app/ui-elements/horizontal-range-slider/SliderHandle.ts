@@ -1,12 +1,12 @@
 export class SliderHandle {
 
   private _x: number;
-  private _y: number;
+  private readonly _y: number;
   private _width: number;
   private _height: number;
-  private _baseColor: string;
-  private _activeColor: string;
-  private _hoverColor: string;
+  private readonly _baseColor: string;
+  private readonly _activeColor: string;
+  private readonly _hoverColor: string;
   public hover: boolean = false;
   public active: boolean = false;
 
@@ -28,9 +28,9 @@ export class SliderHandle {
     return this._x;
   }
 
-  set y(value: number) {
+  /*set y(value: number) {
     this._y = value;
-  }
+  }*/
 
   get y(): number {
     return this._y;
