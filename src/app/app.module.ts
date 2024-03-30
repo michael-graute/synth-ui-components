@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import {FormsModule} from "@angular/forms";
 import { KnobComponent } from './ui-elements/knob/knob.component';
 import { SliderComponent } from './ui-elements/slider/slider.component';
-import { SwitchComponent } from './switch/switch.component';
+import { SwitchComponent } from './ui-elements/switch/switch.component';
 import { AdsrEnvelopeComponent } from './ui-elements/adsr-envelope/adsr-envelope.component';
 import { OscilloscopeComponent } from './components/oscilloscope/oscilloscope.component';
 import { WaveformSelectComponent } from './waveform-select/waveform-select.component';
