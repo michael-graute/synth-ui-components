@@ -34,6 +34,7 @@
           <ins-button-group label="Select Buttons" [options]="[{label: 'Foo', value: 'foo'}, {label: 'Bar', value: 'bar'}, {label: 'Baz', value: 'baz'}]" value="bar"></ins-button-group>
           <ins-waveform-select label="Waveform" value="sine"></ins-waveform-select>
         </div>
+        <ins-select [multiple]="false" [tags]="true" [value]="'foo'" [options]="[{label: 'Foo', value: 'foo', tags:['foo', 'bar']}, {label: 'Bar', value: 'bar', tags:['foo', 'bar']}, {label: 'Baz', value: 'baz', tags:['foo', 'bar', 'baz', 'bar baz']}]"></ins-select>
         <ins-divider label="ADSR - Envelope"></ins-divider>
         <ins-adsr-envelope id="showcaseADSR" [height]="50" [(ngModel)]="adsr"></ins-adsr-envelope>
       </div>

@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  min-width: 100px;
+  position: relative;
+}
+
+.ins-select__popup {
+  display: none;
+  position: absolute;
+  background: #2b3035;
+  border: 1px solid #494b4f;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+
+  &.open {
+    display: block;
+  }
+
+  ul.ins-select__options-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    .ins-select__options-list__list-item {
+      cursor: pointer;
+
+      &.selected {
+        background: #212529;
+      }
+
+      .ins-select__options-list__list-item__inner-container {
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+
+        p {
+          margin: 0;
+        }
+
+      }
+
+    }
+
+  }
+
+}
+

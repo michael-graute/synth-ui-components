@@ -18,6 +18,11 @@ export type ChangeEventPayload = {
   new : number[];
 }
 
+export type RangeSliderValue = {
+  start: number,
+  stop: number
+}
+
 @Component({
   selector: 'ins-horizontal-range-slider',
   templateUrl: './horizontal-range-slider.component.html',
@@ -40,9 +45,9 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   @Input() hoverColor: string = '';
   @Input() clickColor: string = '';
   @Input() min: number = 0;
-  @Input() max: number = 250;
+  @Input() max: number = 16;
   @Input() step: number = 1;
-  @Input() width: number = 800;
+  @Input() width: number = 320;
   @Input() height: number = 20;
   @Input() labelTextSize: string = 'x-small';
   @Input() labelTextWeight: number = 300;
@@ -58,16 +63,15 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
 
   @ViewChild('rangeSliderCanvas') rangeSliderCanvas: ElementRef | undefined;
 
-  public mouseDown: boolean = false;
-
-  private internalValue: number[] = [this.min, this.max];
+  private mouseDown: boolean = false;
+  private internalValue: RangeSliderValue = {start: this.min, stop: this.max};
   private oldValue: number[] = [this.min, this.max];
   private mouseDownStartX: number = 0;
   // private mouseOver: boolean = false;
-  private startHandle: SliderHandle = new SliderHandle(0,0, this.startHandleWidth, this.startHandleHeight);
-  private stopHandle: SliderHandle = new SliderHandle(this.width - this.stopHandleWidth,0, this.stopHandleWidth, this.stopHandleHeight);
+  private startHandle: SliderHandle = new SliderHandle(0,0, this.startHandleWidth, this.startHandleHeight, 'start');
+  private stopHandle: SliderHandle = new SliderHandle(this.width - this.stopHandleWidth,0, this.stopHandleWidth, this.stopHandleHeight, 'stop');
   private dragObject: SliderHandle | undefined;
-  private dragValue: number = this.start;
+  private dragValue: number = 0;
 
 
   set value(value: number[])
@@ -77,29 +81,29 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   }
 
   get value(): number []{
-    return this.internalValue;
+    return [this.internalValue.start, this.internalValue.stop];
   }
 
   @Input()
   set start(value: number) {
-    this.internalValue[0] = value;
+    this.internalValue.start = value;
     this.startHandle.x = value;
     this.draw();
   }
 
   get start(): number {
-    return this.internalValue[0];
+    return this.internalValue.start;
   }
 
   @Input()
   set stop(value: number) {
-    this.internalValue[1] = value;
+    this.internalValue.stop = value;
     this.stopHandle.x = value;
     this.draw();
   }
 
   get stop(): number {
-    return this.internalValue[1];
+    return this.internalValue.stop;
   }
 
   constructor() {
@@ -177,12 +181,23 @@ export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, Co
   @HostListener('mousemove', ['$event'])
   handleMouseMove(event: MouseEvent): void {
     if(this.startHandle.hitTest([event.offsetX, event.offsetY])) this.startHandle.hover = true;
-    this.draw();
-    if (!this.mouseDown || ! this.dragObject) return;
-    const dragValue = Math.floor(Math.min(Math.max(this.dragValue + this.calculateDelta(event), this.min), this.max));
+
+    if (!this.mouseDown || !this.dragObject || this.start >= this.stop) {
+      if(this.start >= this.stop) this.start = this.start - 1;
+      return;
+    }
+    const dragValue = Math.round(Math.min(Math.max(this.dragValue + this.calculateDelta(event), this.min), this.max));
     console.log('dragValue', dragValue);
     console.log('dragPosition', this.calculateHandlePositionForValue(dragValue));
     this.dragObject.x = this.calculateHandlePositionForValue(dragValue);
+    console.log('valueRef', this.dragObject.valueRef);
+    // @ts-ignore
+    this.internalValue[this.dragObject.valueRef] = dragValue;
+    // @ts-ignore
+    console.log('start', this.internalValue[this.dragObject.valueRef])
+    console.log('stop', this.stop);
+    console.log('value', this.value);
+    this.draw();
   }
 
   calculateDelta(event: MouseEvent): number {

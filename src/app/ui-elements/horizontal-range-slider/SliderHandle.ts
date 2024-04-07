@@ -7,10 +7,11 @@ export class SliderHandle {
   private readonly _baseColor: string;
   private readonly _activeColor: string;
   private readonly _hoverColor: string;
+  private _valueRef: string;
   public hover: boolean = false;
   public active: boolean = false;
 
-  constructor(x: number, y: number, width: number, height: number, baseColor: string = '#ffffff', hoverColor: string = '#cccccc', activeColor: string =  '#9c9c9c') {
+  constructor(x: number, y: number, width: number, height: number, valueRef:string, baseColor: string = '#ffffff', hoverColor: string = '#cccccc', activeColor: string =  '#9c9c9c') {
     this._x = x;
     this._y = y;
     this._width = width;
@@ -18,6 +19,7 @@ export class SliderHandle {
     this._baseColor = baseColor;
     this._activeColor = activeColor;
     this._hoverColor = hoverColor;
+    this._valueRef = valueRef;
   }
 
   set x(value: number) {
@@ -26,6 +28,16 @@ export class SliderHandle {
 
   get x(): number {
     return this._x;
+  }
+
+  get valueRef(): string
+  {
+    return this._valueRef
+  }
+
+  set valueRef(value: string)
+  {
+    this._valueRef = value;
   }
 
   /*set y(value: number) {

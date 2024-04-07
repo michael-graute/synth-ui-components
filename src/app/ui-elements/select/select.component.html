@@ -1,0 +1,20 @@
+<div class="ins-select__display row" (click)="toggleOpen()">
+  <div class="ins-select__display__current-selected col-11">
+    {{ getSelectDisplay() }}
+  </div>
+  <div class="ins-select__display__open-close-indicator ins-select__display__open-close-indicator_closed col-1">
+    <i *ngIf="!isOpen" class="bi bi-chevron-down"></i>
+    <i *ngIf="isOpen" class="bi bi-chevron-up"></i>
+  </div>
+</div>
+<div class="ins-select__popup" [ngClass]="{'open': isOpen}">
+  <input type="text" class="ins-select__popup__search" (keydown)="searchBarKeyDown($event)">
+  <ul class="ins-select__options-list">
+    <li *ngFor="let option of options" class="ins-select__options-list__list-item" [ngClass]="{'selected': optionSelected(option.value)}" (click)="optionClicked(option.value)">
+      <div class="ins-select__options-list__list-item__inner-container">
+        <input *ngIf="multiple" type="checkbox" [disabled]="value.length === 1" [checked]="optionSelected(option.value)" [value]="option.value" [name]="'foobar' + option.value" [id]="'check_' +  option.value">
+        <p>{{ option.label }}</p>
+      </div>
+    </li>
+  </ul>
+</div>

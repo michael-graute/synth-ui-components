@@ -1,6 +1,9 @@
-<div *ngIf="!audioContextReady">
-  <button class="btn btn-primary" (click)="startAudioContext()">start</button><br>
-  <ins-horizontal-range-slider [startHandleWidth]="10" [stopHandleWidth]="10"></ins-horizontal-range-slider>
+<div *ngIf="!audioContextReady" style="display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;">
+  <button class="btn btn-primary" (click)="startAudioContext()">Klick to Start Audio-Context and launch Application</button><br>
 </div>
 <div *ngIf="audioContextReady" class="ins-main-container" [style]="'grid-template-rows: ' + getGridTemplateRows()">
   <nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
@@ -145,20 +148,6 @@
       <ins-waveform-plotter></ins-waveform-plotter>
     </div>
   </div>
-  <!--<div class="card">
-    <div class="card-header">
-      <div class="d-flex justify-content-between align-items-center">Sequencer <ins-switch [(ngModel)]="sequencerVisible" [hasLabel]="false"></ins-switch></div>
-    </div>
-    <div class="card-body">
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>-->
   <div class="card">
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">Keyboard <ins-switch [(ngModel)]="keyboardVisible" [hasLabel]="false"></ins-switch></div>

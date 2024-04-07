@@ -7,7 +7,7 @@ import { SliderComponent } from './ui-elements/slider/slider.component';
 import { SwitchComponent } from './ui-elements/switch/switch.component';
 import { AdsrEnvelopeComponent } from './ui-elements/adsr-envelope/adsr-envelope.component';
 import { OscilloscopeComponent } from './components/oscilloscope/oscilloscope.component';
-import { WaveformSelectComponent } from './waveform-select/waveform-select.component';
+import { WaveformSelectComponent } from './ui-elements/waveform-select/waveform-select.component';
 import { SimpleSynthComponent } from './instruments/simple-synth/simple-synth.component';
 import { KeyboardComponent} from "./components/keyboard/keyboard.component";
 import { ButtonGroupComponent } from "./ui-elements/button-group/button-group.component";
@@ -45,6 +45,7 @@ import {NoiseSynthComponent} from "./instruments/noise-synth/noise-synth.compone
 import {SamplerComponent} from "./instruments/sampler/sampler.component";
 import {PianoRollComponent} from "./components/piano-roll/piano-roll.component";
 import {HorizontalRangeSliderComponent} from "./ui-elements/horizontal-range-slider/horizontal-range-slider.component";
+import {SelectComponent} from "./ui-elements/select/select.component";
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import {HorizontalRangeSliderComponent} from "./ui-elements/horizontal-range-sli
     NoiseSynthComponent,
     SamplerComponent,
     PianoRollComponent,
-    HorizontalRangeSliderComponent
+    HorizontalRangeSliderComponent,
+    SelectComponent
   ],
   imports: [
     BrowserModule,
