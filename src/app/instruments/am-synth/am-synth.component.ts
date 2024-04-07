@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
-import * as Tone from "tone";
+import {PolySynth, AMSynth} from "tone";
 import {ADSREnvelopeConfig, OscillatorConfig} from "../../types/config.types";
-import {AMSynth} from "tone";
 
 export type AmSynthConfig = {
   volume: number;
@@ -28,7 +27,7 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
   @Input() polyphonic: boolean = true;
 
   protected override componentType: string = 'instrument';
-  protected override instrument: Tone.PolySynth | Tone.AMSynth = new Tone.PolySynth(Tone.AMSynth);
+  protected override instrument: PolySynth | AMSynth = new PolySynth(AMSynth);
   override config: AmSynthConfig = {
     volume: -15,
     active: false,
@@ -66,14 +65,12 @@ export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
 
   override ngOnInit() {
     if(this.polyphonic) {
-      this.instrument = new Tone.PolySynth(Tone.AMSynth);
+      this.instrument = new PolySynth(AMSynth);
     } else {
-      this.instrument = new Tone.AMSynth();
+      this.instrument = new AMSynth();
     }
     super.ngOnInit();
   }
-
-
 
   set type(type: any) {
     this.instrument.set({oscillator: {type: type}});
