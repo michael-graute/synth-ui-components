@@ -1,3 +1,4 @@
+<label *ngIf="label" class="ins-select__label" (click)="toggleOpen()">{{ label }}</label>
 <div class="ins-select__display row" (click)="toggleOpen()">
   <div class="ins-select__display__current-selected col-11">
     {{ getSelectDisplay() }}

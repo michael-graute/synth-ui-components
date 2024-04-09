@@ -4,6 +4,13 @@
   position: relative;
 }
 
+.ins-select__label {
+  font-size: x-small;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
 .ins-select__display {
 
   cursor: pointer;

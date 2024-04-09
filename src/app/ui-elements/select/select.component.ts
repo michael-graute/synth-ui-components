@@ -21,6 +21,7 @@ export type SelectOption = {
 })
 export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewInit {
 
+  @Input() label: string | null = null;
   @Input() multiple: boolean = false;
   @Input() searchEnabled: boolean = false;
   @Input() tags: boolean = false;
