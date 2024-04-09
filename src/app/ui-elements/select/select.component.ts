@@ -96,6 +96,7 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
       }
     } else {
       this.value = value;
+      this.toggleOpen();
     }
     this.onChange();
   }
