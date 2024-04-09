@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 export type SelectOption = {
@@ -19,15 +19,25 @@ export type SelectOption = {
     }
   ]
 })
-export class SelectComponent implements ControlValueAccessor {
+export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewInit {
 
   @Input() multiple: boolean = false;
+  @Input() searchEnabled: boolean = false;
   @Input() tags: boolean = false;
   @Input() options: SelectOption[] = [];
   @Output() change: EventEmitter<string | string[]> = new EventEmitter<string | string[]>();
 
   private _value: string | string[] = '';
   public isOpen: boolean = false;
+  public filteredOptions: SelectOption[] = [];
+
+  ngOnInit() {
+    this.filteredOptions = this.options;
+  }
+
+  ngAfterViewInit() {
+
+  }
 
   @Input()
   set value(value: string | string[])
@@ -91,8 +101,15 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   searchBarKeyDown(event: KeyboardEvent) {
-    const inputField: HTMLInputElement = event.target as HTMLInputElement
-    console.log(inputField.value);
+    event.stopPropagation();
+  }
+
+  searchBarKeyUp(event: KeyboardEvent): void {
+    const inputField: HTMLInputElement = event.target as HTMLInputElement;
+    const searchValue = inputField.value.toLowerCase();
+    console.log(searchValue);
+    this.filteredOptions = this.options.filter((option: SelectOption) => option.label.toLowerCase().startsWith(searchValue));
+    console.log(this.filteredOptions);
     event.stopPropagation();
   }
 
