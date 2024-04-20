@@ -79,9 +79,13 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
 
   getSelectDisplay(): string {
     if(this.multiple && Array.isArray(this.value)) {
-      return this.value.join(', ');
+      let labels: string[] = [];
+      this.value.forEach(value => {
+        labels.push(this.options.find(option => option.value === value)?.label ?? '');
+      })
+      return labels.join(', ');
     }
-    return this.value as string;
+    return this.options.find(option => option.value === this.value as string)?.label ?? '';
   }
 
   toggleOpen() {

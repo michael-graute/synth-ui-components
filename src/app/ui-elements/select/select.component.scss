@@ -1,7 +1,7 @@
 :host {
   display: block;
-  min-width: 100px;
   position: relative;
+  width: -webkit-fill-available;
 }
 
 .ins-select__label {
@@ -40,7 +40,10 @@
 }
 
 .ins-select__popup {
-  display: none;
+  display: block;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
   position: absolute;
   background: #2b3035;
   border: 1px solid #494b4f;
@@ -50,7 +53,9 @@
   padding: 10px;
 
   &.open {
-    display: block;
+    height: auto;
+    overflow: auto;
+    opacity: 1;
   }
 
   .ins-select__popup__search__wrapper {
@@ -61,6 +66,7 @@
     margin-top: -10px;
     background: #212529;
     padding: 10px;
+    border-bottom: 1px solid #494b4f;
 
     .ins-select__popup__search__input {
       width: 100%;
