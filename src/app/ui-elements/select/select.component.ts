@@ -63,7 +63,7 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
     this.onChange = fn;
   }
 
-  onChange() {
+  onChange(value: string | string[]) {
     this.change.emit(this.value);
   }
 
@@ -103,7 +103,7 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
       this.value = value;
       this.toggleOpen();
     }
-    this.onChange();
+    this.onChange(this.value);
   }
 
   searchBarKeyDown(event: KeyboardEvent) {

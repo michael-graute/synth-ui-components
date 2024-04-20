@@ -144,8 +144,10 @@
     <div class="container" style="overflow: auto" [ngClass]="{'hidden': page !== 'elements'}">
       <ins-elements-showcase></ins-elements-showcase>
     </div>
-    <div class="container" style="overflow: auto" [ngClass]="{'hidden': page !== 'playground'}">
-      <ins-waveform-plotter></ins-waveform-plotter>
+    <div class="container" style="overflow: auto; height: 100%" [ngClass]="{'hidden': page !== 'playground'}">
+      <!--<ins-waveform-plotter></ins-waveform-plotter>-->
+      <h3 class="mb-4">Scale Generator</h3>
+      <ins-scale-builder></ins-scale-builder>
     </div>
   </div>
   <div class="card">

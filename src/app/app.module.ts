@@ -46,6 +46,7 @@ import {SamplerComponent} from "./instruments/sampler/sampler.component";
 import {PianoRollComponent} from "./components/piano-roll/piano-roll.component";
 import {HorizontalRangeSliderComponent} from "./ui-elements/horizontal-range-slider/horizontal-range-slider.component";
 import {SelectComponent} from "./ui-elements/select/select.component";
+import {ScaleBuilderComponent} from "./components/scale-builder/scale-builder.component";
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import {SelectComponent} from "./ui-elements/select/select.component";
     SamplerComponent,
     PianoRollComponent,
     HorizontalRangeSliderComponent,
-    SelectComponent
+    SelectComponent,
+    ScaleBuilderComponent
   ],
   imports: [
     BrowserModule,
