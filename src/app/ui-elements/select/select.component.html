@@ -1,15 +1,19 @@
-<label *ngIf="label" class="ins-select__label" (click)="toggleOpen()">{{ label }}</label>
-<div class="ins-select__display row" (click)="toggleOpen()">
-  <div class="ins-select__display__current-selected col-11">
+<span *ngIf="label" class="ins-select__label" (click)="toggleOpen()">{{ label }}</span>
+<div class="ins-select__display" (click)="toggleOpen()">
+  <div class="ins-select__display__current-selected">
     {{ getSelectDisplay() }}
   </div>
-  <div class="ins-select__display__open-close-indicator ins-select__display__open-close-indicator_closed col-1">
+  <div class="ins-select__display__open-close-indicator ins-select__display__open-close-indicator_closed">
     <i *ngIf="!isOpen" class="bi bi-chevron-down"></i>
     <i *ngIf="isOpen" class="bi bi-chevron-up"></i>
   </div>
 </div>
 <div class="ins-select__popup" [ngClass]="{'open': isOpen}">
-  <input *ngIf="searchEnabled" type="text" class="ins-select__popup__search" (keydown)="searchBarKeyDown($event)" (keyup)="searchBarKeyUp($event)">
+  <div class="ins-select__popup__search__wrapper mb-2">
+    <input *ngIf="searchEnabled" type="text" class="ins-select__popup__search__input" (keydown)="searchBarKeyDown($event)" (keyup)="searchBarKeyUp($event)">
+    <i class="bi bi-search ins-select__popup__search__icon"></i>
+  </div>
+
   <ul class="ins-select__options-list">
     <li *ngFor="let option of filteredOptions" class="ins-select__options-list__list-item" [ngClass]="{'selected': optionSelected(option.value)}" (click)="optionClicked(option.value)">
       <div class="ins-select__options-list__list-item__inner-container">
