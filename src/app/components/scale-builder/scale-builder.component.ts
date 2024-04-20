@@ -41,6 +41,15 @@ export class ScaleBuilderComponent implements OnInit {
     {
       label: 'Mixolydian Mode',
       value: 'mixolydian-mode'
+    },
+    {
+      label: 'Major Pentatonic',
+      value: 'major-pentatonic'
+    }
+    ,
+    {
+      label: 'Minor Pentatonic',
+      value: 'minor-pentatonic'
     }
   ];
   public notes: string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -52,9 +61,13 @@ export class ScaleBuilderComponent implements OnInit {
   }
 
   generateScale() {
-    //console.log(this.baseScale);
-    this.currentGeneratedScale = this.scaleBuilderService.getScaleForFormula(this.baseScale, this.notes[this.baseNote], this.baseOctave);
-    console.log(this.scaleBuilderService.getScaleForFormula(this.baseScale, this.notes[this.baseNote], this.baseOctave))
+    if(this.baseScale === 'major-pentatonic') {
+      this.currentGeneratedScale = this.scaleBuilderService.getMajorPentatonicForRootNote(this.notes[this.baseNote], this.baseOctave);
+    } else if(this.baseScale === 'minor-pentatonic') {
+      this.currentGeneratedScale = this.scaleBuilderService.getMinorPentatonicForRootNote(this.notes[this.baseNote], this.baseOctave);
+    } else {
+      this.currentGeneratedScale = this.scaleBuilderService.getScaleForFormula(this.baseScale, this.notes[this.baseNote], this.baseOctave);
+    }
   }
 
   noteButtonDown(note: string) {

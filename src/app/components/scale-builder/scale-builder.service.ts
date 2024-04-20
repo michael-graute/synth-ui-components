@@ -14,7 +14,7 @@ export class ScaleBuilderService {
     'dorian-mode': [2,1,2,2,2,1],
     'mixolydian-mode': [2,2,1,2,2,1],
     'major-pentatonic': [1,2,3,5,6],
-    'minor-pentatonic': [1,2.5,4,5,6.5]
+    'minor-pentatonic': [1,3.5,4,5,7.5]
   }
 
   constructor() { }
@@ -74,6 +74,15 @@ export class ScaleBuilderService {
   }
 
   getMinorPentatonicForRootNote(rootNote: string, octave:number = 3, type: 'natural' | 'harmonic' | 'melodic' = 'natural'): string[] {
-    return [];
+    const baseScale = this.getMinorScaleForRootNote(rootNote, octave);
+    let notes: string[] = [];
+    this.formulas['minor-pentatonic'].forEach((noteIndex: number):void => {
+      let newNoteIndex = noteIndex
+      if(!Number.isInteger(noteIndex)) {
+        newNoteIndex = Math.floor(noteIndex);
+      }
+      notes.push(baseScale[newNoteIndex - 1]);
+    })
+    return notes;
   }
 }
