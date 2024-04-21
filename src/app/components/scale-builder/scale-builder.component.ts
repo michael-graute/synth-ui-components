@@ -4,6 +4,7 @@ import {InsAttackReleasePayload, SynthService} from "../../synth.service";
 import {ScaleBuilderService} from "./scale-builder.service";
 import * as Tone from "tone";
 import {SequencerStep} from "../sequencer/sequencer.component";
+import {getRandomInt} from "../../utils";
 
 @Component({
   selector: 'ins-scale-builder',
@@ -58,7 +59,11 @@ export class ScaleBuilderComponent implements OnInit {
 
   public playing: boolean = false;
   public currentPlayingNote: string = '';
+  public currentPlayingIndex: number = 0;
   private loop: Tone.Loop | undefined;
+
+  public randomStepCount: number = 16;
+  public randomOctaveCount: number = 3;
 
   constructor(private scaleBuilderService: ScaleBuilderService, private synthService: SynthService, private changeDetectorRef: ChangeDetectorRef) {
   }
@@ -66,14 +71,37 @@ export class ScaleBuilderComponent implements OnInit {
   ngOnInit() {
   }
 
-  generateScale() {
-    if(this.baseScale === 'major-pentatonic') {
-      this.currentGeneratedScale = this.scaleBuilderService.getMajorPentatonicForRootNote(this.notes[this.baseNote], this.baseOctave);
-    } else if(this.baseScale === 'minor-pentatonic') {
-      this.currentGeneratedScale = this.scaleBuilderService.getMinorPentatonicForRootNote(this.notes[this.baseNote], this.baseOctave);
-    } else {
-      this.currentGeneratedScale = this.scaleBuilderService.getScaleForFormula(this.baseScale, this.notes[this.baseNote], this.baseOctave);
+  getBaseScale(octave: number|null = null): string[] {
+    let scale: string[] = [];
+    if(null === octave) {
+      octave = this.baseOctave;
     }
+    if(this.baseScale === 'major-pentatonic') {
+      scale = this.scaleBuilderService.getMajorPentatonicForRootNote(this.notes[this.baseNote], octave);
+    } else if(this.baseScale === 'minor-pentatonic') {
+      scale = this.scaleBuilderService.getMinorPentatonicForRootNote(this.notes[this.baseNote], octave);
+    } else {
+      scale = this.scaleBuilderService.getScaleForFormula(this.baseScale, this.notes[this.baseNote], octave);
+    }
+    return scale;
+  }
+
+  generateScale() {
+    this.currentGeneratedScale = this.getBaseScale();
+  }
+
+  randomizeScale(): void {
+    let scale: string[] = []
+    for(let i: number = 0; i < this.randomOctaveCount; i++) {
+      const tmpScale: string[] = this.getBaseScale(this.baseOctave + i);
+      scale = scale.concat(tmpScale);
+    }
+    const randomNotes: string[] = [];
+    for(let i: number = 0; i < this.randomStepCount; i++) {
+      const rand: number = getRandomInt(0, scale.length - 1);
+      randomNotes.push(scale[rand]);
+    }
+    this.currentGeneratedScale = randomNotes;
   }
 
   noteButtonDown(note: string) {
@@ -87,6 +115,7 @@ export class ScaleBuilderComponent implements OnInit {
   play(): void {
     this.playing = true;
     let index = 0;
+    let backward = false;
     this.loop = new Tone.Loop((time: number): void => {
       const note: string = this.currentGeneratedScale[index];
       const attackReleaseOptions: InsAttackReleasePayload = {
@@ -97,8 +126,17 @@ export class ScaleBuilderComponent implements OnInit {
       }
       this.synthService.attackRelease(attackReleaseOptions);
       this.currentPlayingNote = note;
+      this.currentPlayingIndex = index;
       this.changeDetectorRef.detectChanges();
-      index = (index + 1) % this.currentGeneratedScale.length;
+      if(index === 0 || (index < this.currentGeneratedScale.length - 1 && !backward)) {
+        index = (index + 1);
+      } else {
+        backward = true;
+        index = (index - 1);
+        if(index === 0) {
+          backward = false;
+        }
+      }
     }, "4n").start(0);
     Tone.Transport.bpm.value = 120;
     Tone.Transport.start();

@@ -16,13 +16,41 @@
   gap: 5px;
 
   .btn {
+
+    &:disabled {
+      opacity: .2;
+    }
+
+    &:active {
+      color: #00a4e1;
+      background-color: #364551;
+      border-color: #808080;
+    }
+
+    &.ins-btn-play {
+      &:disabled {
+        opacity: 1;
+      }
+      &:active {
+        background: #8bc34b;
+        color: white;
+      }
+    }
+
+    &.ins-btn-record {
+      &:active {
+        background: #ef724b;
+        color: white;
+      }
+    }
+
     &.recording {
-      background: darkred;
+      background: #ef724b;
       color: white;
     }
 
     &.playing {
-      background: #3a620d;
+      background: #8bc34b;
       color: white;
     }
 
