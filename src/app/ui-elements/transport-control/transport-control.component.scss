@@ -1,16 +1,42 @@
 :host {
-  display: flex;
-  gap: 5px;
+  display: block;
 }
 
-.btn {
-  &.recording {
-    background: darkred;
-    color: white;
+.ins-transport-control__label {
+  font-size: x-small;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--text-color);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.ins-transport-control__wrapper {
+  display: flex;
+  gap: 5px;
+
+  .btn {
+    &.recording {
+      background: darkred;
+      color: white;
+    }
+
+    &.playing {
+      background: #3a620d;
+      color: white;
+    }
+
+    &.ins-btn-fast-backward {
+      i {
+        &.bi {
+          &.bi-fast-forward-fill {
+            &:before {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+    }
   }
 
-  &.playing {
-    background: #3a620d;
-    color: white;
-  }
 }

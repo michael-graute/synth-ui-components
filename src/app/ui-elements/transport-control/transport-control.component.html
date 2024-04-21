@@ -1,4 +1,11 @@
-<button class="btn btn-primary" [ngClass]="{playing: playing}" [disabled]="playing" *ngIf="playButton" (click)="onPlayButtonClick()"><i class="bi bi-play-fill"></i></button>
-<button class="btn btn-primary" [disabled]="!playing" *ngIf="pauseButton" (click)="onPauseButtonClick()"><i class="bi bi-pause-fill"></i></button>
-<button class="btn btn-primary" [disabled]="!playing" *ngIf="stopButton" (click)="onStopButtonClick()"><i class="bi bi-stop-fill"></i></button>
-<button class="btn btn-primary" [ngClass]="{recording: recording}" *ngIf="recordButton" (click)="onRecordButtonClick()"><i class="bi bi-record-fill"></i></button>
+<span *ngIf="label" class="ins-transport-control__label">{{label}}</span>
+<div class="ins-transport-control__wrapper">
+  <button class="btn btn-primary ins-btn-skip-back" [disabled]="disabled" *ngIf="fastButtons" (click)="onSkipBackButtonClick()"><i class="bi bi-skip-backward-fill"></i></button>
+  <button class="btn btn-primary ins-btn-fast-backward" [disabled]="disabled" *ngIf="fastButtons" (mousedown)="onFBWDButtonDown()" (mouseup)="onFBWDButtonUp()"><i class="bi bi-fast-forward-fill"></i></button>
+  <button class="btn btn-primary ins-btn-play" [disabled]="playing || disabled" [ngClass]="{playing: playing}" *ngIf="playButton" (click)="onPlayButtonClick()"><i class="bi bi-play-fill"></i></button>
+  <button class="btn btn-primary ins-btn-pause" [disabled]="!playing || disabled" *ngIf="pauseButton" (click)="onPauseButtonClick()"><i class="bi bi-pause-fill"></i></button>
+  <button class="btn btn-primary ins-btn-stop" [disabled]="!playing || disabled" *ngIf="stopButton" (click)="onStopButtonClick()"><i class="bi bi-stop-fill"></i></button>
+  <button class="btn btn-primary ins-btn-record" [disabled]="disabled" [ngClass]="{recording: recording}" *ngIf="recordButton" (click)="onRecordButtonClick()"><i class="bi bi-record-fill"></i></button>
+  <button class="btn btn-primary ins-btn-fast-forward" [disabled]="disabled" *ngIf="fastButtons" (mousedown)="onFFWDButtonDown()" (mouseup)="onFBWDButtonUp()"><i class="bi bi-fast-forward-fill"></i></button>
+  <button class="btn btn-primary ins-btn-skip-forward" [disabled]="disabled" *ngIf="fastButtons" (click)="onSkipForwardButtonClick()"><i class="bi bi-skip-forward-fill"></i></button>
+</div>

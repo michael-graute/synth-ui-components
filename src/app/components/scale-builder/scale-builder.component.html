@@ -3,8 +3,7 @@
   <ins-knob [id]="id + 'KnobOctave'" type="dot" [min]="1" [max]="6" [step]="1" [(ngModel)]="baseOctave" label="Octave" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
   <ins-select [value]="'major'" [options]="scaleOptions" [(ngModel)]="baseScale"></ins-select>
   <button class="btn btn-primary" (click)="generateScale()">Generate&nbsp;Scale</button>
-  <button class="btn btn-primary" [disabled]="playing || currentGeneratedScale.length === 0" (click)="play()"><i class="bi bi-play-fill"></i></button>
-  <button class="btn btn-primary" [disabled]="!playing" (click)="stop()"><i class="bi bi-stop-fill"></i></button>
+  <ins-transport-control [disabled]="currentGeneratedScale.length === 0" [recordButton]="false" [pauseButton]="false" (playButtonClick)="play()" (stopButtonClick)="stop()"></ins-transport-control>
 </div>
 <div class="d-flex gap-2">
   <button (mousedown)="noteButtonDown(note)" [ngClass]="{playing: playing && currentPlayingNote === note}" (mouseup)="noteButtonUp(note)" [disabled]="playing" class="btn btn-secondary btn-sm" *ngFor="let note of currentGeneratedScale">{{ note }}</button>

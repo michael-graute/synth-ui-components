@@ -12,7 +12,7 @@
     <div class="d-flex gap-1">
         <ins-sequencer-step [ngClass]="{'playing': (playing && currentStep === i) || (recordMode && currentRecordStep === i)}" style="flex-grow: 1; display: block" [keyboardConnected]="keyboardConnected" [config]="step" [armed]="step.armed" *ngFor="let step of availableSteps; let i = index" [active]="i < activeStepCount" [id]="id + 'Step' + i" [playing]="(playing && currentStep === i) || (recordMode && currentRecordStep === i)"></ins-sequencer-step>
     </div>
-    <ins-transport-control [pauseButton]="false" (playButtonClick)="playSequence()" (stopButtonClick)="stopSequence()" (recordButtonClick)="toggleRecordMode()"></ins-transport-control>
+    <ins-transport-control  [recording]="recordMode" [playing]="playing" [pauseButton]="false" (playButtonClick)="playSequence()" (stopButtonClick)="stopSequence()" (recordButtonClick)="toggleRecordMode()"></ins-transport-control>
     <button type="button" class="btn btn-primary mt-3" (click)="playSequence()">Play</button>
     <button type="button" class="btn btn-primary mt-3" (click)="stopSequence()">Stop</button>
     <button type="button" class="btn btn-danger mt-3" (click)="toggleRecordMode()" [ngClass]="{'active': recordMode}">Rec</button>
