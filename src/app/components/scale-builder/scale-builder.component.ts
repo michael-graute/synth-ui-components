@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {v4 as uuidv4} from "uuid";
-import {SynthService} from "../../synth.service";
+import {InsAttackReleasePayload, SynthService} from "../../synth.service";
 import {ScaleBuilderService} from "./scale-builder.service";
+import * as Tone from "tone";
+import {SequencerStep} from "../sequencer/sequencer.component";
 
 @Component({
   selector: 'ins-scale-builder',
@@ -54,7 +56,11 @@ export class ScaleBuilderComponent implements OnInit {
   ];
   public notes: string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 
-  constructor(private scaleBuilderService: ScaleBuilderService, private synthService: SynthService) {
+  public playing: boolean = false;
+  public currentPlayingNote: string = '';
+  private loop: Tone.Loop | undefined;
+
+  constructor(private scaleBuilderService: ScaleBuilderService, private synthService: SynthService, private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -76,5 +82,32 @@ export class ScaleBuilderComponent implements OnInit {
 
   noteButtonUp(note: string) {
     this.synthService.noteOff(note);
+  }
+
+  play(): void {
+    this.playing = true;
+    let index = 0;
+    this.loop = new Tone.Loop((time: number): void => {
+      const note: string = this.currentGeneratedScale[index];
+      const attackReleaseOptions: InsAttackReleasePayload = {
+        note: note,
+        duration: "4n",
+        velocity: 1,
+        time: time
+      }
+      this.synthService.attackRelease(attackReleaseOptions);
+      this.currentPlayingNote = note;
+      this.changeDetectorRef.detectChanges();
+      index = (index + 1) % this.currentGeneratedScale.length;
+    }, "4n").start(0);
+    Tone.Transport.bpm.value = 120;
+    Tone.Transport.start();
+  }
+
+  stop(): void {
+    this.playing = false;
+    this.loop?.stop();
+    Tone.Transport.stop();
+    Tone.Transport.loopStart = 0;
   }
 }
