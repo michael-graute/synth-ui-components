@@ -1,0 +1,4 @@
+<button class="btn btn-primary" [ngClass]="{playing: playing}" [disabled]="playing" *ngIf="playButton" (click)="onPlayButtonClick()"><i class="bi bi-play-fill"></i></button>
+<button class="btn btn-primary" [disabled]="!playing" *ngIf="pauseButton" (click)="onPauseButtonClick()"><i class="bi bi-pause-fill"></i></button>
+<button class="btn btn-primary" [disabled]="!playing" *ngIf="stopButton" (click)="onStopButtonClick()"><i class="bi bi-stop-fill"></i></button>
+<button class="btn btn-primary" [ngClass]="{recording: recording}" *ngIf="recordButton" (click)="onRecordButtonClick()"><i class="bi bi-record-fill"></i></button>

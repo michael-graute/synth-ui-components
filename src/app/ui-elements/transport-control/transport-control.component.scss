@@ -1,0 +1,16 @@
+:host {
+  display: flex;
+  gap: 5px;
+}
+
+.btn {
+  &.recording {
+    background: darkred;
+    color: white;
+  }
+
+  &.playing {
+    background: #3a620d;
+    color: white;
+  }
+}

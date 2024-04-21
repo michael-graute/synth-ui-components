@@ -47,6 +47,7 @@ import {PianoRollComponent} from "./components/piano-roll/piano-roll.component";
 import {HorizontalRangeSliderComponent} from "./ui-elements/horizontal-range-slider/horizontal-range-slider.component";
 import {SelectComponent} from "./ui-elements/select/select.component";
 import {ScaleBuilderComponent} from "./components/scale-builder/scale-builder.component";
+import {TransportControlComponent} from "./ui-elements/transport-control/transport-control.component";
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import {ScaleBuilderComponent} from "./components/scale-builder/scale-builder.co
     PianoRollComponent,
     HorizontalRangeSliderComponent,
     SelectComponent,
-    ScaleBuilderComponent
+    ScaleBuilderComponent,
+    TransportControlComponent
   ],
   imports: [
     BrowserModule,
