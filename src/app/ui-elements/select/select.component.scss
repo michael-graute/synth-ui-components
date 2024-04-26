@@ -60,6 +60,15 @@
   width: max-content;
   margin-top: 5px;
 
+  &.ins-select__popup-position-top {
+    bottom: 55px;
+  }
+
+  &.ins-select__popup-position-right {
+    left: 102%;
+    top: 15px;
+  }
+
   &.open {
     height: auto;
     overflow: auto;

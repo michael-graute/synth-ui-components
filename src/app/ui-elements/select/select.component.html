@@ -8,7 +8,7 @@
     <i *ngIf="isOpen" class="bi bi-chevron-up"></i>
   </div>
 </div>
-<div class="ins-select__popup" [ngClass]="{'open': isOpen}">
+<div class="ins-select__popup" [ngClass]="{'open': isOpen}" [className]="'ins-select__popup-position-' + popUpPosition">
   <div  *ngIf="searchEnabled" class="ins-select__popup__search__wrapper mb-2">
     <input type="text" class="ins-select__popup__search__input" (keydown)="searchBarKeyDown($event)" (keyup)="searchBarKeyUp($event)">
     <i class="bi bi-search ins-select__popup__search__icon"></i>

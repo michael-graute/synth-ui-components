@@ -33,7 +33,7 @@
           <ins-switch label="Switch" onLabel="active" offLabel="off"></ins-switch>
           <ins-button-group label="Select Buttons" [options]="[{label: 'Foo', value: 'foo'}, {label: 'Bar', value: 'bar'}, {label: 'Baz', value: 'baz'}]" value="bar"></ins-button-group>
           <ins-waveform-select label="Waveform" value="sine"></ins-waveform-select>
-          <ins-select label="Select Input" [multiple]="true" [searchEnabled]="true" [tags]="true" [value]="['baz','barbazfoo']" [options]="[{label: 'Foo', value: 'foo', tags:['foo', 'bar']}, {label: 'Bar', value: 'bar', tags:['foo', 'bar']}, {label: 'Baz', value: 'baz', tags:['foo', 'bar', 'baz', 'bar baz']}, {label: 'BarBazFoo Lorem Ipsum', value: 'barbazfoo', tags:['foo', 'bar']}, {label: 'BarBaz', value: 'barbaz', tags:['foo', 'bar']}, {label: 'FooBarBaz', value: 'foobarbaz', tags:['foo', 'bar']}]"></ins-select>
+          <ins-select label="Select Input" popUpPosition="top" [multiple]="true" [searchEnabled]="true" [tags]="true" [value]="['baz','barbazfoo']" [options]="[{label: 'Foo', value: 'foo', tags:['foo', 'bar']}, {label: 'Bar', value: 'bar', tags:['foo', 'bar']}, {label: 'Baz', value: 'baz', tags:['foo', 'bar', 'baz', 'bar baz']}, {label: 'BarBazFoo Lorem Ipsum', value: 'barbazfoo', tags:['foo', 'bar']}, {label: 'BarBaz', value: 'barbaz', tags:['foo', 'bar']}, {label: 'FooBarBaz', value: 'foobarbaz', tags:['foo', 'bar']}]"></ins-select>
           <ins-transport-control label="Transport Controls" [skipButtons]="true" [fastButtons]="true"></ins-transport-control>
         </div>
         <ins-divider label="ADSR - Envelope"></ins-divider>

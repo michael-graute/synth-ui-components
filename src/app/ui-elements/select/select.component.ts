@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 export type SelectOption = {
@@ -19,13 +19,14 @@ export type SelectOption = {
     }
   ]
 })
-export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+export class SelectComponent implements ControlValueAccessor, OnInit {
 
   @Input() label: string | null = null;
   @Input() multiple: boolean = false;
   @Input() searchEnabled: boolean = false;
   @Input() tags: boolean = false;
   @Input() options: SelectOption[] = [];
+  @Input() popUpPosition: 'top'|'bottom'|'right' = 'bottom'
   @Output() change: EventEmitter<string | string[]> = new EventEmitter<string | string[]>();
 
   private _value: string | string[] = '';
@@ -34,12 +35,8 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
 
   private _insideClick: boolean = false;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.filteredOptions = this.options;
-  }
-
-  ngAfterViewInit() {
-
   }
 
   @Input()
@@ -65,7 +62,7 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
     this.onChange = fn;
   }
 
-  onChange(value: string | string[]) {
+  onChange(value: string | string[]): void {
     this.change.emit(this.value);
   }
 
@@ -90,11 +87,11 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
     return this.options.find(option => option.value === this.value as string)?.label ?? '';
   }
 
-  toggleOpen() {
+  toggleOpen(): void {
     this.isOpen = !this.isOpen;
   }
 
-  optionClicked(value: string) {
+  optionClicked(value: string): void {
     if(this.multiple && Array.isArray(this.value)) {
       if (this.optionSelected(value) && this.value.length > 1) {
         this.value.splice(this.value.indexOf(value), 1);
