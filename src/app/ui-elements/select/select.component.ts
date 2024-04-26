@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 export type SelectOption = {
@@ -31,6 +31,8 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
   private _value: string | string[] = '';
   public isOpen: boolean = false;
   public filteredOptions: SelectOption[] = [];
+
+  private _insideClick: boolean = false;
 
   ngOnInit() {
     this.filteredOptions = this.options;
@@ -111,12 +113,34 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
   }
 
   searchBarKeyUp(event: KeyboardEvent): void {
-    const inputField: HTMLInputElement = event.target as HTMLInputElement;
-    const searchValue = inputField.value.toLowerCase();
-    console.log(searchValue);
-    this.filteredOptions = this.options.filter((option: SelectOption) => option.label.toLowerCase().startsWith(searchValue));
-    console.log(this.filteredOptions);
-    event.stopPropagation();
+    if(event.key !== 'Escape') {
+      const inputField: HTMLInputElement = event.target as HTMLInputElement;
+      const searchValue = inputField.value.toLowerCase();
+      this.filteredOptions = this.options.filter((option: SelectOption) => option.label.toLowerCase().startsWith(searchValue));
+      event.stopPropagation();
+    } else if(this.isOpen) {
+      this.toggleOpen();
+    }
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  documentKeyDown(evt: KeyboardEvent): void {
+    if(evt.key === 'Escape' && this.isOpen) {
+      this.toggleOpen();
+    }
+  }
+
+  @HostListener('click')
+  clicked(): void {
+    this._insideClick = true;
+  }
+
+  @HostListener('document:click')
+  documentClick(): void{
+    if(!this._insideClick && this.isOpen) {
+      this.toggleOpen();
+    }
+    this._insideClick = false;
   }
 
 }

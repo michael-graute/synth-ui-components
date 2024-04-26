@@ -7,19 +7,21 @@ export class ScaleBuilderService {
 
   private notes: string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
   private formulas: any = {
+    'chromatic': [1,1,1,1,1,1,1,1,1,1,1],
     'major': [2,2,1,2,2,2],
     'natural-minor': [2,1,2,2,1,2],
     'harmonic-minor': [2,1,2,2,1,3],
     'melodic-minor': [2,1,2,2,2,2],
     'dorian-mode': [2,1,2,2,2,1],
     'mixolydian-mode': [2,2,1,2,2,1],
+    'modern-lydian-mode': [2,2,2,1,2,2],
     'major-pentatonic': [1,2,3,5,6],
     'minor-pentatonic': [1,3.5,4,5,7.5]
   }
 
   constructor() { }
 
-  buildBaseScaleForRootNoteAndOctave(rootNote: string, octave: number = 3) {
+  getChromaticScaleForRootNoteAndOctave(rootNote: string, octave: number = 3) {
     const rootIndex = this.notes.findIndex(note => note === rootNote);
     let tmpOctave = octave;
     let notes: string[] = [];
@@ -36,7 +38,7 @@ export class ScaleBuilderService {
   }
 
   getScaleForFormula(formular: string, rootNote: string, octave: number = 3): string[] {
-    const baseNotes: string[] = this.buildBaseScaleForRootNoteAndOctave(rootNote, octave);
+    const baseNotes: string[] = this.getChromaticScaleForRootNoteAndOctave(rootNote, octave);
     let notes: string[] = [rootNote + octave];
     let rootIndex = 0;
     this.formulas[formular].forEach((stepCount: number): void => {

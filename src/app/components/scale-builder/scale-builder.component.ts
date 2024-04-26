@@ -3,7 +3,6 @@ import {v4 as uuidv4} from "uuid";
 import {InsAttackReleasePayload, SynthService} from "../../synth.service";
 import {ScaleBuilderService} from "./scale-builder.service";
 import * as Tone from "tone";
-import {SequencerStep} from "../sequencer/sequencer.component";
 import {getRandomInt} from "../../utils";
 
 @Component({
@@ -21,6 +20,10 @@ export class ScaleBuilderComponent implements OnInit {
   public currentGeneratedScale: string[] = [];
 
   public scaleOptions: any[] = [
+    {
+      label: 'Chromatic',
+      value: 'chromatic'
+    },
     {
       label: 'Major',
       value: 'major'
@@ -46,10 +49,13 @@ export class ScaleBuilderComponent implements OnInit {
       value: 'mixolydian-mode'
     },
     {
+      label: 'Modern Lydian Mode',
+      value: 'modern-lydian-mode'
+    },
+    {
       label: 'Major Pentatonic',
       value: 'major-pentatonic'
-    }
-    ,
+    },
     {
       label: 'Minor Pentatonic',
       value: 'minor-pentatonic'
