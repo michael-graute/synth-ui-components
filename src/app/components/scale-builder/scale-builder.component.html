@@ -6,6 +6,7 @@
   <button class="btn btn-primary" (click)="randomizeScale()">Randimize&nbsp;Scale</button>
   <ins-knob [id]="id + 'KnobRandomStepCount'" type="line" [min]="4" [max]="32" [step]="1" [(ngModel)]="randomStepCount" label="Steps" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
   <ins-knob [id]="id + 'KnobRandomStepCount'" type="line" [min]="2" [max]="6" [step]="1" [(ngModel)]="randomOctaveCount" label="Octaves" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3"></ins-knob>
+  <ins-knob [id]="id + 'KnobTempo'" [(ngModel)]="tempo" type="dot" [options]="tempoOptions" [size]="40" [baseLineWidth]="2" [valueLineWidth]="3" [label]="'Tempo'"></ins-knob>
   <ins-transport-control [disabled]="currentGeneratedScale.length === 0" [recordButton]="false" [pauseButton]="false" (playButtonClick)="play()" (stopButtonClick)="stop()"></ins-transport-control>
 </div>
 <div class="d-flex gap-2">

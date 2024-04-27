@@ -62,7 +62,9 @@ export class ScaleBuilderComponent implements OnInit {
     }
   ];
   public notes: string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  public tempoOptions: string[] = ['1n', '2n', '4n', '8n', '16n', '32n', '64n'];
 
+  public tempo: number = 2;
   public playing: boolean = false;
   public currentPlayingNote: string = '';
   public currentPlayingIndex: number = 0;
@@ -126,7 +128,7 @@ export class ScaleBuilderComponent implements OnInit {
       const note: string = this.currentGeneratedScale[index];
       const attackReleaseOptions: InsAttackReleasePayload = {
         note: note,
-        duration: "4n",
+        duration: this.tempoOptions[this.tempo],
         velocity: 1,
         time: time
       }
@@ -143,7 +145,7 @@ export class ScaleBuilderComponent implements OnInit {
           backward = false;
         }
       }
-    }, "4n").start(0);
+    }, this.tempoOptions[this.tempo]).start(0);
     Tone.Transport.bpm.value = 120;
     Tone.Transport.start();
   }
