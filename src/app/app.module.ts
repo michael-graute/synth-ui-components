@@ -48,6 +48,8 @@ import {HorizontalRangeSliderComponent} from "./ui-elements/horizontal-range-sli
 import {SelectComponent} from "./ui-elements/select/select.component";
 import {ScaleBuilderComponent} from "./components/scale-builder/scale-builder.component";
 import {TransportControlComponent} from "./ui-elements/transport-control/transport-control.component";
+import { MixerComponent } from './components/mixer/mixer.component';
+import { MixerStripComponent } from './components/mixer/mixer-strip/mixer-strip.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +98,9 @@ import {TransportControlComponent} from "./ui-elements/transport-control/transpo
     HorizontalRangeSliderComponent,
     SelectComponent,
     ScaleBuilderComponent,
-    TransportControlComponent
+    TransportControlComponent,
+    MixerComponent,
+    MixerStripComponent
   ],
   imports: [
     BrowserModule,

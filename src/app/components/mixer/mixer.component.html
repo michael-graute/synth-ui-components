@@ -1,0 +1,3 @@
+<div class="ins-mixer__wrapper">
+  <ins-mixer-strip *ngFor="let channel of channels" [id]="this.id + 'Strip_' + channel.id" [config]="channel"></ins-mixer-strip>
+</div>
