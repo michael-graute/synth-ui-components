@@ -1,5 +1,6 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {v4 as uuidv4} from "uuid";
 
 export type SelectOption = {
   label: string;
@@ -21,6 +22,7 @@ export type SelectOption = {
 })
 export class SelectComponent implements ControlValueAccessor, OnInit {
 
+  @Input() id: string = uuidv4();
   @Input() label: string | null = null;
   @Input() multiple: boolean = false;
   @Input() searchEnabled: boolean = false;

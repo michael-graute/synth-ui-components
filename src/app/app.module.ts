@@ -50,6 +50,7 @@ import {ScaleBuilderComponent} from "./components/scale-builder/scale-builder.co
 import {TransportControlComponent} from "./ui-elements/transport-control/transport-control.component";
 import { MixerComponent } from './components/mixer/mixer.component';
 import { MixerStripComponent } from './components/mixer/mixer-strip/mixer-strip.component';
+import {ColliderComponent} from "./components/collider/collider.component";
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { MixerStripComponent } from './components/mixer/mixer-strip/mixer-strip.
     ScaleBuilderComponent,
     TransportControlComponent,
     MixerComponent,
-    MixerStripComponent
+    MixerStripComponent,
+    ColliderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {getRandomInt} from "../../utils";
 
 @Injectable({
   providedIn: 'root'
@@ -86,5 +87,19 @@ export class ScaleBuilderService {
       notes.push(baseScale[newNoteIndex - 1]);
     })
     return notes;
+  }
+
+  getRandomizedNotesForScale(formula: string, rootNote: string, rootOctave: number, octaveRange: number, numberOfNotes: number): string[] {
+    let scale: string[] = []
+    for(let i: number = 0; i < octaveRange; i++) {
+      const tmpScale: string[] = this.getScaleForFormula(formula, rootNote, rootOctave + i);
+      scale = scale.concat(tmpScale);
+    }
+    const randomNotes: string[] = [];
+    for(let i: number = 0; i < numberOfNotes; i++) {
+      const rand: number = getRandomInt(0, scale.length - 1);
+      randomNotes.push(scale[rand]);
+    }
+    return randomNotes;
   }
 }

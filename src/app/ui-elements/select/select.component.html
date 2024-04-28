@@ -10,14 +10,14 @@
 </div>
 <div class="ins-select__popup" [ngClass]="{'open': isOpen}" [className]="'ins-select__popup-position-' + popUpPosition">
   <div  *ngIf="searchEnabled" class="ins-select__popup__search__wrapper mb-2">
-    <input type="text" class="ins-select__popup__search__input" (keydown)="searchBarKeyDown($event)" (keyup)="searchBarKeyUp($event)">
+    <input type="text" [id]="id + 'InputSearch'" class="ins-select__popup__search__input" (keydown)="searchBarKeyDown($event)" (keyup)="searchBarKeyUp($event)">
     <i class="bi bi-search ins-select__popup__search__icon"></i>
   </div>
 
   <ul class="ins-select__options-list">
     <li *ngFor="let option of filteredOptions" class="ins-select__options-list__list-item" [ngClass]="{'selected': optionSelected(option.value)}" (click)="optionClicked(option.value)">
       <div class="ins-select__options-list__list-item__inner-container">
-        <input *ngIf="multiple" type="checkbox" [disabled]="value.length === 1" [checked]="optionSelected(option.value)" [value]="option.value" [name]="'foobar' + option.value" [id]="'check_' +  option.value">
+        <input *ngIf="multiple" type="checkbox" [disabled]="value.length === 1" [checked]="optionSelected(option.value)" [value]="option.value" [name]="'foobar' + option.value" [id]="id + 'Check_' +  option.value">
         <p>{{ option.label }}</p>
       </div>
     </li>
