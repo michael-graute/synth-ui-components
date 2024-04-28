@@ -9,7 +9,9 @@ export type InsMixerChannel = {
   panning: number,
   mute: boolean,
   solo: boolean,
-  instrument: any
+  instrument: any,
+  effects: any[],
+  control: string
 }
 
 @Component({
@@ -32,7 +34,9 @@ export class MixerComponent implements OnInit {
         panning: 0,
         mute: false,
         solo: false,
-        instrument: 'DuoSynth'
+        instrument: 'DuoSynth',
+        effects: [],
+        control: 'keyboard'
       });
     }
   }
@@ -43,6 +47,10 @@ export class MixerComponent implements OnInit {
 
   removeChannel(channelId: string): void {
     this.channels = this.channels.filter((channel: InsMixerChannel) => channel.id !== channelId);
+  }
+
+  debug(): void {
+    console.log(this.channels);
   }
 
 }

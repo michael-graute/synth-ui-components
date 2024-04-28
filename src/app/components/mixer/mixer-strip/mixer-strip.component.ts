@@ -16,7 +16,9 @@ export class MixerStripComponent {
     volume: 0,
     panning: 0,
     mute: false,
-    solo: false
+    solo: false,
+    effects: [],
+    control: 'keyboard'
   }
 
   @Input() id: string = uuidv4();

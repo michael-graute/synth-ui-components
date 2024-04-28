@@ -2,5 +2,5 @@
   <ins-slider [id]="id + 'SliderVolume'" [min]="-15" [max]="0" label="vol" [(ngModel)]="config.volume"></ins-slider>
   <ins-knob [id]="id + 'KnobPanning'" label="pan" [size]="30" [baseLineWidth]="2" [valueLineWidth]="3" type="pan" [min]="-10" [max]="10" [negativeValuePrefix]="'L'" [positiveValuePrefix]="'R'" [zeroValueReplacement]="'C'" [(ngModel)]="config.panning"></ins-knob>
   <ins-switch [id]="id + 'SwitchMute'" [hasLabel]="false" [(ngModel)]="config.mute" label="mute"></ins-switch>
-  <ins-switch [id]="id + 'SwitchSole'" [hasLabel]="false" [(ngModel)]="config.solo" label="solo"></ins-switch>
+  <ins-switch [id]="id + 'SwitchSolo'" [hasLabel]="false" [(ngModel)]="config.solo" label="solo"></ins-switch>
 </div>
