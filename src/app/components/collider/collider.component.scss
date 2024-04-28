@@ -1,0 +1,38 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.ins-collider__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+
+  .ins-collider__row {
+    display: flex;
+    gap: 1px;
+
+    .ins-collider__row_cell {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      background: #3b4249;
+      position: relative;
+
+      &.border-cell {
+        background: #2e393e;
+      }
+
+      p {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: smaller;
+        font-weight: 300;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
