@@ -19,8 +19,16 @@
       background: #3b4249;
       position: relative;
 
+      &.active {
+        background: darkorange;
+      }
+
       &.border-cell {
         background: #2e393e;
+
+        &.active {
+          background: darkorange;
+        }
       }
 
       p {
