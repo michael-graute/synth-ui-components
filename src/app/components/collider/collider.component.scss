@@ -19,15 +19,31 @@
       background: #3b4249;
       position: relative;
 
+      &.colliding {
+        background: #e1bc00;
+      }
+
       &.active {
         background: darkorange;
+
+        &.colliding {
+          background: #e1bc00;
+        }
       }
 
       &.border-cell {
         background: #2e393e;
 
+        &.colliding {
+          background: #e1bc00;
+        }
+
         &.active {
           background: darkorange;
+
+          &.colliding {
+            background: #e1bc00;
+          }
         }
       }
 

@@ -7,6 +7,37 @@ export type InsCollider = {
   x: number, y: number, dx: number, dy: number, id: string
 }
 
+export const initialColliders: InsCollider[] = [
+  {
+    id: '1',
+    x: 4,
+    y: 1,
+    dx: 1,
+    dy: 1
+  },
+  {
+    id: '2',
+    x: 9,
+    y: 1,
+    dx: -1,
+    dy: -1
+  },
+  {
+    id: '3',
+    x: 15,
+    y: 12,
+    dx: -1,
+    dy: -1
+  },
+  {
+    id: '4',
+    x: 7,
+    y: 4,
+    dx: -1,
+    dy: -1
+  }
+]
+
 @Component({
   selector: 'ins-collider',
   templateUrl: './collider.component.html',
@@ -14,23 +45,9 @@ export type InsCollider = {
 })
 export class ColliderComponent implements OnInit {
 
-  public matrix: any[] = []
-  public points: InsCollider[] = [
-    {
-      id: '1',
-      x: 4,
-      y: 1,
-      dx: 1,
-      dy: 2
-    },
-    {
-      id: '2',
-      x: 9,
-      y: 1,
-      dx: -1,
-      dy: -1
-    }
-  ]
+  public matrix: any[] = [];
+  public collisions: InsCollider[] = [];
+  public points: InsCollider[] = JSON.parse(JSON.stringify(initialColliders));
 
   public loop: Tone.Loop | undefined;
 
@@ -45,65 +62,56 @@ export class ColliderComponent implements OnInit {
     for(let i = 0; i < size; i++) {
       this.matrix.push(this.scaleBuilderService.getRandomizedNotesForScale('natural-minor', 'C', 1, 2, size));
     }
-    console.log(this.matrix);
   }
 
   play() {
     this.loop = new Tone.Loop((time) => {
+      this.collisions = [];
       this.points.forEach(point => {
+        this.changeDetectorRef.detectChanges();
         point.x = point.x + point.dx;
         point.y = point.y + point.dy;
         if (point.x + point.dx > 15 || point.x + point.dx < 0) {
           this.playNote(this.matrix[point.x][point.y], time);
+          this.collisions?.push(point);
           point.dx = -point.dx;
         }
 
         if (point.y + point.dy > 15 || point.y + point.dy < 0) {
           this.playNote(this.matrix[point.x][point.y], time);
+          this.collisions?.push(point);
           point.dy = -point.dy;
         }
 
         if(this.collision(point)) {
           this.playNote(this.matrix[point.x][point.y], time);
+          this.collisions?.push(point);
           point.dx = -point.dx;
           point.dy = -point.dy;
         }
-
       });
-      this.changeDetectorRef.detectChanges();
-    }, '8n');
+    }, '2n');
     this.loop.start();
     Tone.Transport.start();
   }
 
   playNote(note: string, time: number) {
-    this.synthService.attackRelease({
-      note: note,
-      duration: '8n',
-      velocity: 1,
-      time: time
-    });
+    if(note) {
+      this.synthService.attackRelease({
+        note: note,
+        duration: '8n',
+        velocity: 1,
+        time: time
+      });
+    }
   }
 
   stop(): void {
     this.loop?.stop();
     Tone.getTransport().stop();
-    this.points = [
-      {
-        id: '1',
-        x: 4,
-        y: 1,
-        dx: 1,
-        dy: 1
-      },
-      {
-        id: '2',
-        x: 9,
-        y: 1,
-        dx: -1,
-        dy: -1
-      }
-    ]
+    this.points = JSON.parse(JSON.stringify(initialColliders));
+    this.collisions = [];
+    this.changeDetectorRef.detectChanges();
   }
 
   pause(): void {
@@ -119,4 +127,10 @@ export class ColliderComponent implements OnInit {
     return this.points.findIndex(point => point.x === currentPoint.x && point.y === currentPoint.y && point.id !== currentPoint.id) > -1;
   }
 
+  isColliding(x: number, y: number): boolean {
+    if(this.collisions.length > 0) {
+      return this.collisions?.findIndex(point => point.x === x && point.y === y) > -1;
+    }
+    return false;
+  }
 }

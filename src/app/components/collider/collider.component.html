@@ -1,7 +1,7 @@
 <div class="ins-collider__wrapper">
   <ins-transport-control class="mt-3" (playButtonClick)="play()" (stopButtonClick)="stop()" (pauseButtonClick)="pause()" [recordButton]="false"></ins-transport-control>
   <div class="ins-collider__row" *ngFor="let row of matrix; let x = index;">
-    <div class="ins-collider__row_cell" *ngFor="let col of row; let y = index;" [ngClass]="{'active': hasCollider(x, y), 'border-cell': x === 0 || x === matrix.length - 1 || y === 0 || y === row.length - 1}">
+    <div class="ins-collider__row_cell" *ngFor="let col of row; let y = index;" [ngClass]="{'colliding': isColliding(x, y), 'active': hasCollider(x, y), 'border-cell': x === 0 || x === matrix.length - 1 || y === 0 || y === row.length - 1}">
       <p>{{ col }}</p>
     </div>
   </div>
