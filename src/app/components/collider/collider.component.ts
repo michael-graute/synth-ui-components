@@ -1,42 +1,13 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {ScaleBuilderService} from "../scale-builder/scale-builder.service";
 import * as Tone from 'tone';
 import {SynthService} from "../../synth.service";
+import {v4 as uuidv4} from "uuid";
+import {getRandomInt} from "../../utils";
 
 export type InsCollider = {
   x: number, y: number, dx: number, dy: number, id: string
 }
-
-export const initialColliders: InsCollider[] = [
-  {
-    id: '1',
-    x: 4,
-    y: 1,
-    dx: 1,
-    dy: 1
-  },
-  {
-    id: '2',
-    x: 9,
-    y: 1,
-    dx: -1,
-    dy: -1
-  },
-  {
-    id: '3',
-    x: 15,
-    y: 12,
-    dx: -1,
-    dy: -1
-  },
-  {
-    id: '4',
-    x: 7,
-    y: 4,
-    dx: -1,
-    dy: -1
-  }
-]
 
 @Component({
   selector: 'ins-collider',
@@ -45,39 +16,65 @@ export const initialColliders: InsCollider[] = [
 })
 export class ColliderComponent implements OnInit {
 
+  @Input() matrixSize: number = 16;
   public matrix: any[] = [];
   public collisions: InsCollider[] = [];
-  public points: InsCollider[] = JSON.parse(JSON.stringify(initialColliders));
-
+  public colliders: InsCollider[] = [];
+  public tempo: string = '2n';
   public loop: Tone.Loop | undefined;
+  public colliderAmount: number = 4;
 
   constructor(private synthService: SynthService, private scaleBuilderService: ScaleBuilderService, private changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
     this.buildMatrix();
+    this.initializeColliders();
+    console.log(this.colliders);
   }
 
-  buildMatrix(size: number = 16) {
-    for(let i = 0; i < size; i++) {
-      this.matrix.push(this.scaleBuilderService.getRandomizedNotesForScale('natural-minor', 'C', 1, 2, size));
+  buildMatrix() {
+    for(let i = 0; i < this.matrixSize; i++) {
+      this.matrix.push(this.scaleBuilderService.getRandomizedNotesForScale('natural-minor', 'C', 1, 2, this.matrixSize));
     }
+  }
+
+  initializeColliders() {
+    this.colliders = [];
+    for(let i = 0; i < this.colliderAmount; i++) {
+      this.addCollider();
+    }
+  }
+
+  addCollider() {
+    const collider: InsCollider = {
+      id: uuidv4(),
+      x: getRandomInt(1,this.matrixSize-2),
+      y: getRandomInt(1,this.matrixSize-2),
+      dx: -1,
+      dy: -1
+    }
+    this.colliders.push(collider);
+  }
+
+  removeCollider(): void {
+    this.colliders.pop();
   }
 
   play() {
     this.loop = new Tone.Loop((time) => {
       this.collisions = [];
-      this.points.forEach(point => {
+      this.colliders.forEach(point => {
         this.changeDetectorRef.detectChanges();
         point.x = point.x + point.dx;
         point.y = point.y + point.dy;
-        if (point.x + point.dx > 15 || point.x + point.dx < 0) {
+        if (point.x + point.dx > this.matrixSize-1 || point.x + point.dx < 0) {
           this.playNote(this.matrix[point.x][point.y], time);
           this.collisions?.push(point);
           point.dx = -point.dx;
         }
 
-        if (point.y + point.dy > 15 || point.y + point.dy < 0) {
+        if (point.y + point.dy > this.matrixSize-1 || point.y + point.dy < 0) {
           this.playNote(this.matrix[point.x][point.y], time);
           this.collisions?.push(point);
           point.dy = -point.dy;
@@ -90,7 +87,7 @@ export class ColliderComponent implements OnInit {
           point.dy = -point.dy;
         }
       });
-    }, '2n');
+    }, this.tempo);
     this.loop.start();
     Tone.Transport.start();
   }
@@ -109,7 +106,7 @@ export class ColliderComponent implements OnInit {
   stop(): void {
     this.loop?.stop();
     Tone.getTransport().stop();
-    this.points = JSON.parse(JSON.stringify(initialColliders));
+    this.initializeColliders();
     this.collisions = [];
     this.changeDetectorRef.detectChanges();
   }
@@ -120,11 +117,11 @@ export class ColliderComponent implements OnInit {
   }
 
   hasCollider(x: number, y: number) {
-    return this.points.findIndex(point => point.x === x && point.y === y) > -1;
+    return this.colliders.findIndex(point => point.x === x && point.y === y) > -1;
   }
 
   collision(currentPoint: InsCollider) {
-    return this.points.findIndex(point => point.x === currentPoint.x && point.y === currentPoint.y && point.id !== currentPoint.id) > -1;
+    return this.colliders.findIndex(point => point.x === currentPoint.x && point.y === currentPoint.y && point.id !== currentPoint.id) > -1;
   }
 
   isColliding(x: number, y: number): boolean {
