@@ -29,7 +29,7 @@ export class MixerComponent implements OnInit {
     for(let i = 0; i < 6; i++) {
       this.addChannel({
         id: 'synth' + i,
-        name: 'Foo Bar',
+        name: 'Chan ' + i,
         volume: -4,
         panning: 0,
         mute: false,

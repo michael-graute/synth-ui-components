@@ -4,4 +4,15 @@
   width: 40px;
   align-items: center;
   gap: 10px;
+
+  .ins-mixer-strip__header {
+    font-size: x-small;
+    text-transform: uppercase;
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 50px;
+  }
+
 }
