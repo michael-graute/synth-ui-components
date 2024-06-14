@@ -1,0 +1,19 @@
+:host {
+  position: relative;
+  display: block;
+}
+
+.ins-menu-button__wrapper {
+  button {
+    &.ins-menu-button__has-icon {
+      .ins-menu-button__title {
+        margin-left: 5px;
+      }
+    }
+  }
+
+  ins-context-menu {
+    top: 35px;
+    min-width: 100%;
+  }
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {InsContextMenuItem} from "../../ui-elements/context-menu/context-menu.component";
 
 @Component({
   selector: 'ins-elements-showcase',
@@ -15,5 +16,9 @@ export class ElementsShowcaseComponent {
     decay: 25,
     sustain: 70,
     release: 45
+  }
+
+  contextMenuItemClick(item: InsContextMenuItem): void {
+    console.log(item);
   }
 }

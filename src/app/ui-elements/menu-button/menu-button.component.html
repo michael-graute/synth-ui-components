@@ -1,0 +1,7 @@
+<div class="ins-menu-button__wrapper">
+  <button class="btn btn-primary" [ngClass]="{'ins-menu-button__has-icon': icon, 'ins-menu-button__has-title': title}" (click)="toggleOpen()">
+    <i *ngIf="icon" [class]="icon"></i>
+    <span *ngIf="title" class="ins-menu-button__title">{{title}}</span>
+  </button>
+  <ins-context-menu *ngIf="isOpen" [config]="contextMenu" (itemClick)="onMenuItemClick($event)"></ins-context-menu>
+</div>

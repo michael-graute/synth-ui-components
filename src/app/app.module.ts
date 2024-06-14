@@ -51,6 +51,9 @@ import {TransportControlComponent} from "./ui-elements/transport-control/transpo
 import { MixerComponent } from './components/mixer/mixer.component';
 import { MixerStripComponent } from './components/mixer/mixer-strip/mixer-strip.component';
 import {ColliderComponent} from "./components/collider/collider.component";
+import {WindowComponent} from "./ui-elements/window/window.component";
+import {ContextMenuComponent} from "./ui-elements/context-menu/context-menu.component";
+import {MenuButtonComponent} from "./ui-elements/menu-button/menu-button.component";
 
 @NgModule({
   declarations: [
@@ -102,7 +105,10 @@ import {ColliderComponent} from "./components/collider/collider.component";
     TransportControlComponent,
     MixerComponent,
     MixerStripComponent,
-    ColliderComponent
+    ColliderComponent,
+    WindowComponent,
+    ContextMenuComponent,
+    MenuButtonComponent
   ],
   imports: [
     BrowserModule,

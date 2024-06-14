@@ -35,6 +35,7 @@
           <ins-waveform-select id="showCaseWaveformSelect" label="Waveform" value="sine"></ins-waveform-select>
           <ins-select id="showCaseSelect" label="Select Input" popUpPosition="top" [multiple]="true" [searchEnabled]="true" [tags]="true" [value]="['baz','barbazfoo']" [options]="[{label: 'Foo', value: 'foo', tags:['foo', 'bar']}, {label: 'Bar', value: 'bar', tags:['foo', 'bar']}, {label: 'Baz', value: 'baz', tags:['foo', 'bar', 'baz', 'bar baz']}, {label: 'BarBazFoo Lorem Ipsum', value: 'barbazfoo', tags:['foo', 'bar']}, {label: 'BarBaz', value: 'barbaz', tags:['foo', 'bar']}, {label: 'FooBarBaz', value: 'foobarbaz', tags:['foo', 'bar']}]"></ins-select>
           <ins-transport-control id="showCaseTransportControl" label="Transport Controls" [skipButtons]="true" [fastButtons]="true"></ins-transport-control>
+          <ins-menu-button style="margin-top: 20px;" [icon]="'bi-gear-fill'" title="settings" [contextMenu]="{items: [{id: 'foo', label: 'Foo'},{id: 'bar', label: 'Bar'},{id: 'baz', label: 'Baz'},{id: 'foobarbaz', label: 'Foo Bar Baz'}]}" (menuItemClick)="contextMenuItemClick($event)"></ins-menu-button>
         </div>
         <ins-divider label="ADSR - Envelope"></ins-divider>
         <ins-adsr-envelope id="showCaseADSR" [height]="50" [(ngModel)]="adsr"></ins-adsr-envelope>
