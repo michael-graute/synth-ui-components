@@ -72,13 +72,15 @@
           <ins-membrane-synth name="Membrane Synth" id="membrane-synth" [polyphonic]="true"></ins-membrane-synth>
         </div>
         <div class="col-3">
-          <!--<ins-pluck-synth name="Pluck Synth" id="pluck-synth" ></ins-pluck-synth>-->
           <ins-noise-synth name="Noise Synth" id="noise-synth"></ins-noise-synth>
         </div>
       </div>
       <div class="row mt-4">
         <div class="col-3">
           <ins-sampler id="sampler"></ins-sampler>
+        </div>
+        <div class="col-3">
+          <ins-pluck-synth name="Pluck Synth" id="pluck-synth" ></ins-pluck-synth>
         </div>
       </div>
     </div>
@@ -103,6 +105,7 @@
         </div>
         <div class="col-2">
           <ins-delay id="delay"></ins-delay>
+          <ins-pingpong-delay id="pingpong-delay" class="mt-2"></ins-pingpong-delay>
           <ins-reverb id="reverb" class="mt-2"></ins-reverb>
         </div>
         <div class="col-2">
@@ -145,7 +148,6 @@
       <ins-elements-showcase></ins-elements-showcase>
     </div>
     <div class="container" style="overflow: auto; height: 100%" [ngClass]="{'hidden': page !== 'playground'}">
-      <!--<ins-waveform-plotter></ins-waveform-plotter>-->
       <h3 style="font-size: x-large; font-weight: 300; text-transform: uppercase;" class="mb-4">Scale Generator + Randomizer</h3>
       <ins-scale-builder></ins-scale-builder>
       <h3 style="font-size: x-large; font-weight: 300; text-transform: uppercase;" class="mb-4">Mixer</h3>

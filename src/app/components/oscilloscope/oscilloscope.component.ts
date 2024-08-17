@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import * as Tone from "tone";
-import {Transport} from "tone/build/esm/core/clock/Transport";
+import {TransportClass} from "tone/build/esm/core/clock/Transport";
+
 
 @Component({
   selector: 'ins-oscilloscope',
@@ -15,7 +16,7 @@ export class OscilloscopeComponent implements AfterViewInit {
   public analyser = new Tone.Analyser('waveform', 512);
   private interval: any;
   public isPlaying = false;
-  private transport?: Transport;
+  private transport?: TransportClass;
   private transportScheduledRepeatId?: number;
   public type: "scope" | "graph" = 'scope';
 
@@ -27,7 +28,7 @@ export class OscilloscopeComponent implements AfterViewInit {
     this.synth.connect(this.fft);
     this.synth.connect(this.analyser);
     this.transport = Tone.getTransport();
-    this.transportScheduledRepeatId = this.transport?.scheduleRepeat((time) => {
+    this.transportScheduledRepeatId = this.transport?.scheduleRepeat((time: any) => {
       this.draw();
     }, this.analyser.blockTime);
     this.transport?.start();

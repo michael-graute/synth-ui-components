@@ -23,15 +23,13 @@ export class PluckSynthComponent extends AbstractSynthComponent<PluckSynthConfig
   protected override instrument: Tone.PluckSynth = new Tone.PluckSynth();
   public override config: PluckSynthConfig = {
     active: true,
-    volume: 0,
+    volume: -15,
     octave: 0,
     resonance: 0.7,
     dampening: 4000,
     attackNoise: 1,
     release: 1,
   };
-
-
 
   set resonance(value: number) {
     this.instrument.set({resonance: value});

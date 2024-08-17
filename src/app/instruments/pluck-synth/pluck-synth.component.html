@@ -1,1 +1,33 @@
-<p>pluck-synth works!</p>
+<div class="ins-pluck-synth card" [class]="{'inactive': !active}">
+  <div class="ins-pluck-synth__header card-header">
+    <div class="d-flex justify-content-between align-items-center">{{ name }} <ins-switch [(ngModel)]="active" [hasLabel]="false"></ins-switch></div>
+  </div>
+  <div class="ins-pluck-synth__body card-body">
+    <div class="d-flex flex-wrap gap-1">
+      <div class="ins-knob-container ins-pluck-synth__volume">
+        <ins-knob [id]="id + 'KnobVolume'" [name]="id + 'KnobVolume'" label="Volume" [min]="-20" [max]="0" [(ngModel)]="volume" (change)="triggerUndo('volume', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobVolumeMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="volume"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-pluck-synth-synth__octave">
+        <ins-knob [id]="id + 'KnobOctave'" type="dot" label="Octave" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave" (change)="triggerUndo('octave', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobOctaveMidiOverlay'" [min]="-3" [max]="3" [step]="1" [(ngModel)]="octave"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-pluck-synth__resonance">
+        <ins-knob [id]="id + 'KnobResonance'" [name]="id + 'KnobResonance'" label="Attack" [min]="0" [max]="1" [step]=".01" [(ngModel)]="resonance" (change)="triggerUndo('resonance', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobAttackMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="resonance"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-pluck-synth__release">
+        <ins-knob [id]="id + 'KnobRelease'" [name]="id + 'KnobVolume'" label="Release" [min]="0" [max]="1" [step]=".01" [(ngModel)]="release" (change)="triggerUndo('release', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobReleaseMidiOverlay'" [min]="-20" [max]="0" [(ngModel)]="release"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-pluck-synth__attackNoise">
+        <ins-knob [id]="id + 'KnobAttackNoise'" [name]="id + 'KnobattAckNoise'" label="Att Noise" [min]="0" [max]="20" [step]=".01" [(ngModel)]="attackNoise" (change)="triggerUndo('attackNoise', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobAttackMidiOverlay'" [min]="0" [max]="20" [(ngModel)]="attackNoise"></ins-midi-overlay>
+      </div>
+      <div class="ins-knob-container ins-pluck-synth__dampening">
+        <ins-knob [id]="id + 'KnobDampening'" [name]="id + 'KnobVolume'" label="Damp" [min]="0" [max]="7000" [step]="1" [(ngModel)]="dampening" (change)="triggerUndo('dampening', $event)"></ins-knob>
+        <ins-midi-overlay [id]="id + 'KnobDampeningMidiOverlay'" [min]="0" [max]="7000" [(ngModel)]="dampening"></ins-midi-overlay>
+      </div>
+    </div>
+  </div>
+</div>

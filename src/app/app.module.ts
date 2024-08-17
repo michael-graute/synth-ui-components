@@ -54,6 +54,7 @@ import {ColliderComponent} from "./components/collider/collider.component";
 import {WindowComponent} from "./ui-elements/window/window.component";
 import {ContextMenuComponent} from "./ui-elements/context-menu/context-menu.component";
 import {MenuButtonComponent} from "./ui-elements/menu-button/menu-button.component";
+import {PingpongDelayComponent} from "./effects/pingpong-delay/pingpong-delay.component";
 
 @NgModule({
   declarations: [
@@ -93,6 +94,7 @@ import {MenuButtonComponent} from "./ui-elements/menu-button/menu-button.compone
     BitCrusherComponent,
     ChebyshevComponent,
     AutoFilterComponent,
+    PingpongDelayComponent,
     MetalSynthComponent,
     MembraneSynthComponent,
     PluckSynthComponent,

@@ -43,7 +43,7 @@ export class MidiManagerService {
       if (result.state === "granted") {
         this.midiAccessGranted = true;
       } else if (result.state === "prompt") {
-        return navigator.requestMIDIAccess({ sysex: true }).then((midiAccess: WebMidi.MIDIAccess): void => {
+        return navigator.requestMIDIAccess({ sysex: true }).then((midiAccess: MIDIAccess): void => {
           this.midiAccessGranted = midiAccess.sysexEnabled;
         });
       } else if (result.state === "denied") {
