@@ -5,7 +5,7 @@ import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
 import {PresetManagerService, InsPreset} from "../../managers/preset-manager/preset-manager.service";
 
-export interface SequencerStep {
+export type SequencerStep = {
   id: number;
   velocity: number;
   pitch: number;
@@ -184,22 +184,22 @@ export class SequencerComponent implements OnInit {
         }
         this.synthService.attackRelease(attackReleaseOptions);
       }
-      Tone.Draw.schedule((): void => {
+      Tone.getDraw().schedule((): void => {
         this.currentStep = index;
         this.stepPlaying.next(index);
         index = (index + 1) % this.activeStepCount;
         this.changeDetectorRef.detectChanges();
       }, time);
     }, this.gateOptions[this.interval]).start(0);
-    Tone.Transport.bpm.value = this.tempo;
-    Tone.Transport.start();
+    Tone.getTransport().bpm.value = this.tempo;
+    Tone.getTransport().start();
   }
 
   stopSequence(): void {
     this.playing = false;
     this.loop?.stop();
-    Tone.Transport.stop();
-    Tone.Transport.loopStart = 0;
+    Tone.getTransport().stop();
+    Tone.getTransport().loopStart = 0;
     this.currentStep = 0;
     this.changeDetectorRef.detectChanges();
   }
