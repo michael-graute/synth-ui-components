@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {SynthService} from "../synth.service";
 import {PresetManagerService, InsPreset} from "../managers/preset-manager/preset-manager.service";
 import {UndoManagerService} from "../managers/undo-manager/undo-manager.service";
+import {WindowService} from "../ui-elements/window/window.service";
 
 @Component({template: ''})
 export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
@@ -15,7 +16,7 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
   protected instrument: any = null;
   protected startEffektLFOAtActivation: boolean = false;
 
-  constructor(protected presetManagerService: PresetManagerService, protected synthService: SynthService, protected undoManagerService: UndoManagerService) {}
+  constructor(protected presetManagerService: PresetManagerService, protected synthService: SynthService, protected undoManagerService: UndoManagerService, protected windowService: WindowService) {}
 
   ngOnInit(): void {
     //console.log(this.instrument?.name, this.instrument?.get());
