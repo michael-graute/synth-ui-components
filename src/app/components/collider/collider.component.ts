@@ -30,7 +30,6 @@ export class ColliderComponent implements OnInit {
   ngOnInit() {
     this.buildMatrix();
     this.initializeColliders();
-    console.log(this.colliders);
   }
 
   buildMatrix() {
