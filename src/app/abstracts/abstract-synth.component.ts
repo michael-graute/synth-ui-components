@@ -14,7 +14,7 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
   protected subscriptions: Subscription = new Subscription();
   protected componentType: any = null;
   protected instrument: any = null;
-  protected startEffektLFOAtActivation: boolean = false;
+  protected startEffectLfoAtActivation: boolean = false;
 
   constructor(protected presetManagerService: PresetManagerService, protected synthService: SynthService, protected undoManagerService: UndoManagerService, protected windowService: WindowService) {}
 
@@ -57,11 +57,11 @@ export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
       // @ts-ignore
       if(this.config.active) {
         this.synthService.addEffect(this.id, this.instrument, this.config);
-        if(this.startEffektLFOAtActivation) {
+        if(this.startEffectLfoAtActivation) {
           this.instrument.start();
         }
       } else {
-        if(this.startEffektLFOAtActivation) {
+        if(this.startEffectLfoAtActivation) {
           this.instrument.stop();
           }
         this.synthService.removeEffect(this.id);

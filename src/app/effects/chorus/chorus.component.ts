@@ -19,7 +19,7 @@ export type ChorusConfig = {
   styleUrl: './chorus.component.scss'
 })
 export class ChorusComponent extends AbstractSynthComponent<ChorusConfig> {
-  protected override startEffektLFOAtActivation: boolean  = true;
+  protected override startEffectLfoAtActivation: boolean  = true;
   override instrument: Tone.Chorus = new Tone.Chorus();
   override componentType: string = 'effect';
 

@@ -23,7 +23,7 @@ export type AutoFilterConfig = {
   styleUrl: './auto-filter.component.scss'
 })
 export class AutoFilterComponent extends AbstractSynthComponent<AutoFilterConfig> {
-    protected override startEffektLFOAtActivation = true;
+    protected override startEffectLfoAtActivation = true;
     protected override instrument: Tone.AutoFilter = new Tone.AutoFilter();
     protected override componentType = 'effect';
     public override config: AutoFilterConfig = {

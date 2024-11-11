@@ -17,7 +17,7 @@ export type TremoloConfig = {
   styleUrl: './tremolo.component.scss'
 })
 export class TremoloComponent extends AbstractSynthComponent<TremoloConfig> {
-  protected override startEffektLFOAtActivation: boolean = true;
+  protected override startEffectLfoAtActivation: boolean = true;
   public override config: TremoloConfig = {
     active: false,
     wet: 1,
