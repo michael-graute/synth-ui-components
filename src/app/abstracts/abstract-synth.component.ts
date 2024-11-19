@@ -6,7 +6,10 @@ import {PresetManagerService, InsPreset} from "../managers/preset-manager/preset
 import {UndoManagerService} from "../managers/undo-manager/undo-manager.service";
 import {WindowService} from "../ui-elements/window/window.service";
 
-@Component({template: ''})
+@Component({
+    template: '',
+    standalone: true
+})
 export class AbstractSynthComponent<T> implements OnInit, OnDestroy {
 
   @Input() id: string = uuidv4();

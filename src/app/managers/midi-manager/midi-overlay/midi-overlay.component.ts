@@ -3,20 +3,23 @@ import {MidiCCEvent, MidiManagerService, MidiMap} from "../midi-manager.service"
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {convertRange} from "../../../utils";
 import {v4 as uuidv4} from 'uuid';
+import { NgIf, NgClass } from '@angular/common';
 
 
 
 @Component({
-  selector: 'ins-midi-overlay',
-  templateUrl: './midi-overlay.component.html',
-  styleUrl: './midi-overlay.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: MidiOverlayComponent
-    }
-    ]
+    selector: 'ins-midi-overlay',
+    templateUrl: './midi-overlay.component.html',
+    styleUrl: './midi-overlay.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: MidiOverlayComponent
+        }
+    ],
+    standalone: true,
+    imports: [NgIf, NgClass]
 })
 export class MidiOverlayComponent implements ControlValueAccessor{
   @Input() id: string = uuidv4();

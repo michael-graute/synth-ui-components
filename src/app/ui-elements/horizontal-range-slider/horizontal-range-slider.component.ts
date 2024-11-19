@@ -24,16 +24,17 @@ export type RangeSliderValue = {
 }
 
 @Component({
-  selector: 'ins-horizontal-range-slider',
-  templateUrl: './horizontal-range-slider.component.html',
-  styleUrl: './horizontal-range-slider.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: HorizontalRangeSliderComponent
-    }
-  ]
+    selector: 'ins-horizontal-range-slider',
+    templateUrl: './horizontal-range-slider.component.html',
+    styleUrl: './horizontal-range-slider.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: HorizontalRangeSliderComponent
+        }
+    ],
+    standalone: true
 })
 export class HorizontalRangeSliderComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 

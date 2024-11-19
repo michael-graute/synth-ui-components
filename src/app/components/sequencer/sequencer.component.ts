@@ -4,6 +4,12 @@ import {InsAttackReleasePayload, SynthService} from "../../synth.service";
 import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
 import {PresetManagerService, InsPreset} from "../../managers/preset-manager/preset-manager.service";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { NgFor, NgClass, NgIf } from '@angular/common';
+import { SequencerStepComponent } from './sequencer-step/sequencer-step.component';
+import { TransportControlComponent } from '../../ui-elements/transport-control/transport-control.component';
 
 export type SequencerStep = {
   id: number;
@@ -27,9 +33,11 @@ export type SequencerConfig = {
 }
 
 @Component({
-  selector: 'ins-sequencer',
-  templateUrl: './sequencer.component.html',
-  styleUrl: './sequencer.component.scss'
+    selector: 'ins-sequencer',
+    templateUrl: './sequencer.component.html',
+    styleUrl: './sequencer.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, NgFor, SequencerStepComponent, NgClass, NgIf, TransportControlComponent]
 })
 export class SequencerComponent implements OnInit {
   noteOptions: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G','G#', 'A', 'A#', 'B'];

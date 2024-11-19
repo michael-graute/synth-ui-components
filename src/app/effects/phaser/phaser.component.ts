@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type PhaserConfig = {
   active: boolean,
@@ -13,9 +17,11 @@ export type PhaserConfig = {
 };
 
 @Component({
-  selector: 'ins-phaser',
-  templateUrl: './phaser.component.html',
-  styleUrl: './phaser.component.scss'
+    selector: 'ins-phaser',
+    templateUrl: './phaser.component.html',
+    styleUrl: './phaser.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, MidiOverlayComponent]
 })
 export class PhaserComponent extends AbstractSynthComponent<PhaserConfig> {
 

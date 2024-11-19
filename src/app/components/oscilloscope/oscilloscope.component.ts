@@ -1,12 +1,16 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import * as Tone from "tone";
 import {TransportClass} from "tone/build/esm/core/clock/Transport";
+import { ButtonGroupComponent } from '../../ui-elements/button-group/button-group.component';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
-  selector: 'ins-oscilloscope',
-  templateUrl: './oscilloscope.component.html',
-  styleUrls: ['./oscilloscope.component.scss']
+    selector: 'ins-oscilloscope',
+    templateUrl: './oscilloscope.component.html',
+    styleUrls: ['./oscilloscope.component.scss'],
+    standalone: true,
+    imports: [ButtonGroupComponent, FormsModule]
 })
 export class OscilloscopeComponent implements AfterViewInit {
   @ViewChild('canvasElement', {static: true}) canvasElement: any;

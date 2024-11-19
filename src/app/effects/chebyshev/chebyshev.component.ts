@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from 'tone';
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type ChebyshevConfig = {
   active: boolean;
@@ -10,9 +14,11 @@ export type ChebyshevConfig = {
 };
 
 @Component({
-  selector: 'ins-chebyshev',
-  templateUrl: './chebyshev.component.html',
-  styleUrl: './chebyshev.component.scss'
+    selector: 'ins-chebyshev',
+    templateUrl: './chebyshev.component.html',
+    styleUrl: './chebyshev.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, MidiOverlayComponent]
 })
 export class ChebyshevComponent extends AbstractSynthComponent<ChebyshevConfig> {
 

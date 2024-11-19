@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { NgFor } from '@angular/common';
 
 export type InsContextMenuItem = {
   id: string,
@@ -12,9 +13,11 @@ export type InsContextMenuConfig = {
 }
 
 @Component({
-  selector: 'ins-context-menu',
-  templateUrl: './context-menu.component.html',
-  styleUrl: './context-menu.component.scss'
+    selector: 'ins-context-menu',
+    templateUrl: './context-menu.component.html',
+    styleUrl: './context-menu.component.scss',
+    standalone: true,
+    imports: [NgFor]
 })
 export class ContextMenuComponent {
   @Output() itemClick: EventEmitter<InsContextMenuItem> = new EventEmitter<InsContextMenuItem>()

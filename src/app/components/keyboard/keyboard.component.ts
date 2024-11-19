@@ -1,12 +1,15 @@
 import {ChangeDetectorRef, Component, HostListener, OnInit} from '@angular/core';
 import {InsAttackReleasePayload, InsNoteOnPayload, SynthService} from "../../synth.service";
 import * as Tone from "tone";
+import { NgClass, NgFor, NgIf } from '@angular/common';
 
 
 @Component({
-  selector: 'ins-keyboard',
-  templateUrl: './keyboard.component.html',
-  styleUrls: ['./keyboard.component.scss']
+    selector: 'ins-keyboard',
+    templateUrl: './keyboard.component.html',
+    styleUrls: ['./keyboard.component.scss'],
+    standalone: true,
+    imports: [NgClass, NgFor, NgIf]
 })
 export class KeyboardComponent implements OnInit {
   private octaveBase : number = 0;

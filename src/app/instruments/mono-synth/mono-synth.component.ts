@@ -3,6 +3,14 @@ import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
 import {ADSREnvelopeConfig, FilterConfig, FilterEnvelopeConfig, OscillatorConfig} from "../../types/config.types";
 import {FilterRollOff} from "tone";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { DividerComponent } from '../../ui-elements/divider/divider.component';
+import { WaveformSelectComponent } from '../../ui-elements/waveform-select/waveform-select.component';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
+import { AdsrEnvelopeComponent } from '../../ui-elements/adsr-envelope/adsr-envelope.component';
+import { ButtonGroupComponent } from '../../ui-elements/button-group/button-group.component';
 
 export type MonoSynthConfig = {
   active: boolean;
@@ -18,9 +26,11 @@ export type MonoSynthConfig = {
 }
 
 @Component({
-  selector: 'ins-mono-synth',
-  templateUrl: './mono-synth.component.html',
-  styleUrl: './mono-synth.component.scss'
+    selector: 'ins-mono-synth',
+    templateUrl: './mono-synth.component.html',
+    styleUrl: './mono-synth.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, DividerComponent, WaveformSelectComponent, KnobComponent, MidiOverlayComponent, AdsrEnvelopeComponent, ButtonGroupComponent]
 })
 export class MonoSynthComponent extends AbstractSynthComponent<MonoSynthConfig> {
 

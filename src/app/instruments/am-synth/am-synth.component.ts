@@ -2,6 +2,15 @@ import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import {PolySynth, AMSynth} from "tone";
 import {ADSREnvelopeConfig, OscillatorConfig} from "../../types/config.types";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { DividerComponent } from '../../ui-elements/divider/divider.component';
+import { WaveformSelectComponent } from '../../ui-elements/waveform-select/waveform-select.component';
+import { AdsrEnvelopeComponent } from '../../ui-elements/adsr-envelope/adsr-envelope.component';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
+import { NgIf, JsonPipe } from '@angular/common';
+import { WindowComponent } from '../../ui-elements/window/window.component';
 
 export type AmSynthConfig = {
   volume: number;
@@ -17,9 +26,11 @@ export type AmSynthConfig = {
 }
 
 @Component({
-  selector: 'ins-am-synth',
-  templateUrl: './am-synth.component.html',
-  styleUrl: './am-synth.component.scss'
+    selector: 'ins-am-synth',
+    templateUrl: './am-synth.component.html',
+    styleUrl: './am-synth.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, DividerComponent, WaveformSelectComponent, AdsrEnvelopeComponent, KnobComponent, MidiOverlayComponent, NgIf, WindowComponent, JsonPipe]
 })
 export class AmSynthComponent extends AbstractSynthComponent<AmSynthConfig> {
 

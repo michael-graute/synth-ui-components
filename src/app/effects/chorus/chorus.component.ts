@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { WaveformSelectComponent } from '../../ui-elements/waveform-select/waveform-select.component';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type ChorusConfig = {
   active: boolean;
@@ -14,9 +19,11 @@ export type ChorusConfig = {
 }
 
 @Component({
-  selector: 'ins-chorus',
-  templateUrl: './chorus.component.html',
-  styleUrl: './chorus.component.scss'
+    selector: 'ins-chorus',
+    templateUrl: './chorus.component.html',
+    styleUrl: './chorus.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, WaveformSelectComponent, KnobComponent, MidiOverlayComponent]
 })
 export class ChorusComponent extends AbstractSynthComponent<ChorusConfig> {
   protected override startEffectLfoAtActivation: boolean  = true;

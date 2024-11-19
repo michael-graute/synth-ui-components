@@ -2,6 +2,13 @@ import {Component, Input} from '@angular/core';
 import { AbstractSynthComponent } from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
 import {ADSREnvelopeConfig} from "../../types/config.types";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { DividerComponent } from '../../ui-elements/divider/divider.component';
+import { ButtonGroupComponent } from '../../ui-elements/button-group/button-group.component';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
+import { AdsrEnvelopeComponent } from '../../ui-elements/adsr-envelope/adsr-envelope.component';
 
 export type NoiseSynthConfig = {
   triggerWithoutNote: boolean;
@@ -18,9 +25,11 @@ export type NoiseSynthConfig = {
 }
 
 @Component({
-  selector: 'ins-noise-synth',
-  templateUrl: './noise-synth.component.html',
-  styleUrl: './noise-synth.component.scss'
+    selector: 'ins-noise-synth',
+    templateUrl: './noise-synth.component.html',
+    styleUrl: './noise-synth.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, DividerComponent, ButtonGroupComponent, KnobComponent, MidiOverlayComponent, AdsrEnvelopeComponent]
 })
 export class NoiseSynthComponent extends AbstractSynthComponent<NoiseSynthConfig> {
   @Input() name: string = 'NoiseSynth';

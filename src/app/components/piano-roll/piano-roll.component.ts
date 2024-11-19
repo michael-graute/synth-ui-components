@@ -5,6 +5,10 @@ import {Subject, Subscription} from "rxjs";
 import {v4 as uuidv4} from "uuid";
 import {InsPreset, PresetManagerService} from "../../managers/preset-manager/preset-manager.service";
 import {UndoManagerService} from "../../managers/undo-manager/undo-manager.service";
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { FormsModule } from '@angular/forms';
+import { NgFor, NgClass } from '@angular/common';
+import { TransportControlComponent } from '../../ui-elements/transport-control/transport-control.component';
 
 export type PianoRollStep = {
   id: string;
@@ -29,9 +33,11 @@ export type PianoRollConfig = {
 }
 
 @Component({
-  selector: 'ins-piano-roll',
-  templateUrl: './piano-roll.component.html',
-  styleUrl: './piano-roll.component.scss'
+    selector: 'ins-piano-roll',
+    templateUrl: './piano-roll.component.html',
+    styleUrl: './piano-roll.component.scss',
+    standalone: true,
+    imports: [KnobComponent, FormsModule, NgFor, NgClass, TransportControlComponent]
 })
 export class PianoRollComponent implements OnInit, OnDestroy {
 

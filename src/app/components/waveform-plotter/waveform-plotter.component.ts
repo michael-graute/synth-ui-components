@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'ins-waveform-plotter',
-  templateUrl: './waveform-plotter.component.html',
-  styleUrl: './waveform-plotter.component.scss'
+    selector: 'ins-waveform-plotter',
+    templateUrl: './waveform-plotter.component.html',
+    styleUrl: './waveform-plotter.component.scss',
+    standalone: true
 })
 export class WaveformPlotterComponent implements AfterViewInit {
 

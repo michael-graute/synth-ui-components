@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type ReverbConfig = {
   active: boolean;
@@ -10,9 +14,11 @@ export type ReverbConfig = {
 }
 
 @Component({
-  selector: 'ins-reverb',
-  templateUrl: './reverb.component.html',
-  styleUrl: './reverb.component.scss'
+    selector: 'ins-reverb',
+    templateUrl: './reverb.component.html',
+    styleUrl: './reverb.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, MidiOverlayComponent]
 })
 export class ReverbComponent extends AbstractSynthComponent<ReverbConfig> {
 

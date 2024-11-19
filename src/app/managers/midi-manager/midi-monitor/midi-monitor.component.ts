@@ -4,12 +4,15 @@ import {Observable, Subscriber} from "rxjs";
 import {map} from 'rxjs/operators';
 import * as Tone from "tone";
 import {MidiCCEvent, MidiNoteEvent, MidiManagerService} from "../midi-manager.service";
+import { NgIf, NgClass } from '@angular/common';
 
 
 @Component({
-  selector: 'ins-midi-monitor',
-  templateUrl: './midi-monitor.component.html',
-  styleUrls: ['./midi-monitor.component.scss']
+    selector: 'ins-midi-monitor',
+    templateUrl: './midi-monitor.component.html',
+    styleUrls: ['./midi-monitor.component.scss'],
+    standalone: true,
+    imports: [NgIf, NgClass]
 })
 export class MidiMonitorComponent implements OnInit {
 

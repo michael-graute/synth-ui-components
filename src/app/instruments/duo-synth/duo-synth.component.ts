@@ -2,6 +2,13 @@ import {Component, Input} from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import {ADSREnvelopeConfig, FilterConfig, OscillatorConfig} from "../../types/config.types";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { DividerComponent } from '../../ui-elements/divider/divider.component';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
+import { WaveformSelectComponent } from '../../ui-elements/waveform-select/waveform-select.component';
+import { AdsrEnvelopeComponent } from '../../ui-elements/adsr-envelope/adsr-envelope.component';
 
 export type DuoSynthConfig = {
   voice0: {
@@ -34,9 +41,11 @@ export type DuoSynthConfig = {
 }
 
 @Component({
-  selector: 'ins-duo-synth',
-  templateUrl: './duo-synth.component.html',
-  styleUrl: './duo-synth.component.scss'
+    selector: 'ins-duo-synth',
+    templateUrl: './duo-synth.component.html',
+    styleUrl: './duo-synth.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, DividerComponent, KnobComponent, MidiOverlayComponent, WaveformSelectComponent, AdsrEnvelopeComponent]
 })
 export class DuoSynthComponent extends AbstractSynthComponent<DuoSynthConfig> {
 

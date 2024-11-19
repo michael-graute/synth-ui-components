@@ -1,6 +1,13 @@
 import { Component } from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from 'tone';
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { DividerComponent } from '../../ui-elements/divider/divider.component';
+import { WaveformSelectComponent } from '../../ui-elements/waveform-select/waveform-select.component';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
+import { ButtonGroupComponent } from '../../ui-elements/button-group/button-group.component';
 
 export type AutoFilterConfig = {
   active: boolean;
@@ -18,9 +25,11 @@ export type AutoFilterConfig = {
 };
 
 @Component({
-  selector: 'ins-auto-filter',
-  templateUrl: './auto-filter.component.html',
-  styleUrl: './auto-filter.component.scss'
+    selector: 'ins-auto-filter',
+    templateUrl: './auto-filter.component.html',
+    styleUrl: './auto-filter.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, DividerComponent, WaveformSelectComponent, KnobComponent, MidiOverlayComponent, ButtonGroupComponent]
 })
 export class AutoFilterComponent extends AbstractSynthComponent<AutoFilterConfig> {
     protected override startEffectLfoAtActivation = true;

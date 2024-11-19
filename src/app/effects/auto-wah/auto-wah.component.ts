@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from 'tone';
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type AutoWahConfig = {
   active: boolean;
@@ -14,9 +18,11 @@ export type AutoWahConfig = {
 };
 
 @Component({
-  selector: 'ins-auto-wah',
-  templateUrl: './auto-wah.component.html',
-  styleUrl: './auto-wah.component.scss'
+    selector: 'ins-auto-wah',
+    templateUrl: './auto-wah.component.html',
+    styleUrl: './auto-wah.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, MidiOverlayComponent]
 })
 export class AutoWahComponent extends AbstractSynthComponent<AutoWahConfig> {
 

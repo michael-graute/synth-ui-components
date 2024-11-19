@@ -8,9 +8,10 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
 import {convertRange} from "../../utils";
+import { NgClass, NgStyle, NgIf, NgFor } from '@angular/common';
 
 export type changeEventPayload = {
   old: number;
@@ -18,16 +19,18 @@ export type changeEventPayload = {
 }
 
 @Component({
-  selector: 'ins-knob',
-  templateUrl: './knob.component.html',
-  styleUrls: ['./knob.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: KnobComponent
-    }
-  ]
+    selector: 'ins-knob',
+    templateUrl: './knob.component.html',
+    styleUrls: ['./knob.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: KnobComponent
+        }
+    ],
+    standalone: true,
+    imports: [NgClass, NgStyle, NgIf, NgFor, FormsModule]
 })
 export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 

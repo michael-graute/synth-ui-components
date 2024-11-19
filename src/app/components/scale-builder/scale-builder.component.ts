@@ -4,11 +4,18 @@ import {InsAttackReleasePayload, SynthService} from "../../synth.service";
 import {ScaleBuilderService} from "./scale-builder.service";
 import * as Tone from "tone";
 import {getRandomInt} from "../../utils";
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { FormsModule } from '@angular/forms';
+import { SelectComponent } from '../../ui-elements/select/select.component';
+import { TransportControlComponent } from '../../ui-elements/transport-control/transport-control.component';
+import { NgFor, NgClass } from '@angular/common';
 
 @Component({
-  selector: 'ins-scale-builder',
-  templateUrl: './scale-builder.component.html',
-  styleUrl: './scale-builder.component.scss'
+    selector: 'ins-scale-builder',
+    templateUrl: './scale-builder.component.html',
+    styleUrl: './scale-builder.component.scss',
+    standalone: true,
+    imports: [KnobComponent, FormsModule, SelectComponent, TransportControlComponent, NgFor, NgClass]
 })
 export class ScaleBuilderComponent implements OnInit {
 

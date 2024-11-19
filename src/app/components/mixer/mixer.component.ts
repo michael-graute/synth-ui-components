@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {v4 as uuidv4} from "uuid";
+import { NgFor } from '@angular/common';
+import { MixerStripComponent } from './mixer-strip/mixer-strip.component';
 
 
 export type InsMixerChannel = {
@@ -15,9 +17,11 @@ export type InsMixerChannel = {
 }
 
 @Component({
-  selector: 'ins-mixer',
-  templateUrl: './mixer.component.html',
-  styleUrl: './mixer.component.scss'
+    selector: 'ins-mixer',
+    templateUrl: './mixer.component.html',
+    styleUrl: './mixer.component.scss',
+    standalone: true,
+    imports: [NgFor, MixerStripComponent]
 })
 export class MixerComponent implements OnInit {
 

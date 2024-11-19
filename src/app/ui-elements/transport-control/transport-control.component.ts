@@ -1,9 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { NgIf, NgClass } from '@angular/common';
 
 @Component({
-  selector: 'ins-transport-control',
-  templateUrl: './transport-control.component.html',
-  styleUrl: './transport-control.component.scss'
+    selector: 'ins-transport-control',
+    templateUrl: './transport-control.component.html',
+    styleUrl: './transport-control.component.scss',
+    standalone: true,
+    imports: [NgIf, NgClass]
 })
 export class TransportControlComponent {
 

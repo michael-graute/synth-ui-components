@@ -1,6 +1,10 @@
 import {Component} from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../abstracts/abstract-synth.component";
+import { SwitchComponent } from '../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { WaveformSelectComponent } from '../ui-elements/waveform-select/waveform-select.component';
+import { KnobComponent } from '../ui-elements/knob/knob.component';
 
 export type LfoConfig = {
   active: boolean;
@@ -15,9 +19,11 @@ export type LfoConfig = {
 }
 
 @Component({
-  selector: 'ins-lfo',
-  templateUrl: './lfo.component.html',
-  styleUrl: './lfo.component.scss'
+    selector: 'ins-lfo',
+    templateUrl: './lfo.component.html',
+    styleUrl: './lfo.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, WaveformSelectComponent, KnobComponent]
 })
 export class LfoComponent extends AbstractSynthComponent<LfoConfig> {
   override config: LfoConfig = {

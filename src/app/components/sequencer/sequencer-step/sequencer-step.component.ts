@@ -1,11 +1,17 @@
 import {Component, Input} from '@angular/core';
 import {SequencerStep} from "../sequencer.component";
 import {v4 as uuidv4} from 'uuid';
+import { NgClass, NgIf } from '@angular/common';
+import { SwitchComponent } from '../../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../../ui-elements/knob/knob.component';
 
 @Component({
-  selector: 'ins-sequencer-step',
-  templateUrl: './sequencer-step.component.html',
-  styleUrl: './sequencer-step.component.scss'
+    selector: 'ins-sequencer-step',
+    templateUrl: './sequencer-step.component.html',
+    styleUrl: './sequencer-step.component.scss',
+    standalone: true,
+    imports: [NgClass, SwitchComponent, FormsModule, KnobComponent, NgIf]
 })
 export class SequencerStepComponent {
   @Input() active: boolean = false;

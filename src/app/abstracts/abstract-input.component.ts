@@ -3,7 +3,8 @@ import {ControlValueAccessor} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
 
 @Component({
-  template: '',
+    template: '',
+    standalone: true,
 })
 export class AbstractInputComponent<T = any> implements OnInit, AfterViewInit, ControlValueAccessor {
 

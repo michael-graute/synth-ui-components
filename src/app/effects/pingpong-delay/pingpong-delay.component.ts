@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type PingpongDelayConfig = {
   active: boolean;
@@ -11,9 +15,11 @@ export type PingpongDelayConfig = {
 }
 
 @Component({
-  selector: 'ins-pingpong-delay',
-  templateUrl: './pingpong-delay.component.html',
-  styleUrl: './pingpong-delay.component.scss'
+    selector: 'ins-pingpong-delay',
+    templateUrl: './pingpong-delay.component.html',
+    styleUrl: './pingpong-delay.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, MidiOverlayComponent]
 })
 export class PingpongDelayComponent extends AbstractSynthComponent<PingpongDelayConfig> {
   override instrument: Tone.PingPongDelay = new Tone.PingPongDelay(.5, .5);

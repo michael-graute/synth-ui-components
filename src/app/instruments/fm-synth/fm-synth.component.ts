@@ -2,6 +2,13 @@ import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
 import {ADSREnvelopeConfig, OscillatorConfig} from "../../types/config.types";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { DividerComponent } from '../../ui-elements/divider/divider.component';
+import { WaveformSelectComponent } from '../../ui-elements/waveform-select/waveform-select.component';
+import { AdsrEnvelopeComponent } from '../../ui-elements/adsr-envelope/adsr-envelope.component';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type FmSynthConfig = {
   volume: number;
@@ -18,9 +25,11 @@ export type FmSynthConfig = {
 }
 
 @Component({
-  selector: 'ins-fm-synth',
-  templateUrl: './fm-synth.component.html',
-  styleUrl: './fm-synth.component.scss'
+    selector: 'ins-fm-synth',
+    templateUrl: './fm-synth.component.html',
+    styleUrl: './fm-synth.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, DividerComponent, WaveformSelectComponent, AdsrEnvelopeComponent, KnobComponent, MidiOverlayComponent]
 })
 export class FmSynthComponent extends AbstractSynthComponent<FmSynthConfig> {
   @Input() name: string = 'fm-synth';

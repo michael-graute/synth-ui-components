@@ -1,6 +1,7 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from "uuid";
+import { NgIf, NgClass, NgFor } from '@angular/common';
 
 export type SelectOption = {
   label: string;
@@ -9,16 +10,18 @@ export type SelectOption = {
 }
 
 @Component({
-  selector: 'ins-select',
-  templateUrl: './select.component.html',
-  styleUrl: './select.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: SelectComponent
-    }
-  ]
+    selector: 'ins-select',
+    templateUrl: './select.component.html',
+    styleUrl: './select.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: SelectComponent
+        }
+    ],
+    standalone: true,
+    imports: [NgIf, NgClass, NgFor]
 })
 export class SelectComponent implements ControlValueAccessor, OnInit {
 

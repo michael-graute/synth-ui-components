@@ -1,18 +1,21 @@
 import {Component, EventEmitter, HostBinding, Input, Output} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
+import { NgIf, NgClass } from '@angular/common';
 
 @Component({
-  selector: 'ins-switch',
-  templateUrl: './switch.component.html',
-  styleUrls: ['./switch.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi:true,
-      useExisting: SwitchComponent
-    }
-  ]
+    selector: 'ins-switch',
+    templateUrl: './switch.component.html',
+    styleUrls: ['./switch.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: SwitchComponent
+        }
+    ],
+    standalone: true,
+    imports: [NgIf, NgClass, FormsModule]
 })
 export class SwitchComponent implements ControlValueAccessor {
   @HostBinding('id') @Input() id: string = uuidv4();

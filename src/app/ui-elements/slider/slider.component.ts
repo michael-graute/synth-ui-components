@@ -1,18 +1,21 @@
 import {AfterViewInit, Component, ElementRef, HostBinding, HostListener, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
+import { NgStyle, DecimalPipe } from '@angular/common';
 
 @Component({
-  selector: 'ins-slider',
-  templateUrl: './slider.component.html',
-  styleUrls: ['./slider.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi:true,
-      useExisting: SliderComponent
-    }
-  ]
+    selector: 'ins-slider',
+    templateUrl: './slider.component.html',
+    styleUrls: ['./slider.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: SliderComponent
+        }
+    ],
+    standalone: true,
+    imports: [NgStyle, DecimalPipe]
 })
 export class SliderComponent implements AfterViewInit, ControlValueAccessor {
   private mouseDown: boolean = false;

@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import * as Tone from "tone";
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type DelayConfig = {
   active: boolean;
@@ -11,9 +15,11 @@ export type DelayConfig = {
 }
 
 @Component({
-  selector: 'ins-delay',
-  templateUrl: './feedback-delay.component.html',
-  styleUrl: './feedback-delay.component.scss'
+    selector: 'ins-delay',
+    templateUrl: './feedback-delay.component.html',
+    styleUrl: './feedback-delay.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, MidiOverlayComponent]
 })
 export class FeedbackDelayComponent extends AbstractSynthComponent<DelayConfig> {
   override instrument: Tone.FeedbackDelay = new Tone.FeedbackDelay(.5, .5);

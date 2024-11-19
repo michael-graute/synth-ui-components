@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from 'tone';
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type BitCrusherConfig = {
   active: boolean;
@@ -9,9 +13,11 @@ export type BitCrusherConfig = {
 };
 
 @Component({
-  selector: 'ins-bit-crusher',
-  templateUrl: './bit-crusher.component.html',
-  styleUrl: './bit-crusher.component.scss'
+    selector: 'ins-bit-crusher',
+    templateUrl: './bit-crusher.component.html',
+    styleUrl: './bit-crusher.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, MidiOverlayComponent]
 })
 export class BitCrusherComponent extends AbstractSynthComponent<BitCrusherConfig> {
 

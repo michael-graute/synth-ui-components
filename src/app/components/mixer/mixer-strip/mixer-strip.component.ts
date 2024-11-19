@@ -1,11 +1,17 @@
 import {Component, Input} from '@angular/core';
 import {v4 as uuidv4} from "uuid";
 import {InsMixerChannel} from "../mixer.component";
+import { SliderComponent } from '../../../ui-elements/slider/slider.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../../ui-elements/knob/knob.component';
+import { SwitchComponent } from '../../../ui-elements/switch/switch.component';
 
 @Component({
-  selector: 'ins-mixer-strip',
-  templateUrl: './mixer-strip.component.html',
-  styleUrl: './mixer-strip.component.scss'
+    selector: 'ins-mixer-strip',
+    templateUrl: './mixer-strip.component.html',
+    styleUrl: './mixer-strip.component.scss',
+    standalone: true,
+    imports: [SliderComponent, FormsModule, KnobComponent, SwitchComponent]
 })
 export class MixerStripComponent {
 

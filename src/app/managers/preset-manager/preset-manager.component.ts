@@ -1,6 +1,8 @@
 import {Component, HostListener} from '@angular/core';
 import {SynthService} from "../../synth.service";
 import {PresetManagerService} from "./preset-manager.service";
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 export type InsPreset = {
   id: string,
@@ -10,9 +12,11 @@ export type InsPreset = {
 }
 
 @Component({
-  selector: 'ins-preset-manager',
-  templateUrl: './preset-manager.component.html',
-  styleUrl: './preset-manager.component.scss'
+    selector: 'ins-preset-manager',
+    templateUrl: './preset-manager.component.html',
+    styleUrl: './preset-manager.component.scss',
+    standalone: true,
+    imports: [NgIf, FormsModule, NgFor]
 })
 export class PresetManagerComponent {
 

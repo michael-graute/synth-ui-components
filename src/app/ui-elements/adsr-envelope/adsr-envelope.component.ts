@@ -1,6 +1,9 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from "@angular/forms";
 import {v4 as uuidv4} from "uuid";
+import { NgStyle } from '@angular/common';
+import { KnobComponent } from '../knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type AdsrEnvelopeValue = {
   attack: number;
@@ -14,16 +17,18 @@ export type ChangeEventPayload = {old: AdsrEnvelopeValue, new: AdsrEnvelopeValue
 export type CanvasPoint = {x: number, y: number};
 
 @Component({
-  selector: 'ins-adsr-envelope',
-  templateUrl: './adsr-envelope.component.html',
-  styleUrls: ['./adsr-envelope.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi:true,
-      useExisting: AdsrEnvelopeComponent
-    }
-  ]
+    selector: 'ins-adsr-envelope',
+    templateUrl: './adsr-envelope.component.html',
+    styleUrls: ['./adsr-envelope.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            multi: true,
+            useExisting: AdsrEnvelopeComponent
+        }
+    ],
+    standalone: true,
+    imports: [NgStyle, KnobComponent, FormsModule, MidiOverlayComponent]
 })
 export class AdsrEnvelopeComponent implements AfterViewInit, ControlValueAccessor {
 

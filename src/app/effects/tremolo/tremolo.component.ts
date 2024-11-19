@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from "tone";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { WaveformSelectComponent } from '../../ui-elements/waveform-select/waveform-select.component';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type TremoloConfig = {
   active: boolean;
@@ -12,9 +17,11 @@ export type TremoloConfig = {
 }
 
 @Component({
-  selector: 'ins-tremolo',
-  templateUrl: './tremolo.component.html',
-  styleUrl: './tremolo.component.scss'
+    selector: 'ins-tremolo',
+    templateUrl: './tremolo.component.html',
+    styleUrl: './tremolo.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, WaveformSelectComponent, KnobComponent, MidiOverlayComponent]
 })
 export class TremoloComponent extends AbstractSynthComponent<TremoloConfig> {
   protected override startEffectLfoAtActivation: boolean = true;

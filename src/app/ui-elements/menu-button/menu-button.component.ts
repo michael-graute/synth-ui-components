@@ -1,10 +1,13 @@
 import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
-import {InsContextMenuConfig, InsContextMenuItem} from "../context-menu/context-menu.component";
+import { InsContextMenuConfig, InsContextMenuItem, ContextMenuComponent } from "../context-menu/context-menu.component";
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'ins-menu-button',
-  templateUrl: './menu-button.component.html',
-  styleUrl: './menu-button.component.scss'
+    selector: 'ins-menu-button',
+    templateUrl: './menu-button.component.html',
+    styleUrl: './menu-button.component.scss',
+    standalone: true,
+    imports: [NgClass, NgIf, ContextMenuComponent]
 })
 export class MenuButtonComponent {
   @Input() contextMenu: InsContextMenuConfig = {items: []}

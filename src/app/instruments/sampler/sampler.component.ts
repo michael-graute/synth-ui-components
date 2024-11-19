@@ -2,6 +2,10 @@ import {Component, Input} from '@angular/core';
 import {AbstractSynthComponent} from "../../abstracts/abstract-synth.component";
 import * as Tone from 'tone';
 import {OneShotSourceCurve} from "tone/build/esm/source/OneShotSource";
+import { SwitchComponent } from '../../ui-elements/switch/switch.component';
+import { FormsModule } from '@angular/forms';
+import { KnobComponent } from '../../ui-elements/knob/knob.component';
+import { MidiOverlayComponent } from '../../managers/midi-manager/midi-overlay/midi-overlay.component';
 
 export type SamplerConfig = {
   active: boolean;
@@ -18,9 +22,11 @@ export type SamplePack = {
 }
 
 @Component({
-  selector: 'ins-sampler',
-  templateUrl: './sampler.component.html',
-  styleUrl: './sampler.component.scss'
+    selector: 'ins-sampler',
+    templateUrl: './sampler.component.html',
+    styleUrl: './sampler.component.scss',
+    standalone: true,
+    imports: [SwitchComponent, FormsModule, KnobComponent, MidiOverlayComponent]
 })
 export class SamplerComponent extends AbstractSynthComponent<SamplerConfig> {
   samplePacks: {[key:string]: SamplePack} = {

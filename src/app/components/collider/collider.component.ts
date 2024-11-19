@@ -4,15 +4,19 @@ import * as Tone from 'tone';
 import {SynthService} from "../../synth.service";
 import {v4 as uuidv4} from "uuid";
 import {getRandomInt} from "../../utils";
+import { TransportControlComponent } from '../../ui-elements/transport-control/transport-control.component';
+import { NgFor, NgClass } from '@angular/common';
 
 export type InsCollider = {
   x: number, y: number, dx: number, dy: number, id: string
 }
 
 @Component({
-  selector: 'ins-collider',
-  templateUrl: './collider.component.html',
-  styleUrl: './collider.component.scss'
+    selector: 'ins-collider',
+    templateUrl: './collider.component.html',
+    styleUrl: './collider.component.scss',
+    standalone: true,
+    imports: [TransportControlComponent, NgFor, NgClass]
 })
 export class ColliderComponent implements OnInit {
 
