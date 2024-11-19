@@ -3,9 +3,10 @@ import {SynthService} from "./synth.service";
 import * as Tone from 'tone';
 
 @Component({
-  selector: 'ins-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'ins-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
 
