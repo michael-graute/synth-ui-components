@@ -215,10 +215,14 @@ export class KnobComponent implements OnInit, AfterViewInit, ControlValueAccesso
     event.preventDefault();
     this.mouseWheelEvent = event;
     if(!this.mouseDown && this.mouseOver) {
-      this.tmpValue += event.deltaY/4;
-      if(this.tmpValue >= this.rangeIndicator) this.tmpValue = this.rangeIndicator;
-      if(this.tmpValue <= 0) this.tmpValue = 0;
-      this.value = Math.round(convertRange( this.tmpValue, [ 0, this.rangeIndicator ], [ this.min, this.max ] )/this.step) * this.step;
+      let step = this.step;
+      if(event.deltaY < 0) {
+        step = -(this.step)
+      }
+      this.tmpValue = this.value + step;
+      if(this.tmpValue > this.max) this.tmpValue = this.max;
+      if(this.tmpValue <= this.min) this.tmpValue = this.min;
+      this.value = this.tmpValue;
       clearTimeout(this.valueChangedInterval);
       this.valueChangedInterval = setTimeout(() => {
         this.triggerValueChange();
