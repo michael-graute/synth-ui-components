@@ -200,30 +200,42 @@ export class SynthService {
   }
 
   connectLFO(id: string, destination: any): void {
-    const lfo: LFO = this.getLFO(id).lfo;
-    lfo.connect(destination);
+    const insLFO = this.getLFO(id);
+    if(insLFO) {
+      const lfo: LFO = insLFO.lfo;
+      lfo.connect(destination);
+    }
   }
 
   disconnectLFO(id: string, destination: any): void {
-    const lfo: LFO = this.getLFO(id).lfo;
-    lfo.disconnect(destination);
+    const insLFO = this.getLFO(id);
+    if(insLFO) {
+      const lfo: LFO = insLFO.lfo;
+      lfo.disconnect(destination);
+    }
   }
 
   getLFOs(): InsLFO[] {
     return this.lfos;
   }
 
-  getLFO(id: string): InsLFO {
+  getLFO(id: string): InsLFO | undefined {
     return <InsLFO>this.getLFOs().find((lfo: InsLFO) => lfo.id === id);
   }
 
   startLFO(id: string): void {
-    const lfo: LFO = this.getLFO(id)?.lfo;
-    if(lfo) lfo.start();
+    const insLFO = this.getLFO(id);
+    if(insLFO) {
+      const lfo: LFO = insLFO.lfo;
+      if (lfo) lfo.start();
+    }
   }
 
   stopLFO(id: string): void {
-    const lfo: LFO = this.getLFO(id)?.lfo;
-    if(lfo) lfo.stop();
+    const insLFO = this.getLFO(id);
+    if(insLFO) {
+      const lfo: LFO = insLFO.lfo;
+      if (lfo) lfo.stop();
+    }
   }
 }
