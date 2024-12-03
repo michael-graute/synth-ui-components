@@ -15,7 +15,6 @@ export interface ButtonGroupOption {
     NgIf,
     ReactiveFormsModule,
     FormsModule,
-    JsonPipe,
     NgClass
   ],
   templateUrl: './button-group.component.html',
