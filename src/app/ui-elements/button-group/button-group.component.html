@@ -1,7 +1,6 @@
 <span *ngIf="label" class="ins-button-group-label">{{label}}</span>
-<div class="btn-group" style="margin-bottom: 18px;">
+<div class="ins-button-group-buttons">
   <ng-container *ngFor="let option of options; let i = index">
-    <input type="radio" class="btn-check" value="{{option.value}}" [(ngModel)]="value" [name]="name" [id]="id + i" autocomplete="off">
-    <label class="btn btn-secondary" [for]="id + i">{{option.label}}</label>
+    <button type="button" [ngClass]="{'active': value === option.value, 'ins-btn': true}" (click)="buttonClick(option.value)">{{option.label}}</button>
   </ng-container>
 </div>

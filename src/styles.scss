@@ -11,8 +11,11 @@
   --primary-color: #00a4e1;
   --button-hover-bg: #30363b;
   --button-click-bg: #3b4249;
+  --button-border-radius: 3px;
   --card-body-bg: #212529;
   --card-header-bg: #282c30;
+  --line-width: 1px;
+
 }
 
 html {
@@ -54,6 +57,23 @@ pre {
        font-weight: 500;
      }
    }
+
+}
+
+button.ins-btn {
+  border: 1px solid var(--text-color);
+  background: var(--body-bg-color);
+  font-size: small;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--text-color);
+  padding: 5px 15px;
+  border-radius: 3px;
+
+  &.active {
+    color: var(--primary-color);
+    background-color: var(--button-click-bg);
+  }
 
 }
 

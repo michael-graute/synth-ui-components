@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
-import {NgForOf, NgIf} from "@angular/common";
+import {JsonPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 
 export interface ButtonGroupOption {
   label: string;
@@ -14,7 +14,9 @@ export interface ButtonGroupOption {
     NgForOf,
     NgIf,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    JsonPipe,
+    NgClass
   ],
   templateUrl: './button-group.component.html',
   styleUrl: './button-group.component.scss',
@@ -58,5 +60,10 @@ export class ButtonGroupComponent implements ControlValueAccessor {
   }
 
   onChange(value: string) {
+  }
+
+  buttonClick(value: string): void {
+    this.internalValue = value;
+    this.onChange(value);
   }
 }
