@@ -3,5 +3,5 @@
     <i *ngIf="icon" [class]="icon"></i>
     <span *ngIf="title" class="ins-menu-button__title">{{title}}</span>
   </button>
-  <ins-context-menu *ngIf="isOpen" [config]="contextMenu" (itemClick)="onMenuItemClick($event)"></ins-context-menu>
+  <ins-context-menu [hidden]="!isOpen" [config]="contextMenu" (itemClick)="onMenuItemClick($event)"></ins-context-menu>
 </div>
